@@ -1,0 +1,20 @@
+{
+  "name": "wp-ripper",
+  "version": "1.0.0",
+  "description": "Work in progress",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "cheerio": "^1.0.0-rc.2",
+    "file-exists": "^4.0.0",
+    "image-downloader": "^3.2.2",
+    "qb-log": "^1.0.1",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-qb": "^1.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
