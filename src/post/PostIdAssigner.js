@@ -1,13 +1,17 @@
+/* TODO This is quite naive iterative implementation of finding unique id. */
+
 module.exports = class PostIdAssigner {
-  constructor({ seenIdsArray = [] }) {
-    this.seenIdsArray(seenIdsArray);
+  constructor(config = {}) {
+    const { seenIdsArray = [] } = config;
+
+    this.setSeenIds(seenIdsArray);
   }
 
   setSeenIds(seenIdsArray) {
     const newSeenIds = {};
 
     seenIdsArray.forEach((existingId) => {
-      if (this.seenIds[existingId]) {
+      if (newSeenIds[existingId]) {
         throw Error(`Attempted to set non unique existing id in PostIdAssigner.`);
       }
       newSeenIds[existingId] = true;
@@ -23,17 +27,13 @@ module.exports = class PostIdAssigner {
     this.seenIds[uniqueId] = true;
 
     postInfo.id = uniqueId;
+
+    return uniqueId;
   }
 
   getPostId(postInfo) {
     if (postInfo.id) {
       return postInfo.id;
-    }
-
-    if (postInfo.images.length) {
-      const parts = postInfo.images[0].split('/');
-
-      return parts[parts.length - 2]; // eslint-disable-line no-magic-numbers
     }
 
     return 'MISSING';
