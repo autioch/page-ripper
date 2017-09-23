@@ -10,12 +10,12 @@ module.exports = class PostInfoParser {
       id: this.parsePostId(url, $, links, images),
       url,
       title: this.parsePostTitle(url, $, links, images),
-      addedDate: this.parsePostDate(url, $, links, images),
+      addedDate: this.parsePostAddedDate(url, $, links, images),
       gatheredDate: new Date().toJSON().split('T')[0],
       images
     };
 
-    const extraInfo = this.parseExtraInfo(url, $, links, images);
+    const extraInfo = this.parseExtraPostInfo(url, $, links, images);
 
     return Object.assign(commonPostInfo, extraInfo);
   }
@@ -39,7 +39,9 @@ module.exports = class PostInfoParser {
   }
 
   parsePostTitle(url, $, links, images) { // eslint-disable-line no-unused-vars
-    return $('.top_title').text();
+    return $('h1.title').text();
+
+    // return $('.top_title').text();
   }
 
   parsePostAddedDate(url, $, links, images) { // eslint-disable-line no-unused-vars

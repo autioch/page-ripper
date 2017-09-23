@@ -1,7 +1,7 @@
 module.exports = class PostDownloader {
-  constructor({ FileSaver, PostIdAssigner, PostInfoFetcher, PostInfoParser }) {
+  constructor({ FileSaver, IdGenerator, PostInfoFetcher, PostInfoParser }) {
     this.FileSaver = FileSaver;
-    this.PostIdAssigner = PostIdAssigner;
+    this.IdGenerator = IdGenerator;
     this.PostInfoFetcher = PostInfoFetcher;
     this.PostInfoParser = PostInfoParser;
   }
@@ -9,17 +9,14 @@ module.exports = class PostDownloader {
   downloadPost(postUrl) {
     return this.PostInfoFetcher
       .fetchPostInfo(postUrl)
-      .then((bodyText) => {
-        const postInfo = this.parsePostInfo(bodyText, postUrl);
-
-        return this.savePostInfo(postInfo, postUrl);
-      });
+      .then((bodyText) => this.parsePostInfo(bodyText, postUrl))
+      .then((postInfo) => this.savePostInfo(postInfo, postUrl));
   }
 
   parsePostInfo(bodyText, postUrl) {
     const postInfo = this.PostInfoParser.parsePostInfo(bodyText, postUrl);
 
-    this.PostIdAssigner.assignPostId(postInfo);
+    this.IdGenerator.generateId(postInfo);
 
     return postInfo;
   }
@@ -29,12 +26,12 @@ module.exports = class PostDownloader {
     const fileContents = this.serializePostInfo(postInfo);
 
     return this.FileSaver
-      .saveFile(fileName, fileContents, 'json')
+      .saveFile(fileName, fileContents)
       .then(() => postInfo);
   }
 
   getPostInfoFilename(postInfo) {
-    return postInfo.id.toString();
+    return `${postInfo.id}.json`;
   }
 
   serializePostInfo(postInfo) {

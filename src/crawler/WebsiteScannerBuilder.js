@@ -1,13 +1,13 @@
 const DefaultFileSaver = require('../FileSaver');
 const DefaultPostDownloader = require('../post/PostDownloader');
-const DefaultPostIdAssigner = require('../post/PostIdAssigner');
+const DefaultIdGenerator = require('../utils/IdGenerator');
 const DefaultPostInfoFetcher = require('../post/PostInfoFetcher');
 const DefaultPostInfoParser = require('../post/PostInfoParser');
 const DefaultWebsiteScanner = require('../website/WebsiteScanner');
 
 module.exports = function WebsiteScannerBuilder({
   FileSaver = DefaultFileSaver,
-  PostIdAssigner = DefaultPostIdAssigner,
+  IdGenerator = DefaultIdGenerator,
   PostInfoFetcher = DefaultPostInfoFetcher,
   PostInfoParser = DefaultPostInfoParser,
   PostDownloader = DefaultPostDownloader,
@@ -21,7 +21,7 @@ module.exports = function WebsiteScannerBuilder({
       FileSaver: new FileSaver({
         rootPath
       }),
-      PostIdAssigner: new PostIdAssigner(),
+      IdGenerator: new IdGenerator(),
       PostInfoFetcher: new PostInfoFetcher(),
       PostInfoParser: new PostInfoParser()
     })
