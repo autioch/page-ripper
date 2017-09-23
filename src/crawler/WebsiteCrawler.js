@@ -1,6 +1,6 @@
 const Bluebird = require('bluebird');
 
-module.exports = class WebsiteScanner {
+module.exports = class WebsiteCrawler {
   constructor({ PostDownloader, requestPause = 0, visitedUrls = [] }) {
     this.requestPause = requestPause;
     this.PostDownloader = PostDownloader;

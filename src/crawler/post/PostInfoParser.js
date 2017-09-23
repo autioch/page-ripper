@@ -6,7 +6,14 @@ module.exports = class PostInfoParser {
     const images = $('a.highslide').map((index, el) => el.attribs.href).get();
     const links = $('a').filter((index, link) => link.attribs.rel);
 
-    const commonPostInfo = {
+    const commonPostInfo = this.parseCommonPostInfo(url, $, links, images);
+    const extraInfo = this.parseExtraPostInfo(url, $, links, images);
+
+    return Object.assign(commonPostInfo, extraInfo);
+  }
+
+  parseCommonPostInfo(url, $, links, images) {
+    return {
       id: this.parsePostId(url, $, links, images),
       url,
       title: this.parsePostTitle(url, $, links, images),
@@ -14,10 +21,6 @@ module.exports = class PostInfoParser {
       gatheredDate: new Date().toJSON().split('T')[0],
       images
     };
-
-    const extraInfo = this.parseExtraPostInfo(url, $, links, images);
-
-    return Object.assign(commonPostInfo, extraInfo);
   }
 
   /* Wordpress defaults */
@@ -40,14 +43,12 @@ module.exports = class PostInfoParser {
 
   parsePostTitle(url, $, links, images) { // eslint-disable-line no-unused-vars
     return $('h1.title').text();
-
-    // return $('.top_title').text();
   }
 
   parsePostAddedDate(url, $, links, images) { // eslint-disable-line no-unused-vars
     const [day, month, year] = $('.top_title_top')
       .text()
-      .replace('Dodany dnia ', '')
+      .replace(/[a-z ]+/gi, '')
       .split('-');
 
     return `${year}-${month}-${day}`;

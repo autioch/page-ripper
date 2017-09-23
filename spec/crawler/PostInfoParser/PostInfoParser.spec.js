@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 /* eslint max-nested-callbacks: [2, 4] */
 const { expect } = require('chai');
-const PostInfoParser = require('./PostInfoParser');
+const PostInfoParser = require('../../../src/crawler/post/PostInfoParser');
 
 const testCaseUrl = 'http://joemonster.org/art/40836/Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw';
 const testCaseBody = require('fs').readFileSync(`${__dirname}/PostInfoParser.testCase.htm`); // eslint-disable-line
@@ -22,7 +22,7 @@ describe('PostInfoParser parsePostInfo', () => {
   });
 
   it(`will return proper id`, () => {
-    expect(postInfo.id).to.equal('Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw');
+    expect(postInfo.id).to.equal('40836');
   });
 
   it(`will return proper url`, () => {

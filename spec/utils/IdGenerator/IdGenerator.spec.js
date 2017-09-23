@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 /* eslint max-nested-callbacks: [2, 4] */
 const { expect } = require('chai');
-const IdGenerator = require('./IdGenerator');
+const IdGenerator = require('../../../src/utils/IdGenerator');
 const testCases = require('./IdGenerator.testCases');
 
 describe('IdGenerator creation', () => {

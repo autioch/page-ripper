@@ -1,17 +1,17 @@
-const DefaultFileSaver = require('../FileSaver');
-const DefaultPostDownloader = require('../post/PostDownloader');
+const DefaultFileSaver = require('../utils/FileSaver');
 const DefaultIdGenerator = require('../utils/IdGenerator');
-const DefaultPostInfoFetcher = require('../post/PostInfoFetcher');
-const DefaultPostInfoParser = require('../post/PostInfoParser');
-const DefaultWebsiteScanner = require('../website/WebsiteScanner');
+const DefaultPostDownloader = require('./post/PostDownloader');
+const DefaultPostInfoFetcher = require('./post/PostInfoFetcher');
+const DefaultPostInfoParser = require('./post/PostInfoParser');
+const DefaultWebsiteCrawler = require('../website/WebsiteCrawler');
 
-module.exports = function WebsiteScannerBuilder({
+module.exports = function WebsiteCrawlerBuilder({
   FileSaver = DefaultFileSaver,
   IdGenerator = DefaultIdGenerator,
+  PostDownloader = DefaultPostDownloader,
   PostInfoFetcher = DefaultPostInfoFetcher,
   PostInfoParser = DefaultPostInfoParser,
-  PostDownloader = DefaultPostDownloader,
-  WebsiteScanner = DefaultWebsiteScanner,
+  WebsiteScanner = DefaultWebsiteCrawler,
   requestPause = 1000, // eslint-disable-line no-magic-numbers
   rootPath
 }) {
