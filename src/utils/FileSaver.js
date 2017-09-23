@@ -41,9 +41,11 @@ module.exports = class FileSaver {
   saveFile(fileName, fileContents) {
     const fullPath = path.join(this.rootPath, fileName);
 
-    // if (this.fileExists(fullPath)) {
-    //   throw Error('Attempted to save a file with a name that already exists.');
-    // }
+    if (this.fileExists(fullPath)) {
+      console.warn('Attempted to save a file with a name that already exists.');
+
+      return Bluebird.resolve();
+    }
 
     return this
       .createFolder(path.dirname(fullPath))
