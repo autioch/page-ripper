@@ -1,6 +1,33 @@
 const fs = require('bluebird').promisifyAll(require('fs'));
 const path = require('path');
 const fileExists = require('file-exists');
+const Bluebird = require('bluebird');
+
+function createFolder(folderPath, callback) {
+  fs.mkdir(folderPath, (err) => {
+    if (!err) {
+      return callback();
+    }
+
+    if (err.code === 'EEXIST') {
+      return callback();
+    }
+
+    if (err.code !== 'ENOENT') {
+      return callback(err);
+    }
+
+    /* Try creating parent folder. */
+    return createFolder(path.dirname(folderPath), (nestedErr) => {
+      if (nestedErr) {
+        return callback(nestedErr);
+      }
+
+      /* Then try again. */
+      return createFolder(folderPath, callback);
+    });
+  });
+}
 
 module.exports = class FileSaver {
   constructor({ rootPath }) {
@@ -18,7 +45,21 @@ module.exports = class FileSaver {
       throw Error('Attempted to save a file with a name that already exists.');
     }
 
-    return this.writeFile(fileName, fileContents);
+    return this
+      .createFolder(path.dirname(fullPath))
+      .then(() => this.writeFile(fileName, fileContents));
+  }
+
+  createFolder(folderPath) {
+    return new Bluebird((resolve, reject) => {
+      createFolder(path.resolve(folderPath), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(folderPath);
+        }
+      });
+    });
   }
 
   writeFile(fullPath, fileContents) {

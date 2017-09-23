@@ -2,36 +2,29 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = class DetailsFetcher {
-  constructor({ rootPath, PostImageDownloader }) {
-    this.PostImageDownloader = PostImageDownloader;
+  constructor({ rootPath, ImageDownloader, FileSaver }) {
+    this.ImageDownloader = ImageDownloader;
+    this.FileSaver = FileSaver;
     this.rootPath = rootPath;
   }
 
   fetchPostDetails(postInfo) {
-    const detailsFolderPath = postInfo.id.toString();
+    const postFolder = this.getPostFolder(postInfo);
 
     return fs
-      .mkdirAsync(detailsFolderPath)
-      .then(() => this.savePostInfo(detailsFolderPath, postInfo))
-      .then(() => this.fetchImages(detailsFolderPath, postInfo));
+      .mkdirAsync(postFolder)
+      .then(() => this.savePostInfo(postFolder, postInfo))
+      .then(() => this.ImageDownloader.downloadImages(postFolder, postInfo));
   }
 
-  savePostInfo(detailsFolderPath, postInfo) {
+  getPostFolder(postInfo) {
+    return postInfo.id.toString();
+  }
+
+  savePostInfo(postFolder, postInfo) {
     const detailsData = JSON.stringify(postInfo, null, '  ');
-    const detailsPath = path.join(detailsFolderPath, 'postInfo.json');
+    const detailsPath = path.join(postFolder, 'postInfo.json');
 
-    return fs.writeFileAsync(detailsPath, detailsData, 'utf8');
-  }
-
-  fetchImages(detailsFolderPath, postInfo) {
-    const imagePromises = this
-      .getImageUrlsToDownload(postInfo)
-      .map((imageUrl) => this.PostImageDownloader.downloadImage(imageUrl, detailsFolderPath));
-
-    return Promise.all(imagePromises);
-  }
-
-  getImageUrlsToDownload(postInfo) {
-    return postInfo.images;
+    return this.FileSaver.saveFile(detailsPath, detailsData);
   }
 };

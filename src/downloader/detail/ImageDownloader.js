@@ -1,36 +1,37 @@
-const fileExists = require('file-exists');
 const path = require('path');
 const download = require('image-downloader');
 
 module.exports = class ImageDownloader {
-  constructor({ rootPath }) {
-    this.rootPath = rootPath;
+  constructor({ IdGenerator }) {
+    this.IdGenerator = IdGenerator;
   }
 
-  generateFilename(originalFilename, fileExtension) {
-    let currentIndex = 1;
-    let fileName = originalFilename;
+  downloadImages(postInfo, postFolder) {
+    this.IdGenerator.setSeenIds([]);
 
-    while (this.fileExists(fileName, fileExtension)) {
-      currentIndex = currentIndex + 1;
-      fileName = this.getRepeatedFileName(originalFilename, currentIndex);
-    }
+    const imageUrlsToDownload = this.getImageUrlsToDownload(postInfo);
 
-    return fileName;
+    return Promise.all(imageUrlsToDownload.map((imageUrl) => this.fetchAndDownload(postFolder, imageUrl)));
   }
 
-  getRepeatedFileName(originalFilename, currentIndex) {
-    return `${originalFilename} (${currentIndex})`;
+  getImageUrlsToDownload(postInfo) {
+    return postInfo.images;
   }
 
-  fileExists(fileName, fileExtension) {
-    return fileExists.sync(path.join(this.rootPath, `${fileName}.${fileExtension}`));
-  }
-
-  downloadImage(imageUrl, folderPath) {
+  getImageFileName(postFolder, imageUrl) {
     const imageExtension = path.extname(imageUrl);
+
     const imageName = imageUrl.substr(0, imageUrl.length - imageExtension.length);
-    const fileName = this.generateFilename(path.join(folderPath, imageName), imageExtension);
+
+    const { id } = this.IdGenerator.generateId({
+      id: imageName
+    });
+
+    return path.join(postFolder, `${id}.${imageExtension}`);
+  }
+
+  fetchAndDownload(postFolder, imageUrl) {
+    const fileName = this.getImageFileName(postFolder, imageUrl);
 
     return download.image({
       url: imageUrl,
