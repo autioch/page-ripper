@@ -14,8 +14,8 @@
     "request": "^2.81.0"
   },
   "scripts": {
-    "test": "mocha --reporter=list src/**/*.spec.js",
-    "test:watch": "mocha --reporter=min --watch src/**/*.spec.js & exit 0"
+    "test": "mocha --reporter=list spec/**/*.spec.js",
+    "test:watch": "mocha --reporter=min --watch spec/**/*.spec.js & exit 0"
   },
   "devDependencies": {
     "eslint": "^4.1.1",

@@ -38,7 +38,7 @@ module.exports = class PostInfoParser {
   parsePostId(url, $, links, images) { // eslint-disable-line no-unused-vars
     const urlParts = url.split('/');
 
-    return urlParts[urlParts.length - 1];
+    return urlParts[urlParts.length - 2]; // eslint-disable-line no-magic-numbers
   }
 
   parsePostTitle(url, $, links, images) { // eslint-disable-line no-unused-vars
