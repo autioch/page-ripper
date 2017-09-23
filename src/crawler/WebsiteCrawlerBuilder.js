@@ -3,7 +3,7 @@ const DefaultIdGenerator = require('../utils/IdGenerator');
 const DefaultPostDownloader = require('./post/PostDownloader');
 const DefaultPostInfoFetcher = require('./post/PostInfoFetcher');
 const DefaultPostInfoParser = require('./post/PostInfoParser');
-const DefaultWebsiteCrawler = require('../website/WebsiteCrawler');
+const DefaultWebsiteCrawler = require('./WebsiteCrawler');
 
 module.exports = function WebsiteCrawlerBuilder({
   FileSaver = DefaultFileSaver,
@@ -11,11 +11,11 @@ module.exports = function WebsiteCrawlerBuilder({
   PostDownloader = DefaultPostDownloader,
   PostInfoFetcher = DefaultPostInfoFetcher,
   PostInfoParser = DefaultPostInfoParser,
-  WebsiteScanner = DefaultWebsiteCrawler,
+  WebsiteCrawler = DefaultWebsiteCrawler,
   requestPause = 1000, // eslint-disable-line no-magic-numbers
   rootPath
 }) {
-  return new WebsiteScanner({
+  return new WebsiteCrawler({
     requestPause,
     PostDownloader: new PostDownloader({
       FileSaver: new FileSaver({

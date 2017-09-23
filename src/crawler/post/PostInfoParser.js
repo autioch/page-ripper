@@ -1,30 +1,33 @@
 const cheerio = require('cheerio');
 
 module.exports = class PostInfoParser {
+  constructor() {
+    this.cheerio = cheerio;
+  }
+
   parsePostInfo(bodyText, url) {
     const $ = cheerio.load(bodyText);
-    const images = $('a.highslide').map((index, el) => el.attribs.href).get();
     const links = $('a').filter((index, link) => link.attribs.rel);
 
-    const commonPostInfo = this.parseCommonPostInfo(url, $, links, images);
-    const extraInfo = this.parseExtraPostInfo(url, $, links, images);
+    const commonPostInfo = this.parseCommonPostInfo(url, $, links);
+    const extraInfo = this.parseExtraPostInfo(url, $, links);
 
     return Object.assign(commonPostInfo, extraInfo);
   }
 
-  parseCommonPostInfo(url, $, links, images) {
+  parseCommonPostInfo(url, $, links) {
     return {
-      id: this.parsePostId(url, $, links, images),
+      id: this.parsePostId(url, $, links),
       url,
-      title: this.parsePostTitle(url, $, links, images),
-      addedDate: this.parsePostAddedDate(url, $, links, images),
+      title: this.parsePostTitle(url, $, links),
+      addedDate: this.parsePostAddedDate(url, $, links),
       gatheredDate: new Date().toJSON().split('T')[0],
-      images
+      images: this.parseImages(url, $, links)
     };
   }
 
   /* Wordpress defaults */
-  parseExtraPostInfo(url, $, links, images) { // eslint-disable-line no-unused-vars
+  parseExtraPostInfo(url, $, links) { // eslint-disable-line no-unused-vars
     return {
       categories: $('.end_title > a').map((index, el) => $(el).text()).get(),
       related: $('.wp_rp_title').map(this.parseLink).get(),
@@ -35,17 +38,21 @@ module.exports = class PostInfoParser {
     };
   }
 
-  parsePostId(url, $, links, images) { // eslint-disable-line no-unused-vars
+  parseImages(url, $, links) { // eslint-disable-line no-unused-vars
+    return $('img').map((index, el) => el.attribs.src).get();
+  }
+
+  parsePostId(url, $, links) { // eslint-disable-line no-unused-vars
     const urlParts = url.split('/');
 
     return urlParts[urlParts.length - 2]; // eslint-disable-line no-magic-numbers
   }
 
-  parsePostTitle(url, $, links, images) { // eslint-disable-line no-unused-vars
+  parsePostTitle(url, $, links) { // eslint-disable-line no-unused-vars
     return $('h1.title').text();
   }
 
-  parsePostAddedDate(url, $, links, images) { // eslint-disable-line no-unused-vars
+  parsePostAddedDate(url, $, links) { // eslint-disable-line no-unused-vars
     const [day, month, year] = $('.top_title_top')
       .text()
       .replace(/[a-z ]+/gi, '')

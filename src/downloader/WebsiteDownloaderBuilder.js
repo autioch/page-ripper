@@ -1,4 +1,4 @@
-const DefaultWebsiteDownloader = require('/WebsiteDownloader');
+const DefaultWebsiteDownloader = require('./WebsiteDownloader');
 const DefaultPostDetailsFetcher = require('./detail/DetailsFetcher');
 const DefaultPostImageDownloader = require('./detail/ImageDownloader');
 const DefaultIdGenerator = require('../utils/IdGenerator');

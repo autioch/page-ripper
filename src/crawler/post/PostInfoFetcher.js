@@ -1,4 +1,5 @@
 const request = require('request');
+const Bluebird = require('bluebird');
 
 module.exports = class PostInfoFetcher {
   preparePostUrl(url) {
@@ -8,7 +9,7 @@ module.exports = class PostInfoFetcher {
   fetchPostInfo(url) {
     const uri = this.preparePostUrl(url);
 
-    return new Promise((resolve, reject) => {
+    return new Bluebird((resolve, reject) => {
       request({
         uri
       }, (error, response, body) => {
