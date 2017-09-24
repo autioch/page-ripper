@@ -11,21 +11,24 @@ module.exports = class WebsiteCrawler {
   scan(postUrl) {
     return this.PostDownloader
       .downloadPost(postUrl)
-      .then((postInfo) => this.loop(postInfo, postUrl));
+      .tap((postInfo) => this.enqueueUrls(this.getUrlsToEnqueue(postInfo, postUrl)))
+      .then(() => this.loop(postUrl), () => this.loop(postUrl));
   }
 
-  loop(postInfo, postUrl) { // eslint-disable-line no-unused-vars
-    this.enqueueUrls(this.getUrlsToEnqueue(postInfo, postUrl));
-
+  loop(postUrl) { // eslint-disable-line no-unused-vars
     const nextUrl = this.getNextUrl();
 
     if (nextUrl === null) {
-      return Bluebird.resolve();
+      return this.endLoop(postUrl);
     }
 
     return Bluebird
       .delay(this.requestPause)
       .then(() => this.scan(nextUrl));
+  }
+
+  endLoop(postUrl) { // eslint-disable-line no-unused-vars
+    return Bluebird.resolve();
   }
 
   getNextUrl() {

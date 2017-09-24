@@ -35,7 +35,7 @@ module.exports = class JMPostInfoParser extends PageRipper.Crawler.Post.PostInfo
       next: $('a#next_art').attr('href'),
       tags: this.parseTags($),
       comments: this.parseComments($),
-      content: $('div#arcik').text().trim()
+      content: this.parseContent($)
     };
   }
 
@@ -46,9 +46,21 @@ module.exports = class JMPostInfoParser extends PageRipper.Crawler.Post.PostInfo
       .filter((tag) => !IGNORED_TAGS.includes(tag));
   }
 
+  parseContent($) {
+    const content = $('div#arcik').text().trim();
+
+    return content.replace(/ +/gi, ' ');
+  }
+
   parseComments($) {
-    const commentsScript = $('#commentsContainer>script').html();
-    const functionBody = `${CONSOLE_REPLACE}const ${commentsScript}return comment_js;`;
+    const commentsScript = $('#commentsContainer>script');
+
+    if (!commentsScript.length) {
+      return 'Comments not available';
+    }
+
+    const commentsScriptText = commentsScript.html();
+    const functionBody = `${CONSOLE_REPLACE}const ${commentsScriptText}return comment_js;`;
 
     let allComments;
 
@@ -58,7 +70,7 @@ module.exports = class JMPostInfoParser extends PageRipper.Crawler.Post.PostInfo
       allComments = commentsFunction();
     } catch (err) {
       return {
-        rawComments: commentsScript,
+        rawComments: commentsScriptText,
         error: err.message
       };
     }
@@ -122,15 +134,28 @@ module.exports = class JMPostInfoParser extends PageRipper.Crawler.Post.PostInfo
   }
 
   parsePostAddedDate(url, $, links, images) { // eslint-disable-line no-unused-vars
-    const [day, monthText, year, time] = $('.art-author-date')
-      .text()
-      .split('\n')
-      .map((part) => part.trim())
-      .filter((part) => part.length > 1)
-      .pop()
-      .split(' ');
+    const artAuthorDate = $('.art-author-date');
 
-    return `${year}-${MONTH_TRANSLATION[monthText] || '99'}-${day} ${time}`;
+    if (!artAuthorDate.length) {
+      throw Error('Could not find art author date in post body.');
+    }
+
+    const parts = artAuthorDate.text().split('\n')
+      .map((part) => part.trim())
+      .filter((part) => part.length > 1);
+
+    if (!parts.length) {
+      throw Error('No parts in art author date in post body.');
+    }
+
+    const [day, monthText, year, time] = parts.pop().split(' ');
+    const month = MONTH_TRANSLATION[monthText];
+
+    if (!month) {
+      throw Error('Unkown month in art author date.');
+    }
+
+    return `${year}-${month}-${day} ${time}`;
   }
 
   parseImages(url, $, links) { // eslint-disable-line no-unused-vars
