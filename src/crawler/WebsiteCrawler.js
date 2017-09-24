@@ -1,62 +1,46 @@
 const Bluebird = require('bluebird');
 
 module.exports = class WebsiteCrawler {
-  constructor({ PostDownloader, requestPause = 0, visitedUrls = [] }) {
-    this.requestPause = requestPause;
+  constructor({ PostDownloader, Enqueuer, requestPause = 0 }) {
     this.PostDownloader = PostDownloader;
-    this.visitedUrls = visitedUrls;
-    this.queuedUrls = [];
+    this.Enqueuer = Enqueuer;
+    this.requestPause = requestPause;
+    this.finishPromise = null;
   }
 
-  scan(postUrl) {
-    return this.PostDownloader
-      .downloadPost(postUrl)
-      .tap((postInfo) => this.enqueueUrls(this.getUrlsToEnqueue(postInfo, postUrl)))
-      .then(() => this.loop(postUrl), () => this.loop(postUrl));
+  start(postUrl) {
+    return new Bluebird((resolve) => this.scheduleCrawl(postUrl, resolve));
   }
 
-  loop(postUrl) { // eslint-disable-line no-unused-vars
-    const nextUrl = this.getNextUrl();
-
-    if (nextUrl === null) {
-      return this.endLoop(postUrl);
-    }
-
+  scheduleCrawl(postUrl, endResolve) {
     return Bluebird
       .delay(this.requestPause)
-      .then(() => this.scan(nextUrl));
+      .then(() => this.crawl(postUrl))
+      .finally(() => this.loop(postUrl, endResolve));
   }
 
-  endLoop(postUrl) { // eslint-disable-line no-unused-vars
-    return Bluebird.resolve();
+  crawl(postUrl) {
+    return this.PostDownloader
+      .downloadPost(postUrl)
+      .then((postInfo) => {
+        this.Enqueuer.addToQueue(this.getUrlsToEnqueue(postInfo, postUrl));
+        this.Enqueuer.visit(postUrl);
+
+        return postInfo;
+      });
   }
 
-  getNextUrl() {
-    if (!this.queuedUrls.length) {
-      return null;
+  loop(postUrl, endResolve) { // eslint-disable-line no-unused-vars
+    const nextUrl = this.Enqueuer.getNext();
+
+    if (nextUrl === null) {
+      return endResolve(postUrl);
     }
 
-    return this.queuedUrls.shift();
-  }
-
-  enqueueUrls(urlsToEnqueue) {
-    this.queuedUrls.push(...urlsToEnqueue);
+    return this.scheduleCrawl(nextUrl, endResolve);
   }
 
   getUrlsToEnqueue(postInfo, postUrl) { // eslint-disable-line no-unused-vars
-    if (postInfo.id && parseInt(postInfo.id, 10) === postInfo.id) {
-      return postInfo.id + 1;
-    }
-
-    const urlParts = postInfo.url.split('/');
-    const id = parseInt(urlParts.pop(), 10);
-
-    if (isNaN(id)) {
-      return [];
-    }
-
-    urlParts.push(id + 1);
-
-    return [urlParts.join('/')];
+    return postInfo.prev || [];
   }
 };
