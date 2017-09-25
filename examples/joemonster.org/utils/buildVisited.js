@@ -9,4 +9,4 @@ fs
     concurrency: 5
   })
   .call('map', (fileText) => JSON.parse(fileText).url)
-  .then((visitedUrls) => fs.writeFileAsync('../config/visitedUrls.json', JSON.stringify(visitedUrls, null, '  ')));
+  .then((visited) => fs.writeFileAsync('../config/visited.json', JSON.stringify(visited, null, '  ')));

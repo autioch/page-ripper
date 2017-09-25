@@ -13,10 +13,8 @@ module.exports = class WebsiteCrawler {
   }
 
   scheduleCrawl(postUrl, endResolve) {
-    return Bluebird
-      .delay(this.requestPause)
-      .then(() => this.crawl(postUrl))
-      .finally(() => this.loop(postUrl, endResolve));
+    /* Instead of Bluebird.delay use setTimeout to avoid callstack exceeded. */
+    setTimeout(() => this.crawl(postUrl).finally(() => this.loop(postUrl, endResolve)), this.requestPause);
   }
 
   crawl(postUrl) {
@@ -34,10 +32,12 @@ module.exports = class WebsiteCrawler {
     const nextUrl = this.Enqueuer.getNext();
 
     if (nextUrl === null) {
-      return endResolve(postUrl);
+      endResolve(postUrl);
+
+      return;
     }
 
-    return this.scheduleCrawl(nextUrl, endResolve);
+    this.scheduleCrawl(nextUrl, endResolve);
   }
 
   getUrlsToEnqueue(postInfo, postUrl) { // eslint-disable-line no-unused-vars

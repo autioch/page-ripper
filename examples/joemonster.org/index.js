@@ -4,13 +4,13 @@ const JMPostInfoParser = require('./JMPostInfoParser');
 const JMWebsiteCrawler = require('./JMWebsiteCrawler');
 const qbLog = require('./qbLog');
 
-const visitedUrls = require('./config/visitedUrls.json');
+const visited = require('./config/visited.json');
 const { lastUrl } = require('./config/lastUrl.json');
 
 const crawler = new PageRipper.Crawler.WebsiteCrawlerBuilder({
   requestPause: 1000, // eslint-disable-line no-magic-numbers
   rootPath: path.join('e:', 'joemonster'),
-  visitedUrls,
+  visited,
   WebsiteCrawler: JMWebsiteCrawler,
   PostInfoParser: JMPostInfoParser
 });

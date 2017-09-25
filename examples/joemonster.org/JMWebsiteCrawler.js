@@ -2,7 +2,7 @@ const PageRipper = require('../../index');
 const qbLog = require('qb-log');
 const fs = require('bluebird').promisifyAll(require('fs'));
 
-const REPORT_AMOUNT = 50;
+const REPORT_AMOUNT = 100;
 
 module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawler {
   constructor(config) {
@@ -17,6 +17,8 @@ module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawle
   }
 
   getUrlsToEnqueue(postInfo, postUrl) { // eslint-disable-line no-unused-vars
+    return [];
+
     if (postInfo.prev) {
       return [`http://joemonster.org${postInfo.prev}`];
     }
@@ -36,7 +38,7 @@ module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawle
   }
 
   saveState(postUrl) {
-    const fileNameVisited = `./config/visitedUrls_${new Date().toJSON()}.json`;
+    const fileNameVisited = `./config/visited_${new Date().toJSON()}.json`;
     const fileContentsVisited = JSON.stringify(this.Enqueuer.visited, null, '  ');
 
     const fileNameLastUrl = `./config/lastUrl_${new Date().toJSON()}.json`;
