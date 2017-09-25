@@ -23,9 +23,7 @@ module.exports = class Enqueuer {
   }
 
   setVisited(visited) {
-    console.log('setVisited', visited.length);
     this.visited = uniq(visited);
-    console.log('setVisited', this.visited.length);
 
     /* Filter out queued items that are already visited. */
     this.setQueued(this.queued);
@@ -66,6 +64,5 @@ module.exports = class Enqueuer {
     } else {
       this.queued = this.queued.filter((queuedItem) => queuedItem !== item);
     }
-    console.log('visit', this.visited.length);
   }
 };
