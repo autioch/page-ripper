@@ -17,8 +17,7 @@ module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawle
   }
 
   getUrlsToEnqueue(postInfo, postUrl) { // eslint-disable-line no-unused-vars
-    return [];
-
+    // return [];
     if (postInfo.prev) {
       return [`http://joemonster.org${postInfo.prev}`];
     }
