@@ -11,6 +11,7 @@ module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawle
   }
 
   crawl(postUrl) {
+    throw Error('Checking error');
     qbLog.fetch(postUrl);
 
     return super.crawl(postUrl).tap((postInfo) => this.reportCounter(postInfo, postUrl));
@@ -45,7 +46,7 @@ module.exports = class JMWebsiteCrawler extends PageRipper.Crawler.WebsiteCrawle
       lastUrl: postUrl
     }, null, '  ');
 
-    fs.writeFileAsync(fileNameVisited.replace(/:/gi, ' '), fileContentsVisited);
-    fs.writeFileAsync(fileNameLastUrl.replace(/:/gi, ' '), fileContentsLastUrl);
+    fs.writeFileAsync(fileNameVisited.replace(/:/gi, '-'), fileContentsVisited);
+    fs.writeFileAsync(fileNameLastUrl.replace(/:/gi, '-'), fileContentsLastUrl);
   }
 };

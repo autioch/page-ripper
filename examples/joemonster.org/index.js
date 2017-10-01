@@ -22,4 +22,10 @@ crawler
     qbLog.empty(postUrl);
 
     crawler.saveState(postUrl);
+  })
+  .catch((postUrl) => {
+    qbLog.info(`${crawler.counter} urls crawled. Last url:`);
+    qbLog.empty(postUrl);
+
+    crawler.saveState(postUrl);
   });
