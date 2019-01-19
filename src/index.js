@@ -1,17 +1,13 @@
-const config = require('../config');
-const setupDb = require('./db');
-const crawlerFactory = require('./crawler');
+const pageRipper = require('./pageRipper');
+const qbLog = require('qb-log');
 
-(async () => {
-  const { db, queuedItems, visitedItems, existingIds } = await setupDb(config);
+module.exports = pageRipper;
 
-  const crawler = crawlerFactory({
-    parsePost: (text) => text,
-    db,
-    existingIds,
-    visitedItems,
-    queuedItems
-  });
+if (require.main === module) {
+  const config = require('../config');
 
-  crawler.start();
-})();
+  pageRipper(config).then(
+    (crawler) => crawler.start(),
+    (err) => qbLog.error(err.message)
+  );
+}

@@ -17,8 +17,7 @@ qbLog({
   }
 });
 
-module.exports = async function setup(config) {
-  const { dbPath, startingPage } = config;
+module.exports = async function setup(dbPath) {
   const rawDb = await connect(dbPath);
   const db = new Wrapper(rawDb);
   const isReady = await isInstalled(db);
@@ -27,16 +26,16 @@ module.exports = async function setup(config) {
     qbLog.install('Database');
 
     await install(db);
+
+    qbLog.install('Done');
   }
 
-  const { visitedItems, queuedItems, existingIds } = prepareLastState(db);
-
-  queuedItems.unshift(startingPage);
+  const { existingIds, visitedItems, queuedItems } = prepareLastState(db);
 
   return {
     db,
+    existingIds,
     queuedItems,
-    visitedItems,
-    existingIds
+    visitedItems
   };
 };

@@ -1,7 +1,7 @@
 const postDownloadFactory = require('./download');
-const postRequest = require('./request');
+const requestPost = require('./request');
 
 module.exports = {
   postDownloadFactory,
-  postRequest
+  requestPost
 };

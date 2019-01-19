@@ -2,12 +2,8 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-magic-numbers */
 const { expect } = require('chai');
-const crawlerFactory = require('./index');
+const crawlerFactory = require('./factory');
 const dbMock = require('../db/mock');
-
-// const mockPostDownloader = (postInfo) => ({
-//   downloadPost: () => new Promise((res) => setTimeout(() => res(postInfo), 10))
-// });
 
 describe('crawlerFactory', () => {
   let db;
@@ -24,7 +20,8 @@ describe('crawlerFactory', () => {
     it(`requires valid configuration`, () => {
       expect(() => crawlerFactory({
         parsePost: () => 'a',
-        db
+        db,
+        dataPath: 'tmp'
       })).to.not.throw();
     });
   });

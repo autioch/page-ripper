@@ -19,7 +19,7 @@ function assertError(err, response, body, url) {
   return null;
 }
 
-module.exports = function postRequest(url) {
+module.exports = function requestPost(url) {
   return new Bluebird((resolve) => request({
     uri: url
   }, (err, response, body) => resolve({

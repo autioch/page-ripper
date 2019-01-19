@@ -6,9 +6,9 @@ const { idStoreFactory } = require('../idStore');
 const { errorTestCases, validTestCases } = require('./download.testCases');
 const dbMock = require('../../db/mock');
 
-const DELAY = 1000;
+const DELAY = 1;
 
-const mockPostRequest = (result, delay = DELAY) => () => new Promise((res) => setTimeout(() => res(result), delay));
+const mockRequestPost = (result, delay = DELAY) => () => new Promise((res) => setTimeout(() => res(result), delay));
 const mockParsePost = (result) => () => result;
 
 describe('crawler post', () => {
@@ -27,7 +27,7 @@ describe('crawler post', () => {
       expect(() => postDownloadFactory({
         db,
         idStore: idStoreFactory(),
-        postRequest: mockPostRequest({}),
+        requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
       })).to.not.throw();
     });
@@ -36,7 +36,7 @@ describe('crawler post', () => {
       const downloader = postDownloadFactory({
         db,
         idStore: idStoreFactory(),
-        postRequest: mockPostRequest({}),
+        requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
       });
 
@@ -49,7 +49,7 @@ describe('crawler post', () => {
       const downloader = postDownloadFactory({
         db,
         idStore: idStoreFactory(),
-        postRequest: mockPostRequest({}),
+        requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
       });
 
@@ -62,7 +62,7 @@ describe('crawler post', () => {
         const downloader = postDownloadFactory({
           db,
           idStore: idStoreFactory(),
-          postRequest: mockPostRequest(testCase.response),
+          requestPost: mockRequestPost(testCase.response),
           parsePost: mockParsePost({})
         });
 
@@ -79,7 +79,7 @@ describe('crawler post', () => {
           idStore: idStoreFactory({
             existingIds: testCase.existingIds
           }),
-          postRequest: mockPostRequest(testCase.response),
+          requestPost: mockRequestPost(testCase.response),
           parsePost: mockParsePost(testCase.parseResult)
         });
 

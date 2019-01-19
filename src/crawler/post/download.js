@@ -3,19 +3,19 @@ const dbAPIFactory = require('./dbAPI');
 const { ensureConfig } = require('../../utils');
 
 module.exports = function postDownloadFactory(config) {
-  ensureConfig(config, 'postRequest', 'function');
+  ensureConfig(config, 'requestPost', 'function');
   ensureConfig(config, 'parsePost', 'function');
   ensureConfig(config, 'idStore', 'object');
   ensureConfig(config, 'db', 'object');
 
-  const { postRequest, parsePost, idStore, db } = config;
+  const { requestPost, parsePost, idStore, db } = config;
 
   const dbAPI = dbAPIFactory({
     db
   });
 
   async function downloadPost(url) {
-    const result = await postRequest(url);
+    const result = await requestPost(url);
 
     if (result.error) {
       return result;
@@ -27,7 +27,7 @@ module.exports = function postDownloadFactory(config) {
 
     postInfo.id = uniqueId;
 
-    dbAPI.save({
+    await dbAPI.save({
       id: uniqueId,
       url,
       postInfo: JSON.stringify(postInfo)

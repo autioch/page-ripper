@@ -10,22 +10,28 @@ qbLog({
   }
 });
 
-module.exports = function crawl(config) {
+module.exports = function crawlFactory(config) {
   ensureConfig(config, 'downloader', 'object');
+  ensureConfig(config, 'imageDownload', 'object');
   ensureConfig(config, 'queue', 'object');
   ensureConfig(config, 'db', 'object');
 
-  const { downloader, queue, db, requestPause = REQUEST_PAUSE, logDetails = false } = config;
+  const { downloader, imageDownload, queue, db, requestPause = REQUEST_PAUSE, logDetails = false } = config;
   let loopCount = 0;
   let resolve;
 
   async function visit(postUrl) {
     logDetails && qbLog.visit(loopCount + 1, postUrl); // eslint-disable-line no-unused-expressions
 
-    const { nextUrls = [] } = await downloader.downloadPost(postUrl);
+    const { id, imageUrls = [], nextUrls = [] } = await downloader.downloadPost(postUrl);
 
     await queue.add(nextUrls);
     await queue.visit(postUrl);
+
+    imageDownload.download({
+      postId: id,
+      imageUrls
+    });
 
     loopCount++; // eslint-disable-line no-plusplus
   }
@@ -44,13 +50,13 @@ module.exports = function crawl(config) {
     setTimeout(loop, requestPause);
   }
 
+  async function finish() {
+    await db.close();
+
+    return loopCount;
+  }
+
   function start() {
-    async function finish() {
-      await db.close();
-
-      return loopCount;
-    }
-
     const prom = new Promise((res) => {
       resolve = res;
     }).then(finish, finish);

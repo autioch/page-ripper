@@ -1,7 +1,10 @@
 module.exports = {
   extends: 'qb',
-  "parserOptions": {
-      "ecmaVersion": 2017
+  parserOptions: {
+    ecmaVersion: 2017,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true
+    }
   },
   rules: {
     'no-unused-vars': ['error', {
