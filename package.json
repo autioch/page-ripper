@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src",
     "test": "mocha --reporter=list src/**/*.spec.js",
-    "test:watch": "mocha --reporter=min --watch src/**/*.spec.js & exit 0"
+    "test:watch": "mocha --reporter=min --watch src/**/*.spec.js & exit 0",
+    "test-data:watch": "mocha --reporter=min --watch data/**/*.spec.js & exit 0"
   },
   "author": "github.com/autioch",
   "license": "ISC",

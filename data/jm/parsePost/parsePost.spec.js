@@ -1,67 +1,36 @@
 /* eslint-env mocha */
 /* eslint max-nested-callbacks: [2, 4] */
 const { expect } = require('chai');
-const PostInfoParser = require('../../../src/crawler/post/PostInfoParser');
+const cheerio = require('cheerio');
+const parsePost = require('./parsePost');
+const testCases = require('./testCases');
 
-const testCaseUrl = 'http://joemonster.org/art/40836/Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw';
-const testCaseBody = require('fs').readFileSync(`${__dirname}/PostInfoParser.testCase.htm`); // eslint-disable-line
+describe('JM parsePost', () => {
+  testCases.forEach((testCase) => {
+    let result = {
+      id: 'a',
+      nextUrls: [],
+      imageUrls: []
+    };
 
-describe('PostInfoParser creation', () => {
-  it(`can be constructed without arguments`, () => {
-    expect(() => new PostInfoParser()).to.not.throw();
-  });
-});
+    it('parses without throwing', () => {
+      const $ = cheerio.load(testCase.htm);
 
-describe('PostInfoParser parsePostInfo', () => {
-  const postInfoParser = new PostInfoParser();
+      expect(() => {
+        result = parsePost($, testCase.url, testCase.htm);
+      }).to.not.throw();
+    });
 
-  const postInfo = postInfoParser.parsePostInfo(testCaseBody, testCaseUrl);
+    it('returns an id', () => {
+      expect(result.id).to.equal(testCase.id);
+    });
 
-  it(`will return an object`, () => {
-    expect(typeof postInfo).to.equal('object');
-  });
+    it('returns list of nextUrls', () => {
+      expect(result.nextUrls).to.deep.equal(testCase.nextUrls);
+    });
 
-  it(`will return proper id`, () => {
-    expect(postInfo.id).to.equal('40836');
-  });
-
-  it(`will return proper url`, () => {
-    expect(postInfo.url).to.equal(testCaseUrl);
-  });
-
-  it(`will return proper title`, () => {
-    expect(postInfo.title).to.equal('Mistrzowie internetu XXXIV - Świeżak Viagra Władysław');
-  });
-
-  it(`will return proper addedDate`, () => {
-    expect(postInfo.addedDate).to.equal('23-09-2017');
-  });
-
-  it(`will return proper images`, () => {
-    expect(Array.isArray(postInfo.images)).to.equal(true);
-  });
-
-  it(`will return proper categories`, () => {
-    expect(Array.isArray(postInfo.categories)).to.equal(true);
-  });
-
-  it(`will return proper related`, () => {
-    expect(Array.isArray(postInfo.related)).to.equal(true);
-  });
-
-  it(`will return proper next`, () => {
-    expect(Array.isArray(postInfo.next)).to.equal(true);
-  });
-
-  it(`will return proper prev`, () => {
-    expect(Array.isArray(postInfo.prev)).to.equal(true);
-  });
-
-  it(`will return proper tags`, () => {
-    expect(Array.isArray(postInfo.tags)).to.equal(true);
-  });
-
-  it(`will return proper comments`, () => {
-    expect(Array.isArray(postInfo.comments)).to.equal(true);
+    it('returns list of imageUrls', () => {
+      expect(result.imageUrls).to.deep.equal(testCase.imageUrls);
+    });
   });
 });
