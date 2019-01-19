@@ -17,6 +17,21 @@ The main export is an asynchronous function `pageRipper`, which requires configu
  - `parsePost` should be a function that will extract information from the page html,
  - `startingPage` is an optional string, that should be url of the first page to crawl.
 
+### parsePost
+Function that must be passed in configuration. It will be used to extract information from the retrieved post html.
+
+It will accept three arguments:
+ - `cheerio` instance with loaded post body,
+ - post url,
+ - raw response html body.
+
+It must return an object, with optional properties:
+ - `id`, which will be uniquified if it already exists by appending `__(count)` to it,
+ - `nextUrls`, which should be array of urls, that be added to the queue and persisted in the database,
+ - `imageUrls` which should be array of urls for images.
+
+The object can contain any other properties, they will be all persisted in the database.
+
 ## Usage
 
 ### Cli
