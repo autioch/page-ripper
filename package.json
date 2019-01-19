@@ -1,26 +1,29 @@
 {
   "name": "wp-ripper",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Work in progress",
   "main": "index.js",
-  "dependencies": {
-    "bluebird": "^3.5.0",
-    "chai": "^4.1.2",
-    "cheerio": "^1.0.0-rc.2",
-    "file-exists": "^4.0.0",
-    "image-downloader": "^3.2.2",
-    "mocha": "^3.5.3",
-    "qb-log": "^1.0.1",
-    "request": "^2.81.0"
-  },
   "scripts": {
-    "test": "mocha --reporter=list spec/**/*.spec.js",
-    "test:watch": "mocha --reporter=min --watch spec/**/*.spec.js & exit 0"
-  },
-  "devDependencies": {
-    "eslint": "^4.1.1",
-    "eslint-config-qb": "^1.0.0"
+    "start": "node src/index",
+    "test": "mocha --reporter=list src/**/*.spec.js",
+    "test:watch": "mocha --reporter=min --watch src/**/*.spec.js & exit 0"
   },
   "author": "github.com/autioch",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "cheerio": "^1.0.0-rc.2",
+    "filenamify-url": "^1.0.0",
+    "image-downloader": "^3.4.2",
+    "lodash": "^4.17.11",
+    "qb-log": "^1.0.1",
+    "sqlite3": "^4.0.4",
+    "thenify-all": "^1.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "eslint": "^5.12.0",
+    "eslint-config-qb": "^1.0.0"
+  }
 }

@@ -1,40 +1,52 @@
-module.exports = class PostDownloader {
-  constructor({ FileSaver, IdGenerator, PostInfoFetcher, PostInfoParser }) {
-    this.FileSaver = FileSaver;
-    this.IdGenerator = IdGenerator;
-    this.PostInfoFetcher = PostInfoFetcher;
-    this.PostInfoParser = PostInfoParser;
+const cheerio = require('cheerio');
+const postDownloaderDb = require('./postDownloaderDb');
+
+module.exports = function postDownloader({ fetchPost, parsePost, idBuilder, db }) {
+  if (!fetchPost) {
+    throw Error('postDownloader requires fetchPost.');
   }
 
-  downloadPost(postUrl) {
-    return this.PostInfoFetcher
-      .fetchPostInfo(postUrl)
-      .then((bodyText) => this.parsePostInfo(bodyText, postUrl))
-      .then((postInfo) => this.savePostInfo(postInfo, postUrl));
+  if (!parsePost) {
+    throw Error('postDownloader requires parsePost.');
   }
 
-  parsePostInfo(bodyText, postUrl) {
-    const postInfo = this.PostInfoParser.parsePostInfo(bodyText, postUrl);
+  if (!idBuilder) {
+    throw Error('postDownloader requires idBuilder.');
+  }
 
-    this.IdGenerator.generateId(postInfo);
+  if (!db) {
+    throw Error('postDownloader requires db.');
+  }
+
+  const dbAPI = postDownloaderDb({
+    db
+  });
+
+  async function downloadPost(url) {
+    const result = await fetchPost(url);
+
+    if (result.error) {
+      return result;
+    }
+
+    const $ = cheerio.load(result.body);
+    const postInfo = parsePost($, url, result.body);
+    const uniqueId = idBuilder.buildId(postInfo.id);
+
+    postInfo.id = uniqueId;
+
+    dbAPI.add({
+      id: uniqueId,
+      url,
+      postInfo: JSON.stringify(postInfo)
+    });
+
+    idBuilder.markIdAsUsed(uniqueId);
 
     return postInfo;
   }
 
-  savePostInfo(postInfo, postUrl) { // eslint-disable-line no-unused-vars
-    const fileName = this.getPostInfoFilename(postInfo);
-    const fileContents = this.serializePostInfo(postInfo);
-
-    return this.FileSaver
-      .saveFile(fileName, fileContents)
-      .then(() => postInfo);
-  }
-
-  getPostInfoFilename(postInfo) {
-    return `${postInfo.id}.json`;
-  }
-
-  serializePostInfo(postInfo) {
-    return JSON.stringify(postInfo, null, '  ');
-  }
+  return {
+    downloadPost
+  };
 };

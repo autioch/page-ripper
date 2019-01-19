@@ -1,3 +1,17 @@
-exports.Crawler = require('./crawler');
-exports.Downloader = require('./downloader');
-exports.Utils = require('./utils');
+const config = require('../config');
+const setupDb = require('./db');
+const crawlerFactory = require('./crawler');
+
+(async () => {
+  const { db, queuedItems, visitedItems, existingIds } = await setupDb(config);
+
+  const crawler = crawlerFactory({
+    parsePost: (text) => text,
+    db,
+    existingIds,
+    visitedItems,
+    queuedItems
+  });
+
+  crawler.start();
+})();
