@@ -7,7 +7,7 @@ module.exports = async function pageRipper(config) {
   ensureConfig(config, 'dbPath', 'string');
   ensureConfig(config, 'parsePost', 'function');
 
-  const { dataPath, dbPath, parsePost, startingPage } = config;
+  const { dataPath, dbPath, parsePost, startingPage, requestPause } = config;
   const { db, queuedItems, visitedItems, existingIds } = await setupDb(dbPath);
 
   if (startingPage) {
@@ -16,6 +16,7 @@ module.exports = async function pageRipper(config) {
 
   const crawler = crawlerFactory({
     db,
+    requestPause,
     queuedItems,
     visitedItems,
     existingIds,

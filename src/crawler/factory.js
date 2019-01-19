@@ -14,6 +14,7 @@ module.exports = function crawlerFactory(config) {
     parsePost,
     db,
     dataPath,
+    requestPause,
     existingIds = [],
     defaultId = 'MISSING',
     visitedItems = [],
@@ -22,6 +23,7 @@ module.exports = function crawlerFactory(config) {
 
   return crawlFactory({
     db,
+    requestPause,
     downloader: postDownloadFactory({
       db,
       parsePost,
