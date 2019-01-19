@@ -1,8 +1,7 @@
 const crawl = require('./crawl');
-const postDownloader = require('./post/postDownloader');
-const fetchPost = require('./post/fetchPost');
-const idBuilderFactory = require('./idBuilder');
-const enqueuer = require('./enqueuer');
+const { postDownloadFactory, postRequest } = require('./post');
+const { idStoreFactory } = require('./idStore');
+const { queueFactory } = require('./queue');
 
 module.exports = function crawlerFactory(config) {
   const {
@@ -14,19 +13,19 @@ module.exports = function crawlerFactory(config) {
     queuedItems = []
   } = config;
 
-  const idBuilder = idBuilderFactory({
+  const idStore = idStoreFactory({
     defaultId,
     existingIds
   });
 
-  const downloader = postDownloader({
-    idBuilder,
+  const downloader = postDownloadFactory({
+    idStore,
     parsePost,
-    fetchPost,
+    postRequest,
     db
   });
 
-  const queue = enqueuer({
+  const queue = queueFactory({
     visitedItems,
     queuedItems,
     db

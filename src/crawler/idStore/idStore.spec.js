@@ -1,28 +1,28 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
-const idBuilder = require('./idBuilder');
+const idStoreFactory = require('./idStore');
 
-describe('idBuilder', () => {
+describe('idStoreFactory', () => {
   describe('setup', () => {
     it(`constructs without arguments`, () => {
-      expect(idBuilder).to.not.throw();
+      expect(idStoreFactory).to.not.throw();
     });
 
     it('accepts defaultId parameter', () => {
-      expect(() => idBuilder({
+      expect(() => idStoreFactory({
         defaultId: 'TEST'
       })).to.not.throw();
     });
 
     it('accepts existingIds parameter', () => {
-      expect(() => idBuilder({
+      expect(() => idStoreFactory({
         existingIds: ['a']
       })).to.not.throw();
     });
 
     it('accepts existingIds parameter', () => {
-      expect(() => idBuilder({
+      expect(() => idStoreFactory({
         existingIds: ['a']
       })).to.not.throw();
     });
@@ -30,44 +30,44 @@ describe('idBuilder', () => {
 
   describe('marking used ids', () => {
     it('can mark id as used', () => {
-      const builder = idBuilder();
+      const builder = idStoreFactory();
 
-      expect(() => builder.markIdAsUsed('1')).to.not.throw();
+      expect(() => builder.use('1')).to.not.throw();
     });
   });
 
   describe('building new id', () => {
     it('generates new id based on post info', () => {
-      const builder = idBuilder();
-      const newId = builder.buildId('a');
+      const builder = idStoreFactory();
+      const newId = builder.uniquify('a');
 
       expect(newId).to.equal('a');
     });
 
     it('returns new unique id', () => {
-      const builder = idBuilder({
+      const builder = idStoreFactory({
         existingIds: ['a']
       });
 
-      const newId = builder.buildId('a');
+      const newId = builder.uniquify('a');
 
       expect(newId).to.equal('a__2');
     });
 
     it('returns default id when no id is provided', () => {
-      const builder = idBuilder({});
+      const builder = idStoreFactory({});
 
-      const newId = builder.buildId(null);
+      const newId = builder.uniquify(null);
 
       expect(newId).to.equal('MISSING');
     });
 
     it('returns unique default id when no id is provided', () => {
-      const builder = idBuilder({
+      const builder = idStoreFactory({
         existingIds: ['MISSING', 'MISSING__2']
       });
 
-      const newId = builder.buildId(null);
+      const newId = builder.uniquify(null);
 
       expect(newId).to.equal('MISSING__3');
     });

@@ -27,7 +27,7 @@ const validTestCases = [
     }
   },
   {
-    description: 'will return id set by idBuilder',
+    description: 'will return id set by idStore',
     response: {
       body: 'example body',
       error: null,
@@ -42,7 +42,7 @@ const validTestCases = [
     }
   },
   {
-    description: 'will return id duplicate set by idBuilder',
+    description: 'will return id duplicate set by idStore',
     existingIds: ['1'],
     response: {
       body: 'example body',

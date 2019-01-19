@@ -1,10 +1,10 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
-const enqueuer = require('./enqueuer');
-const dbMock = require('../db/mock');
+const queueFactory = require('./queue');
+const dbMock = require('../../db/mock');
 
-describe('enqueuer', () => {
+describe('queue', () => {
   let db;
 
   beforeEach(async () => {
@@ -17,20 +17,20 @@ describe('enqueuer', () => {
 
   describe('setup', () => {
     it(`requires db option`, () => {
-      expect(() => enqueuer({
+      expect(() => queueFactory({
         db
       })).to.not.throw();
     });
 
     it('accepts visitedItems option', () => {
-      expect(() => enqueuer({
+      expect(() => queueFactory({
         db,
         visitedItems: ['a']
       })).to.not.throw();
     });
 
     it('accepts queuedItems option', () => {
-      expect(() => enqueuer({
+      expect(() => queueFactory({
         db,
         queuedItems: ['a']
       })).to.not.throw();
@@ -39,7 +39,7 @@ describe('enqueuer', () => {
 
   describe('next id', () => {
     it('can provide next id in the queue', () => {
-      const queue = enqueuer({
+      const queue = queueFactory({
         db,
         queuedItems: ['a']
       });
@@ -50,7 +50,7 @@ describe('enqueuer', () => {
     });
 
     it('will proide if queue is empty', () => {
-      const queue = enqueuer({
+      const queue = queueFactory({
         db,
         queuedItems: []
       });
@@ -63,7 +63,7 @@ describe('enqueuer', () => {
 
   describe('adding to queue', () => {
     it('allows adding new ids to queue', async () => {
-      const queue = enqueuer({
+      const queue = queueFactory({
         db,
         queuedItems: []
       });
@@ -77,7 +77,7 @@ describe('enqueuer', () => {
 
   describe('visting items', () => {
     it('removes only visited item from queue', async () => {
-      const queue = enqueuer({
+      const queue = queueFactory({
         db,
         queuedItems: ['a']
       });
@@ -88,7 +88,7 @@ describe('enqueuer', () => {
     });
 
     it('removes any visited item from queue', async () => {
-      const queue = enqueuer({
+      const queue = queueFactory({
         db,
         queuedItems: ['a', 'b', 'c']
       });

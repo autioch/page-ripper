@@ -1,5 +1,6 @@
 const { uniq } = require('lodash');
-const enqueuerDb = require('./enqueuerDb');
+const dbAPIFactory = require('./dbAPI');
+const { ensureConfig } = require('../../utils');
 
 const setDict = (obj, key) => Object.assign(obj, {
   [key]: true
@@ -7,16 +8,14 @@ const setDict = (obj, key) => Object.assign(obj, {
 
 const extract = (arr, dict) => uniq(arr).filter((item) => !dict[item]);
 
-module.exports = function enqueuer(config) {
+module.exports = function queueFactory(config) {
+  ensureConfig(config, 'db', 'object');
+
   const { visitedItems = [], queuedItems = [], db } = config;
 
-  const dbAPI = enqueuerDb({
+  const dbAPI = dbAPIFactory({
     db
   });
-
-  if (!db) {
-    throw Error('enqueuer requires db.');
-  }
 
   const visited = visitedItems.reduce((obj, item) => setDict(obj, item), {});
   let queued = extract(queuedItems, visited);

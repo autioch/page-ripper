@@ -1,4 +1,10 @@
-module.exports = function enqueuerDb({ db }) {
+const { ensureConfig } = require('../../utils');
+
+module.exports = function queueDbAPI(config) {
+  ensureConfig(config, 'db', 'object');
+
+  const { db } = config;
+
   async function visit(url) {
     await db.run(`UPDATE queue SET isVisited = ? WHERE url = ?`, [1, url]);
   }

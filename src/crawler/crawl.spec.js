@@ -2,7 +2,7 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable no-magic-numbers */
 const { expect } = require('chai');
-const enqueuer = require('./enqueuer');
+const { queueFactory } = require('./queue');
 const crawlFactory = require('./crawl');
 const dbMock = require('../db/mock');
 
@@ -28,7 +28,7 @@ describe('postDownloader', () => {
       expect(() => crawlFactory({
         db,
         downloader: mockPostDownloader(),
-        queue: enqueuer({
+        queue: queueFactory({
           db
         })
       })).to.not.throw();
@@ -40,7 +40,7 @@ describe('postDownloader', () => {
       const crawl = crawlFactory({
         db,
         downloader: mockPostDownloader(),
-        queue: enqueuer({
+        queue: queueFactory({
           db
         })
       });
@@ -58,7 +58,7 @@ describe('postDownloader', () => {
           nextUrls: []
         }),
         requestPause: 0,
-        queue: enqueuer({
+        queue: queueFactory({
           db,
           queuedItems: ['a']
         })
@@ -78,7 +78,7 @@ describe('postDownloader', () => {
           nextUrls: []
         }),
         requestPause: 0,
-        queue: enqueuer({
+        queue: queueFactory({
           db,
           queuedItems: new Array(loopCount).fill(null).map((_, index) => index.toString())
         })
@@ -97,7 +97,7 @@ describe('postDownloader', () => {
           nextUrls: ['a', 'a']
         }),
         requestPause: 0,
-        queue: enqueuer({
+        queue: queueFactory({
           db,
           queuedItems: ['first']
         })
@@ -117,7 +117,7 @@ describe('postDownloader', () => {
         }),
         requestPause: 0,
         logDetails: true,
-        queue: enqueuer({
+        queue: queueFactory({
           db,
           queuedItems: ['first']
         })

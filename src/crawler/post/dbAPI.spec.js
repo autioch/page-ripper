@@ -4,10 +4,10 @@
 /* eslint-disable no-console */
 /* eslint-disable max-len */
 const { expect } = require('chai');
-const postDownloaderDb = require('./postDownloaderDb');
+const dbAPIFactory = require('./dbAPI');
 const dbMock = require('../../db/mock');
 
-describe('cawler enqueuerDb', () => {
+describe('crawler post db API', () => {
   let db;
 
   beforeEach(async () => {
@@ -19,17 +19,17 @@ describe('cawler enqueuerDb', () => {
   });
 
   it(`constructs properly`, () => {
-    expect(() => postDownloaderDb({
+    expect(() => dbAPIFactory({
       db
     })).to.not.throw();
   });
 
-  it(`add posts`, async () => {
-    const dbAPI = postDownloaderDb({
+  it(`save posts`, async () => {
+    const dbAPI = dbAPIFactory({
       db
     });
 
-    await dbAPI.add({
+    await dbAPI.save({
       id: 'a',
       url: 'http://a.com',
       postInfo: 'json'

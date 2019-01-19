@@ -1,13 +1,13 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
-const imagePrepare = require('./prepare');
-const testCases = require('./prepare.testCases');
+const imageName = require('./imageName');
+const testCases = require('./imageName.testCases');
 
-describe('image prepare', () => {
+describe('imageName', () => {
   testCases.forEach((testCase) => {
     it(testCase.description, () => {
-      const result = imagePrepare(testCase.input);
+      const result = imageName(testCase.input);
 
       expect(result).to.deep.equal(testCase.output);
     });

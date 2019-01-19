@@ -1,17 +1,17 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
-const postDownloader = require('./postDownloader');
-const idBuilder = require('../idBuilder');
-const { errorTestCases, validTestCases } = require('./postDownloader.testCases');
+const postDownloadFactory = require('./download');
+const { idStoreFactory } = require('../idStore');
+const { errorTestCases, validTestCases } = require('./download.testCases');
 const dbMock = require('../../db/mock');
 
 const DELAY = 1000;
 
-const mockFetchPost = (result, delay = DELAY) => () => new Promise((res) => setTimeout(() => res(result), delay));
+const mockPostRequest = (result, delay = DELAY) => () => new Promise((res) => setTimeout(() => res(result), delay));
 const mockParsePost = (result) => () => result;
 
-describe('postDownloader', () => {
+describe('crawler post', () => {
   let db;
 
   beforeEach(async () => {
@@ -24,19 +24,19 @@ describe('postDownloader', () => {
 
   describe('setup', () => {
     it(`requires valid configuration`, () => {
-      expect(() => postDownloader({
+      expect(() => postDownloadFactory({
         db,
-        idBuilder: idBuilder(),
-        fetchPost: mockFetchPost({}),
+        idStore: idStoreFactory(),
+        postRequest: mockPostRequest({}),
         parsePost: mockParsePost({})
       })).to.not.throw();
     });
 
     it('returns API object', () => {
-      const downloader = postDownloader({
+      const downloader = postDownloadFactory({
         db,
-        idBuilder: idBuilder(),
-        fetchPost: mockFetchPost({}),
+        idStore: idStoreFactory(),
+        postRequest: mockPostRequest({}),
         parsePost: mockParsePost({})
       });
 
@@ -46,10 +46,10 @@ describe('postDownloader', () => {
 
   describe('downloadPost', () => {
     it('is a function with single argument', () => {
-      const downloader = postDownloader({
+      const downloader = postDownloadFactory({
         db,
-        idBuilder: idBuilder(),
-        fetchPost: mockFetchPost({}),
+        idStore: idStoreFactory(),
+        postRequest: mockPostRequest({}),
         parsePost: mockParsePost({})
       });
 
@@ -59,10 +59,10 @@ describe('postDownloader', () => {
 
     errorTestCases.forEach((testCase) => {
       it(testCase.description, async () => {
-        const downloader = postDownloader({
+        const downloader = postDownloadFactory({
           db,
-          idBuilder: idBuilder(),
-          fetchPost: mockFetchPost(testCase.response),
+          idStore: idStoreFactory(),
+          postRequest: mockPostRequest(testCase.response),
           parsePost: mockParsePost({})
         });
 
@@ -74,12 +74,12 @@ describe('postDownloader', () => {
 
     validTestCases.forEach((testCase) => {
       it(testCase.description, async () => {
-        const downloader = postDownloader({
+        const downloader = postDownloadFactory({
           db,
-          idBuilder: idBuilder({
+          idStore: idStoreFactory({
             existingIds: testCase.existingIds
           }),
-          fetchPost: mockFetchPost(testCase.response),
+          postRequest: mockPostRequest(testCase.response),
           parsePost: mockParsePost(testCase.parseResult)
         });
 

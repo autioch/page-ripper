@@ -4,10 +4,10 @@
 /* eslint-disable no-console */
 /* eslint-disable max-len */
 const { expect } = require('chai');
-const enqueuerDb = require('./enqueuerDb');
-const dbMock = require('../db/mock');
+const dbAPIFactory = require('./dbAPI');
+const dbMock = require('../../db/mock');
 
-describe('cawler enqueuerDb', () => {
+describe('cawler dbAPIFactory', () => {
   let db;
 
   beforeEach(async () => {
@@ -19,13 +19,13 @@ describe('cawler enqueuerDb', () => {
   });
 
   it(`constructs properly`, () => {
-    expect(() => enqueuerDb({
+    expect(() => dbAPIFactory({
       db
     })).to.not.throw();
   });
 
   it(`add urls to query`, async () => {
-    const dbAPI = enqueuerDb({
+    const dbAPI = dbAPIFactory({
       db
     });
 
@@ -52,7 +52,7 @@ describe('cawler enqueuerDb', () => {
   });
 
   it(`marks visited urls`, async () => {
-    const dbAPI = enqueuerDb({
+    const dbAPI = dbAPIFactory({
       db
     });
 

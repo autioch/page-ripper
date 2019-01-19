@@ -58,23 +58,23 @@ function ensureItemId(itemId, defaultId) {
   return stringifiedId;
 }
 
-module.exports = function idBuilder(config = {}) {
+module.exports = function idStoreFactory(config = {}) {
   const { defaultId = 'MISSING', existingIds = [] } = config;
   const seenIds = existingIds.reduce((obj, item) => setDict(obj, item), {});
 
-  function buildId(itemId) {
+  function uniquify(itemId) {
     const ensuredItemId = ensureItemId(itemId, defaultId);
     const uniqueId = uniquifyId(ensuredItemId, seenIds);
 
     return uniqueId;
   }
 
-  function markIdAsUsed(id) {
+  function use(id) {
     setDict(seenIds, id);
   }
 
   return {
-    buildId,
-    markIdAsUsed
+    uniquify,
+    use
   };
 };

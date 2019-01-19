@@ -1,5 +1,5 @@
 const path = require('path');
-const idBuilderFactory = require('../idBuilder');
+const { idStoreFactory } = require('../idStore');
 const filenamifyUrl = require('filenamify-url');
 
 function getImageId(imageUrl) {
@@ -17,21 +17,21 @@ function getImageId(imageUrl) {
   };
 }
 
-function getImageFileName(imageUrl, idBuilder) {
+function getImageFileName(imageUrl, idStore) {
   const { imageId, imageExt } = getImageId(imageUrl);
 
-  const id = idBuilder.buildId(imageId);
+  const id = idStore.uniquify(imageId);
 
-  idBuilder.markIdAsUsed(id);
+  idStore.use(id);
 
   return `${id}${imageExt}`;
 }
 
-module.exports = function imagePrepare({ folderPath, imageUrls }) {
-  const idBuilder = idBuilderFactory();
+module.exports = function imageName({ folderPath, imageUrls }) {
+  const idStore = idStoreFactory();
 
   return imageUrls.map((imageUrl) => {
-    const fileName = getImageFileName(imageUrl, idBuilder);
+    const fileName = getImageFileName(imageUrl, idStore);
     const fullPath = path.join(folderPath, fileName).replace(/\\/g, '/');
 
     return {

@@ -1,5 +1,7 @@
-const REQUEST_PAUSE = 500;
 const qbLog = require('qb-log');
+const { ensureConfig } = require('../utils');
+
+const REQUEST_PAUSE = 500;
 
 qbLog({
   visit: {
@@ -9,31 +11,13 @@ qbLog({
 });
 
 module.exports = function crawl(config) {
+  ensureConfig(config, 'downloader', 'object');
+  ensureConfig(config, 'queue', 'object');
+  ensureConfig(config, 'db', 'object');
+
   const { downloader, queue, db, requestPause = REQUEST_PAUSE, logDetails = false } = config;
   let loopCount = 0;
   let resolve;
-
-  if (!downloader) {
-    throw Error('crawl requires downloader.');
-  }
-
-  if (!queue) {
-    throw Error('crawl requires queue.');
-  }
-
-  if (!db) {
-    throw Error('crawl requires queue.');
-  }
-
-  async function finish() {
-    await db.close();
-
-    return loopCount;
-  }
-
-  const prom = new Promise((res) => {
-    resolve = res;
-  }).then(finish, finish);
 
   async function visit(postUrl) {
     logDetails && qbLog.visit(loopCount + 1, postUrl); // eslint-disable-line no-unused-expressions
@@ -61,6 +45,16 @@ module.exports = function crawl(config) {
   }
 
   function start() {
+    async function finish() {
+      await db.close();
+
+      return loopCount;
+    }
+
+    const prom = new Promise((res) => {
+      resolve = res;
+    }).then(finish, finish);
+
     loop();
 
     return prom;
