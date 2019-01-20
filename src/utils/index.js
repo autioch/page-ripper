@@ -1,5 +1,7 @@
 const ensureConfig = require('./ensureConfig');
+const folderName = require('./folderName');
 
 module.exports = {
-  ensureConfig
+  ensureConfig,
+  folderName
 };

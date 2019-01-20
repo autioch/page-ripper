@@ -1,29 +1,19 @@
 const fs = require('fs');
 const imagedownload = require('image-downloader');
-const folderName = require('./folderName');
 const imageName = require('./imageName');
-const { ensureConfig } = require('../../utils');
 
-module.exports = function imageDownload(config) {
-  ensureConfig(config, 'dataPath', 'string');
-  const { dataPath } = config;
-
-  async function download({ postId, imageUrls }) {
-    if (!imageUrls.length) {
+module.exports = function imageDownload() {
+  async function download({ folderName, imageUrls }) {
+    if (!imageUrls.length || !folderName) {
       return Promise.resolve();
     }
 
-    const folderPath = folderName({
-      dataPath,
-      postId
-    });
-
-    if (!fs.existsSync(folderPath)) { // eslint-disable-line no-sync
-      await fs.promises.mkdir(folderPath);
+    if (!fs.existsSync(folderName)) { // eslint-disable-line no-sync
+      await fs.promises.mkdir(folderName);
     }
 
     const imageInfos = imageName({
-      folderPath,
+      folderName,
       imageUrls
     });
 

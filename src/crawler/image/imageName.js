@@ -27,12 +27,12 @@ function getImageFileName(imageUrl, idStore) {
   return `${id}${imageExt}`;
 }
 
-module.exports = function imageName({ folderPath, imageUrls }) {
+module.exports = function imageName({ folderName, imageUrls }) {
   const idStore = idStoreFactory();
 
   return imageUrls.map((imageUrl) => {
     const fileName = getImageFileName(imageUrl, idStore);
-    const fullPath = path.join(folderPath, fileName).replace(/\\/g, '/');
+    const fullPath = path.join(folderName, fileName).replace(/\\/g, '/');
 
     return {
       imageUrl,

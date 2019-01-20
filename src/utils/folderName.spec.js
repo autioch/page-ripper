@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const folderName = require('./folderName');
 const testCases = require('./folderName.testCases');
 
-describe('image folder name', () => {
+describe('util folder name', () => {
   testCases.forEach((testCase) => {
     it('produces valid folder name', () => {
       const result = folderName({

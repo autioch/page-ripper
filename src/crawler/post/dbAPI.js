@@ -6,9 +6,9 @@ module.exports = function postDbAPI(config) {
   const { db } = config;
 
   async function save(post) {
-    const { id, url, postInfo } = post;
+    const { id, url, folderName, postInfo } = post;
 
-    await db.run('INSERT INTO posts (id, url, postInfo) VALUES (?, ?, ?)', [id, url, postInfo]);
+    await db.run('INSERT INTO posts (id, url, folderName, postInfo) VALUES (?, ?, ?,  ?)', [id, url, folderName, postInfo]);
   }
 
   return {

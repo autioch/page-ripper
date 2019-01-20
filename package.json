@@ -1,6 +1,6 @@
 {
   "name": "page-ripper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Work in progress",
   "main": "src/index.js",
   "scripts": {

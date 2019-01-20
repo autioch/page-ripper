@@ -2,7 +2,7 @@ module.exports = [
   {
     description: 'works with no images',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: []
     },
     output: []
@@ -10,7 +10,7 @@ module.exports = [
   {
     description: 'returns valid imageInfo for direct image',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com/image.jpeg'
       ]
@@ -23,7 +23,7 @@ module.exports = [
   {
     description: 'returns valid imageInfo for url with port',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com:1234/image.png'
       ]
@@ -36,7 +36,7 @@ module.exports = [
   {
     description: 'returns valid imageInfo for subfolder image',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com/assets/image.png'
       ]
@@ -49,7 +49,7 @@ module.exports = [
   {
     description: 'returns valid imageInfo for complicated image name',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com/assets/complicated image-name_bonus__double.png'
       ]
@@ -62,7 +62,7 @@ module.exports = [
   {
     description: 'returns valid imageInfos for images',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com/assets/image.png',
         'http://a.com/assets/image2.png'
@@ -79,7 +79,7 @@ module.exports = [
   {
     description: 'returns valid imageInfos for images with same id',
     input: {
-      folderPath: 'post/path',
+      folderName: 'post/path',
       imageUrls: [
         'http://a.com/image.png',
         'http://other-domain.com/image.png'
