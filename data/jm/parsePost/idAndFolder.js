@@ -6,6 +6,6 @@ module.exports = function parseIdAndFolder(url) {
 
   return {
     id,
-    folderName: decodeURI(folderName).replace(/"/g, '_').replace(/\?/g, '_')
+    folderName: decodeURI(folderName).replace(/"/g, '_').replace(/\?/g, '_').replace(/:/g, '_').replace(/ /g, '_')
   };
 };

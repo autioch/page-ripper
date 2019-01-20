@@ -7,11 +7,11 @@ module.exports = async function pageRipper(config) {
   ensureConfig(config, 'dbPath', 'string');
   ensureConfig(config, 'parsePost', 'function');
 
-  const { dataPath, dbPath, parsePost, startingPage, requestPause } = config;
+  const { dataPath, dbPath, parsePost, startingPages, requestPause } = config;
   const { db, queuedItems, visitedItems, existingIds } = await setupDb(dbPath);
 
-  if (startingPage) {
-    queuedItems.unshift(startingPage);
+  if (startingPages) {
+    queuedItems.unshift(...startingPages);
   }
 
   const crawler = crawlerFactory({
@@ -24,7 +24,11 @@ module.exports = async function pageRipper(config) {
     dataPath
   });
 
-  process.on('SIGINT', () => db.close());
+  process.on('SIGINT', () => {
+    if (db.db.open) {
+      db.close();
+    }
+  });
 
   return crawler;
 };
