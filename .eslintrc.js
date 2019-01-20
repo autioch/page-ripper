@@ -16,5 +16,6 @@ module.exports = {
     'id-length': ['off'],
     'class-methods-use-this': ['off'],
     'no-await-in-loop': ['off'],
+    'newline-per-chained-call': ['off']
   }
 };
