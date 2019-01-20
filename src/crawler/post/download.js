@@ -30,6 +30,7 @@ module.exports = function postDownloadFactory(config) {
     await dbAPI.save({
       id: uniqueId,
       url,
+      folderName: postInfo.folderName,
       postInfo: JSON.stringify(postInfo)
     });
 

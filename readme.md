@@ -44,3 +44,11 @@ The object can contain any other properties, they will be all persisted in the d
 
 ### NPM module
 This app is currently unavailable in NPM registry.
+
+
+## TODO
+1. Move all `normalizations` of urls to filenames to the crawler, instead of relying on the valid `parsePost` result.
+2. Decide what should be `unique` key in the posts array, `url` or `id`?
+ - if `id`, then how it can by forsed/ensured to be unique by the parser?
+ - if `url`, then how should be treated query parameters, ports, protocols? Which part of url should be "unique"?
+ - maybe both fields should combine into unique property?
