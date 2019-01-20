@@ -39,13 +39,11 @@ describe('db prepareLastState', () => {
 
     const result = await prepareLastState(db);
 
-    expect(result.queuedItems).to.deep.equal([{
-      url: 'http://a.com'
-    }, {
-      url: 'http://b.com'
-    }, {
-      url: 'http://c.com'
-    }]);
+    expect(result.queuedItems).to.deep.equal([
+      'http://a.com',
+      'http://b.com',
+      'http://c.com'
+    ]);
   });
 
   it(`returns valid existingIds`, async () => {
@@ -69,13 +67,7 @@ describe('db prepareLastState', () => {
 
     const result = await prepareLastState(db);
 
-    expect(result.existingIds).to.deep.equal([{
-      id: 'a'
-    }, {
-      id: 'b'
-    }, {
-      id: 'c'
-    }]);
+    expect(result.existingIds).to.deep.equal(['a', 'b', 'c']);
   });
 
   it(`returns valid visitedItems`, async () => {
@@ -99,12 +91,10 @@ describe('db prepareLastState', () => {
 
     const result = await prepareLastState(db);
 
-    expect(result.visitedItems).to.deep.equal([{
-      url: 'http://a.com'
-    }, {
-      url: 'http://b.com'
-    }, {
-      url: 'http://c.com'
-    }]);
+    expect(result.visitedItems).to.deep.equal([
+      'http://a.com',
+      'http://b.com',
+      'http://c.com'
+    ]);
   });
 });

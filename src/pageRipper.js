@@ -24,5 +24,7 @@ module.exports = async function pageRipper(config) {
     dataPath
   });
 
+  process.on('SIGINT', () => db.close());
+
   return crawler;
 };

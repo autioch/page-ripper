@@ -13,6 +13,8 @@ function parseComment(comment, commentLinks) {
     .filter((href) => !href.endsWith('.htm'))
     .filter((href) => !href.endsWith('.html'))
     .filter((href) => !href.includes('facebook.com'))
+    .filter((href) => !href.includes('***'))
+    .filter((href) => !href.includes('youtube.com'))
     .filter((href) => !href.endsWith('.joemonster.org'));
 
   const commentInfo = {
@@ -75,6 +77,6 @@ module.exports = function parseComments($) {
 
   return {
     comments: uniqueComments,
-    links: commentLinks
+    commentLinks
   };
 };

@@ -1,28 +1,45 @@
 const fs = require('fs');
-const imagedownload = require('image-downloader');
+const path = require('path');
 const imageName = require('./imageName');
+const { ensureConfig } = require('../../utils');
+const saveImage = require('./saveImage');
+const qbLog = require('qb-log');
 
-module.exports = function imageDownload() {
+qbLog({
+  imageError: {
+    prefix: 'IMAGE_ERROR',
+    formatter: qbLog._chalk.green // eslint-disable-line no-underscore-dangle
+  }
+});
+
+module.exports = function imageDownload(config) {
+  ensureConfig(config, 'dataPath', 'string');
+
+  const { dataPath } = config;
+
   async function download({ folderName, imageUrls }) {
     if (!imageUrls.length || !folderName) {
       return Promise.resolve();
     }
 
-    if (!fs.existsSync(folderName)) { // eslint-disable-line no-sync
-      await fs.promises.mkdir(folderName);
+    const absoluteFolderPath = path.join(dataPath, folderName);
+
+    if (!fs.existsSync(absoluteFolderPath)) { // eslint-disable-line no-sync
+      await fs.promises.mkdir(absoluteFolderPath);
     }
 
     const imageInfos = imageName({
-      folderName,
+      folderName: absoluteFolderPath,
       imageUrls
     });
 
-    const downloadPromises = imageInfos.map(({ imageUrl, fullPath }) => imagedownload.image({
-      url: imageUrl,
-      dest: fullPath
-    }));
-
-    return Promise.all(downloadPromises);
+    return Promise.all(imageInfos.map((info) => saveImage.image({
+      url: info.imageUrl,
+      dest: info.fullPath
+    }).catch((err) => {
+      qbLog.imageError(info.imageUrl);
+      qbLog.empty(err.message);
+    })));
   }
 
   return {

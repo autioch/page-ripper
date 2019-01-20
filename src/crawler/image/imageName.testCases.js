@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 module.exports = [
   {
     description: 'works with no images',
@@ -18,6 +19,42 @@ module.exports = [
     output: [{
       imageUrl: 'http://a.com/image.jpeg',
       fullPath: 'post/path/image.jpeg'
+    }]
+  },
+  {
+    input: {
+      folderName: 'post/path',
+      imageUrls: [
+        'https://youtu.be/cmh0YmoJrbs?t=311'
+      ]
+    },
+    output: [{
+      imageUrl: 'https://youtu.be/cmh0YmoJrbs?t=311',
+      fullPath: 'post/path/cmh0YmoJrbs_t=311'
+    }]
+  },
+  {
+    input: {
+      folderName: 'post/path',
+      imageUrls: [
+        'https://bit.ly/2SCAroJ'
+      ]
+    },
+    output: [{
+      imageUrl: 'https://bit.ly/2SCAroJ',
+      fullPath: 'post/path/2SCAroJ'
+    }]
+  },
+  {
+    input: {
+      folderName: 'post/path',
+      imageUrls: [
+        'https://podroze.onet.pl/polska/malopolskie/most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim/hp511ye'
+      ]
+    },
+    output: [{
+      imageUrl: 'https://podroze.onet.pl/polska/malopolskie/most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim/hp511ye',
+      fullPath: 'post/path/polska_malopolskie_most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim_hp511ye'
     }]
   },
   {
@@ -56,7 +93,7 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/assets/complicated image-name_bonus__double.png',
-      fullPath: 'post/path/assets_complicated_image-name_bonus_double.png'
+      fullPath: 'post/path/assets_complicated image-name_bonus_double.png'
     }]
   },
   {

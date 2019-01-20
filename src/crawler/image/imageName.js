@@ -1,10 +1,10 @@
 const path = require('path');
 const { idStoreFactory } = require('../idStore');
-const filenamifyUrl = require('filenamify-url');
+const filenamify = require('filenamify');
 
 function getImageId(imageUrl) {
   const [, , , ...rest] = imageUrl.split('/');
-  const imagePath = filenamifyUrl(rest.join('_'), {
+  const imagePath = filenamify(rest.join('_'), {
     replacement: '_'
   });
 
@@ -30,13 +30,15 @@ function getImageFileName(imageUrl, idStore) {
 module.exports = function imageName({ folderName, imageUrls }) {
   const idStore = idStoreFactory();
 
-  return imageUrls.map((imageUrl) => {
-    const fileName = getImageFileName(imageUrl, idStore);
-    const fullPath = path.join(folderName, fileName).replace(/\\/g, '/');
+  return imageUrls
+    .map((imageUrl) => {
+      const fileName = getImageFileName(imageUrl, idStore).replace(/\//g, '_').replace(/\\/g, '_');
+      const fullPath = path.join(folderName, fileName).replace(/\\/g, '/');
 
-    return {
-      imageUrl,
-      fullPath
-    };
-  });
+      return {
+        imageUrl,
+        fullPath
+      };
+    })
+    .filter((info) => !!path.extname(info.fullPath));
 };

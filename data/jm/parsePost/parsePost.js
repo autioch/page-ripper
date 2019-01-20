@@ -15,17 +15,32 @@ module.exports = function parsePost($, url, bodyText) {
       err: GATEWAY_ERROR
     };
   }
+  const { comments, commentLinks } = parseComments($);
+  const imageUrls = parseImageUrls($)
+    .concat(commentLinks || [])
+    .map((imageUrl) => {
+      if (!imageUrl) {
+        return false;
+      }
+
+      if (imageUrl.startsWith('/')) {
+        return `http://joemonster.org${imageUrl}`;
+      }
+
+      return imageUrl;
+    })
+    .filter((imageUrl) => !!imageUrl);
 
   return {
     /* Required */
     ...parseIdAndFolder(url),
-    imageUrls: parseImageUrls($),
+    imageUrls,
     nextUrls: parseNextUrls($),
 
     /* extra details */
     title: $('h1.title').text(),
     ...parseAuthorAndDate($),
-    comments: parseComments($),
+    comments,
     tags: $('.art-footer>a.tag').map((index, el) => text(el)).get().filter((tag) => !IGNORED_TAGS.includes(tag)),
     content: text('div#arcik').replace(/ +/gi, ' ')
   };

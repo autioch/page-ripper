@@ -4,8 +4,8 @@ module.exports = async function prepareLastState(db) {
   const existingIds = await db.all('SELECT id FROM posts');
 
   return {
-    queuedItems,
-    visitedItems,
-    existingIds
+    queuedItems: queuedItems.map((item) => item.url),
+    visitedItems: visitedItems.map((item) => item.url),
+    existingIds: existingIds.map((item) => item.id)
   };
 };

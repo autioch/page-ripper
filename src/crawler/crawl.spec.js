@@ -139,7 +139,6 @@ describe('crawl', () => {
           nextUrls: ['a', 'b', 'c', 'first', 'c']
         }),
         requestPause: 0,
-        logDetails: true,
         queue: queueFactory({
           db,
           queuedItems: ['first']

@@ -30,13 +30,17 @@ describe('JM parsePost', () => {
         expect(result.folderName).to.deep.equal(testCase.folderName);
       });
 
-      it('returns list of nextUrls', () => {
-        expect(result.nextUrls).to.deep.equal(testCase.nextUrls);
-      });
+      if (testCase.nextUrls) {
+        it('returns list of nextUrls', () => {
+          expect(result.nextUrls).to.deep.equal(testCase.nextUrls);
+        });
+      }
 
-      it('returns list of imageUrls', () => {
-        expect(result.imageUrls).to.deep.equal(testCase.imageUrls);
-      });
+      if (testCase.imageUrls) {
+        it('returns list of imageUrls', () => {
+          expect(result.imageUrls).to.deep.equal(testCase.imageUrls);
+        });
+      }
     });
 
     describe(`${index} extras`, () => {
@@ -57,11 +61,7 @@ describe('JM parsePost', () => {
       });
 
       it('returns comments', () => {
-        expect(result.comments.comments.length).to.deep.equal(testCase.commentCount);
-      });
-
-      it('returns comment links', () => {
-        expect(result.comments.links).to.deep.equal(testCase.commentLinks);
+        expect(result.comments.length).to.deep.equal(testCase.commentCount);
       });
     });
   });

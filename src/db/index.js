@@ -30,7 +30,7 @@ module.exports = async function setup(dbPath) {
     qbLog.install('Done');
   }
 
-  const { existingIds, visitedItems, queuedItems } = prepareLastState(db);
+  const { existingIds, visitedItems, queuedItems } = await prepareLastState(db);
 
   return {
     db,
