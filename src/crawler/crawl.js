@@ -21,16 +21,20 @@ module.exports = function crawlFactory(config) {
   let resolve;
 
   async function visit(postUrl) {
-    qbLog.visit(loopCount + 1, postUrl); // eslint-disable-line no-unused-expressions
+    qbLog.visit(loopCount + 1, postUrl);
 
     const postInfo = await downloader.downloadPost(postUrl);
     const { folderName, imageUrls = [], nextUrls = [] } = postInfo;
 
     await queue.add(nextUrls);
-    await imageDownload.download({
-      folderName,
-      imageUrls
-    });
+
+    if (folderName) {
+      await imageDownload.download({
+        folderName,
+        imageUrls
+      });
+    }
+
     await queue.visit(postUrl);
 
     loopCount++; // eslint-disable-line no-plusplus

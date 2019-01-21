@@ -21,7 +21,9 @@ const validTestCases = [
       status: 200,
       url: 'http://test.com'
     },
-    parseResult: {},
+    parseResult: {
+      id: 'MISSING'
+    },
     postInfo: {
       id: 'MISSING'
     }
@@ -42,7 +44,7 @@ const validTestCases = [
     }
   },
   {
-    description: 'will return id duplicate set by idStore',
+    description: 'will return empty info if post already downloaded',
     existingIds: ['1'],
     response: {
       body: 'example body',
@@ -53,9 +55,7 @@ const validTestCases = [
     parseResult: {
       id: '1'
     },
-    postInfo: {
-      id: '1__2'
-    }
+    postInfo: {}
   }
 ];
 

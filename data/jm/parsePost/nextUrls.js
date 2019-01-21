@@ -26,7 +26,5 @@ module.exports = function parseNextUrls($) {
     })
     .filter((imageUrl) => !!imageUrl);
 
-  const filtered = uniq(compact(absoluteUrls)).sort();
-
-  return filtered;
+  return uniq(compact(absoluteUrls)).sort();
 };

@@ -24,22 +24,28 @@ module.exports = function imageDownload(config) {
 
     const absoluteFolderPath = path.join(dataPath, folderName);
 
-    if (!fs.existsSync(absoluteFolderPath)) { // eslint-disable-line no-sync
-      await fs.promises.mkdir(absoluteFolderPath);
-    }
-
     const imageInfos = imageName({
       folderName: absoluteFolderPath,
       imageUrls
     });
 
-    return Promise.all(imageInfos.map((info) => saveImage.image({
+    if (!imageInfos.length) {
+      return Promise.resolve();
+    }
+
+    if (!fs.existsSync(absoluteFolderPath)) { // eslint-disable-line no-sync
+      await fs.promises.mkdir(absoluteFolderPath);
+    }
+
+    const promises = imageInfos.map((info) => saveImage.image({
       url: info.imageUrl,
       dest: info.fullPath
     }).catch((err) => {
       qbLog.imageError(info.imageUrl);
       qbLog.empty(err.message);
-    })));
+    }));
+
+    return Promise.all(promises);
   }
 
   return {

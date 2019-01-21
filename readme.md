@@ -26,11 +26,11 @@ It will accept three arguments:
  - post url,
  - raw response html body.
 
-It must return an object, with optional properties:
- - `id`, uniquified if it already exists by appending `__(count)` to it,
- - `folderName`, name of dir in which assets will be stored; if it's missing, no assets will be downloaded,
- - `nextUrls`, array of urls, that be added to the queue and persisted in the database,
- - `imageUrls` array of urls for images.
+It must return an object, with properties:
+ - `id`, required,
+ - `folderName`, optional, name of dir in which assets will be stored; if it's missing, no assets will be downloaded,
+ - `nextUrls`, optional, array of urls, that be added to the queue and persisted in the database,
+ - `imageUrls` optional, array of urls for images.
 
 The object can contain any other properties, they will be all persisted in the database.
 

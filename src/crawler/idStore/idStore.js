@@ -64,17 +64,16 @@ module.exports = function idStoreFactory(config = {}) {
 
   function uniquify(itemId) {
     const ensuredItemId = ensureItemId(itemId, defaultId);
-    const uniqueId = uniquifyId(ensuredItemId, seenIds);
 
-    return uniqueId;
+    return uniquifyId(ensuredItemId, seenIds);
   }
 
-  function use(id) {
-    setDict(seenIds, id);
-  }
+  const add = (id) => setDict(seenIds, id);
+  const has = (id) => !!seenIds[id];
 
   return {
     uniquify,
-    use
+    add,
+    has
   };
 };

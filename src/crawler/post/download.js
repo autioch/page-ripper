@@ -23,18 +23,19 @@ module.exports = function postDownloadFactory(config) {
 
     const $ = cheerio.load(result.body);
     const postInfo = parsePost($, url, result.body);
-    const uniqueId = idStore.uniquify(postInfo.id);
 
-    postInfo.id = uniqueId;
+    if (idStore.has(postInfo.id)) {
+      return {};
+    }
 
     await dbAPI.save({
-      id: uniqueId,
+      id: postInfo.id,
       url,
       folderName: postInfo.folderName,
       postInfo: JSON.stringify(postInfo)
     });
 
-    idStore.use(uniqueId);
+    idStore.add(postInfo.id);
 
     return postInfo;
   }

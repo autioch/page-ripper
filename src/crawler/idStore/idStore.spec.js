@@ -30,44 +30,44 @@ describe('idStoreFactory', () => {
 
   describe('marking used ids', () => {
     it('can mark id as used', () => {
-      const builder = idStoreFactory();
+      const idStore = idStoreFactory();
 
-      expect(() => builder.use('1')).to.not.throw();
+      expect(() => idStore.add('1')).to.not.throw();
     });
   });
 
   describe('building new id', () => {
     it('generates new id based on post info', () => {
-      const builder = idStoreFactory();
-      const newId = builder.uniquify('a');
+      const idStore = idStoreFactory();
+      const newId = idStore.uniquify('a');
 
       expect(newId).to.equal('a');
     });
 
     it('returns new unique id', () => {
-      const builder = idStoreFactory({
+      const idStore = idStoreFactory({
         existingIds: ['a']
       });
 
-      const newId = builder.uniquify('a');
+      const newId = idStore.uniquify('a');
 
       expect(newId).to.equal('a__2');
     });
 
     it('returns default id when no id is provided', () => {
-      const builder = idStoreFactory({});
+      const idStore = idStoreFactory({});
 
-      const newId = builder.uniquify(null);
+      const newId = idStore.uniquify(null);
 
       expect(newId).to.equal('MISSING');
     });
 
     it('returns unique default id when no id is provided', () => {
-      const builder = idStoreFactory({
+      const idStore = idStoreFactory({
         existingIds: ['MISSING', 'MISSING__2']
       });
 
-      const newId = builder.uniquify(null);
+      const newId = idStore.uniquify(null);
 
       expect(newId).to.equal('MISSING__3');
     });

@@ -5,8 +5,8 @@ const imageName = require('./imageName');
 const testCases = require('./imageName.testCases');
 
 describe('imageName', () => {
-  testCases.forEach((testCase) => {
-    it(testCase.description || 'test case', () => {
+  testCases.forEach((testCase, index) => {
+    it(testCase.description || `test case ${index}`, () => {
       const result = imageName(testCase.input);
 
       expect(result).to.deep.equal(testCase.output);

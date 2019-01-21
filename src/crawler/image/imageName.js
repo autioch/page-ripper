@@ -22,7 +22,7 @@ function getImageFileName(imageUrl, idStore) {
 
   const id = idStore.uniquify(imageId);
 
-  idStore.use(id);
+  idStore.add(id);
 
   return `${id}${imageExt}`;
 }
