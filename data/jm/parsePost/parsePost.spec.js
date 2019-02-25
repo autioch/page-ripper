@@ -59,10 +59,6 @@ describe('JM parsePost', () => {
       it('returns tags', () => {
         expect(result.tags).to.deep.equal(testCase.tags);
       });
-
-      it('returns comments', () => {
-        expect(result.comments.length).to.deep.equal(testCase.commentCount);
-      });
     });
   });
 });

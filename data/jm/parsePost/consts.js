@@ -18,13 +18,26 @@ const MONTH_TRANSLATION = {
 
 const GATEWAY_ERROR = '502 Bad Gateway';
 
-const IGNORED_COMMENT_IMAGES = [
+const IGNORED_IMAGE = [
   'https://img.joemonster.org/images/brak-foto60.gif',
   '/images/icons/exclamation_gray.png'
 ];
 
-const IGNORED_COMMENT_LINKS = [
+const IGNORED_LINK = [
   '#'
+];
+
+const IGNORED_LINK_CONTENT = [
+  '***',
+  'youtube.com',
+  'fbcdn.',
+  'facebook.com'
+];
+
+const IGNORED_LINK_ENDING = [
+  '.htm',
+  '.html',
+  '.joemonster.org'
 ];
 
 module.exports = {
@@ -32,6 +45,8 @@ module.exports = {
   MONTH_TRANSLATION,
   GATEWAY_ERROR,
   CONSOLE_REPLACE,
-  IGNORED_COMMENT_IMAGES,
-  IGNORED_COMMENT_LINKS
+  IGNORED_IMAGE,
+  IGNORED_LINK,
+  IGNORED_LINK_CONTENT,
+  IGNORED_LINK_ENDING
 };

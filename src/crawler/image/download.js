@@ -12,6 +12,18 @@ qbLog({
   }
 });
 
+function saveImageWrapped(url, dest) {
+  return saveImage
+    .image({
+      url,
+      dest
+    })
+    .catch((err) => {
+      qbLog.imageError(url);
+      qbLog.empty(err.message);
+    });
+}
+
 module.exports = function imageDownload(config) {
   ensureConfig(config, 'dataPath', 'string');
 
@@ -23,27 +35,13 @@ module.exports = function imageDownload(config) {
     }
 
     const absoluteFolderPath = path.join(dataPath, folderName);
+    const imageInfos = imageName(absoluteFolderPath, imageUrls);
 
-    const imageInfos = imageName({
-      folderName: absoluteFolderPath,
-      imageUrls
-    });
-
-    if (!imageInfos.length) {
-      return Promise.resolve();
-    }
-
-    if (!fs.existsSync(absoluteFolderPath)) { // eslint-disable-line no-sync
+    if (imageInfos.length && !fs.existsSync(absoluteFolderPath)) { // eslint-disable-line no-sync
       await fs.promises.mkdir(absoluteFolderPath);
     }
 
-    const promises = imageInfos.map((info) => saveImage.image({
-      url: info.imageUrl,
-      dest: info.fullPath
-    }).catch((err) => {
-      qbLog.imageError(info.imageUrl);
-      qbLog.empty(err.message);
-    }));
+    const promises = imageInfos.map((info) => saveImageWrapped(info.imageUrl, info.fullPath));
 
     return Promise.all(promises);
   }

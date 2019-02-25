@@ -1,83 +1,61 @@
 const cheerio = require('cheerio');
-const { uniq } = require('lodash');
-const { CONSOLE_REPLACE, IGNORED_COMMENT_IMAGES, IGNORED_COMMENT_LINKS } = require('./consts');
+const path = require('path');
+const { CONSOLE_REPLACE, IGNORED_IMAGE, IGNORED_LINK_ENDING, IGNORED_LINK_CONTENT, IGNORED_LINK } = require('./consts');
 
-function parseComment(comment, commentLinks) {
-  const { html, data: date, id, uname } = comment; // eslint-disable-line id-blacklist
+function extractLinks(comment, commentLinks) {
+  const { html } = comment; // eslint-disable-line id-blacklist
   const $ = cheerio.load(html);
-  const images = $('.commentDesc img').map((index, el) => el.attribs.src).get()
-    .filter((src) => !IGNORED_COMMENT_IMAGES.includes(src));
+
+  const images = $('.commentDesc img').map((index, el) => el.attribs.src).get().filter((src) => !IGNORED_IMAGE.includes(src));
+
+  commentLinks.push(...images);
 
   const links = $('.commentDesc a').map((index, el) => el.attribs.href).get()
-    .filter((href) => !IGNORED_COMMENT_LINKS.includes(href))
-    .filter((href) => !href.endsWith('.htm'))
-    .filter((href) => !href.endsWith('.html'))
-    .filter((href) => !href.includes('facebook.com'))
-    .filter((href) => !href.includes('fbcdn.'))
-    .filter((href) => !href.includes('***'))
-    .filter((href) => !href.includes('youtube.com'))
-    .filter((href) => !href.endsWith('.joemonster.org'));
+    .filter((href) => !IGNORED_LINK.includes(href))
+    .filter((href) => path.extname(href).length > 1)
+    .filter((href) => IGNORED_LINK_CONTENT.every((content) => !href.includes(content)))
+    .filter((href) => IGNORED_LINK_ENDING.every((content) => !href.endsWith(content)));
 
-  const commentInfo = {
-    id,
-    date,
-    text: $('.commentDesc').text().trim().replace(/( |\t|\n|\r)+/gi, ' '),
-    username: uname
-  };
-
-  if (images.length) {
-    commentInfo.images = images;
-  }
-
-  if (links.length) {
-    commentInfo.links = links;
-    commentLinks.push(...links);
-  }
-
-  return commentInfo;
+  commentLinks.push(...links);
 }
 
-module.exports = function parseComments($) {
+function extractComments($) {
   const commentsScript = $('#commentsContainer>script');
 
   if (!commentsScript.length) {
-    return 'Comments not available';
+    return {
+      error: 'Comments not available'
+    };
   }
 
-  const commentsScriptText = commentsScript.html();
-  const functionBody = `${CONSOLE_REPLACE}const ${commentsScriptText}return comment_js;`;
-
-  let allComments;
-
   try {
-    const commentsFunction = new Function(functionBody); // eslint-disable-line no-new-func
+    const commentsFunction = new Function(`${CONSOLE_REPLACE}const ${commentsScript.html()}return comment_js;`); // eslint-disable-line no-new-func
 
-    allComments = commentsFunction();
+    return commentsFunction();
   } catch (err) {
     return {
-      rawComments: commentsScriptText,
       error: err.message
     };
   }
+}
+
+module.exports = function parseComments($) {
+  const allComments = extractComments($);
+
+  if (allComments.error) {
+    console.log(`Failed to parse comments ${allComments.error}`); // eslint-disable-line no-console
+
+    return [];
+  }
+
   const commentLinks = [];
 
-  const bestComments = allComments.best_comments.map((comment) => parseComment(comment, commentLinks));
-  const comments = Object.values(allComments.comments).map((comment) => {
-    const mainComment = parseComment(comment.maincomment, commentLinks);
+  allComments.best_comments.forEach((comment) => extractLinks(comment, commentLinks));
 
-    if (comment.subcomments) {
-      mainComment.subcomments = Object
-        .values(comment.subcomments)
-        .map((subcomment) => parseComment(subcomment, commentLinks));
-    }
-
-    return mainComment;
+  Object.values(allComments.comments).forEach(({ maincomment, subcomments = {} }) => {
+    extractLinks(maincomment, commentLinks);
+    Object.values(subcomments).forEach((subcomment) => extractLinks(subcomment, commentLinks));
   });
 
-  const uniqueComments = uniq(bestComments.concat(comments), (comment) => comment.id).sort((a, b) => a.id - b.id);
-
-  return {
-    comments: uniqueComments,
-    commentLinks
-  };
+  return commentLinks;
 };

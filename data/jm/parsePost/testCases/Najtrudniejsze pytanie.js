@@ -7,7 +7,7 @@ module.exports = {
 
   /* Required */
   id: '22133',
-  folderName: 'Najtrudniejsze_pytanie',
+  folderName: 'Najtrudniejsze%20pytanie__22133',
   nextUrls: [
     'http://joemonster.org/art/18791/Samoobrona%20dla%20kobiet',
     'http://joemonster.org/art/21418/Kilka%20fakt%C3%B3w%20o%20Pary%C5%BCu',
@@ -44,15 +44,13 @@ module.exports = {
   imageUrls: [
     'http://joemonster.org/i/e/wielkie_pyt01.jpg',
     'http://joemonster.org/i/e/wielkie_pyt02.jpg',
-    'https://static.fishki.pl/static/posts/36/36747/foto_a83a4cf5161f2a7c7202e44f082e641a.jpg',
-    'https://www.joemonster.org/p/950786/Wisers',
-    'https://i575.photobucket.com/albums/ss197/red45/obama-not-bad-l.png'
+    'https://i575.photobucket.com/albums/ss197/red45/obama-not-bad-l.png',
+    'https://static.fishki.pl/static/posts/36/36747/foto_a83a4cf5161f2a7c7202e44f082e641a.jpg'
   ],
 
   /* extra details */
   title: 'Najtrudniejsze pytanie',
   author: 'Reszka',
   addedDate: '2013-01-21 05:06',
-  tags: ['grubo', 'wyglądać', 'nago', 'seks', 'odpowiedź', 'pytanie'],
-  commentCount: 77
+  tags: ['grubo', 'wyglądać', 'nago', 'seks', 'odpowiedź', 'pytanie']
 };

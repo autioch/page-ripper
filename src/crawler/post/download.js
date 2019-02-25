@@ -1,6 +1,6 @@
 const cheerio = require('cheerio');
 const dbAPIFactory = require('./dbAPI');
-const { ensureConfig } = require('../../utils');
+const { ensureConfig, filenamify } = require('../../utils');
 
 module.exports = function postDownloadFactory(config) {
   ensureConfig(config, 'requestPost', 'function');
@@ -27,6 +27,8 @@ module.exports = function postDownloadFactory(config) {
     if (idStore.has(postInfo.id)) {
       return {};
     }
+
+    postInfo.folderName = filenamify(postInfo.folderName);
 
     await dbAPI.save({
       id: postInfo.id,

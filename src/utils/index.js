@@ -1,7 +1,7 @@
 const ensureConfig = require('./ensureConfig');
-const folderName = require('./folderName');
+const filenamify = require('./filenamify');
 
 module.exports = {
   ensureConfig,
-  folderName
+  filenamify
 };
