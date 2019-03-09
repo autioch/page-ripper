@@ -1,6 +1,14 @@
 const cheerio = require('cheerio');
 const dbAPIFactory = require('./dbAPI');
 const { ensureConfig, filenamify } = require('../../utils');
+const qbLog = require('qb-log');
+
+qbLog({
+  post: {
+    prefix: 'POST',
+    formatter: qbLog._chalk.magenta // eslint-disable-line no-underscore-dangle
+  }
+});
 
 module.exports = function postDownloadFactory(config) {
   ensureConfig(config, 'requestPost', 'function');
@@ -15,9 +23,12 @@ module.exports = function postDownloadFactory(config) {
   });
 
   async function downloadPost(url) {
+    qbLog.post(url);
     const result = await requestPost(url);
 
     if (result.error) {
+      qbLog.post('Error', result.error.message);
+
       return result;
     }
 
@@ -25,11 +36,14 @@ module.exports = function postDownloadFactory(config) {
     const postInfo = parsePost($, url, result.body);
 
     if (idStore.has(postInfo.id)) {
+      qbLog.post('Repeated', postInfo.id);
+
       return {};
     }
 
     postInfo.folderName = filenamify(postInfo.folderName);
 
+    qbLog.post('Save', url);
     await dbAPI.save({
       id: postInfo.id,
       url,

@@ -4,7 +4,8 @@ const getImageNames = require('./getImageNames');
 const request = require('request');
 const qbLog = require('qb-log');
 
-const noop = () => {};// eslint-disable-line no-empty-function
+const noop = () => undefined;// eslint-disable-line no-undefined
+const HANG_DELAY = 10000;
 
 qbLog({
   image: {
@@ -15,22 +16,23 @@ qbLog({
 
 qbLog({
   imageError: {
-    prefix: 'IMAGE_ERROR',
-    formatter: qbLog._chalk.green // eslint-disable-line no-underscore-dangle
+    prefix: 'IMAGE ERROR',
+    formatter: qbLog._chalk.red // eslint-disable-line no-underscore-dangle
   }
 });
 
 function saveImage(imageInfo, index) {
   const { imageUrl, fullPath } = imageInfo;
 
-  qbLog.image(index, ' ', imageUrl);
-
   return new Promise((resolve, reject) => {
     const fail = (err) => {
-      qbLog.imageError(imageUrl);
-      qbLog.empty(err.message);
+      qbLog.imageError(err.message);
+      qbLog.empty(index, ' ', imageUrl);
       reject(err);
+      clearTimeout(hangTimeout); // eslint-disable-line no-use-before-define
     };
+
+    const hangTimeout = setTimeout(() => fail(new Error('Image timeout ')), HANG_DELAY);
 
     request({
       url: imageUrl,
@@ -52,6 +54,7 @@ function saveImage(imageInfo, index) {
           }
 
           resolve();
+          clearTimeout(hangTimeout);
         });
       } else if (body) {
         fail(new Error(`Image loading error - ${res.statusCode}`));
@@ -59,13 +62,16 @@ function saveImage(imageInfo, index) {
         fail(new Error(`Image loading error - empty body`));
       }
     });
-  }).catch(noop);
+  })
+    .catch(noop);
 }
 
 module.exports = async function downloadImages(dataPath, folderName, imageUrls) {
   if (!imageUrls.length || !folderName) {
     return Promise.resolve();
   }
+
+  qbLog.image('Start', imageUrls.length);
 
   const absoluteFolderPath = path.join(dataPath, folderName);
   const imageInfos = getImageNames(absoluteFolderPath, imageUrls);
@@ -76,5 +82,5 @@ module.exports = async function downloadImages(dataPath, folderName, imageUrls) 
 
   const promises = imageInfos.map(saveImage);
 
-  return Promise.all(promises);
+  return Promise.all(promises).then(() => qbLog.image('Done'));
 };

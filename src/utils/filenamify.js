@@ -16,11 +16,12 @@ const SAFE_TRIM = /^_|_$/g;
 
 const is = (item) => !!item;
 const cleanPathname = (str) => decodeURI((str || EMPTY).replace(PATH_MULTIPLE, PATH));
+const cleanSearch = (str) => decodeURI((str || EMPTY).replace(PATH_MULTIPLE, PATH));
 const cleanHostname = (str) => (str || EMPTY).replace(WWW, EMPTY);
 
 module.exports = function filenamify(rawUrl) {
   const { hostname, port, pathname, search } = url.parse(rawUrl);
-  const simplifiedUrl = [cleanHostname(hostname), port, cleanPathname(pathname), search].filter(is).join(SAFE);
+  const simplifiedUrl = [cleanHostname(hostname), port, cleanPathname(pathname), cleanSearch(search)].filter(is).join(SAFE);
 
   const fileName = simplifiedUrl
     .replace(FORBIDDEN, SAFE)

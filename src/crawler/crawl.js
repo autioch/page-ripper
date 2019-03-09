@@ -5,8 +5,8 @@ const downloadImages = require('./images/download');
 const REQUEST_PAUSE = 500;
 
 qbLog({
-  visit: {
-    prefix: 'VISIT',
+  crawl: {
+    prefix: 'CRAWL',
     formatter: qbLog._chalk.cyan // eslint-disable-line no-underscore-dangle
   }
 });
@@ -21,7 +21,7 @@ module.exports = function crawlFactory(config) {
   let resolve;
 
   async function visit(postUrl) {
-    qbLog.visit(loopCount + 1, '  ', postUrl);
+    qbLog.crawl(loopCount + 1);
 
     const postInfo = await downloader.downloadPost(postUrl);
     const { folderName, imageUrls = [], nextUrls = [] } = postInfo;
