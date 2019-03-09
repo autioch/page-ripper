@@ -10,11 +10,11 @@ const setDict = (obj, key) => Object.assign(obj, {
 qbLog({
   queueAdd: {
     prefix: 'QUEUE ADD',
-    formatter: qbLog._chalk.blue // eslint-disable-line no-underscore-dangle
+    formatter: qbLog._chalk.grey // eslint-disable-line no-underscore-dangle
   },
   queueInit: {
     prefix: 'QUEUE INIT',
-    formatter: qbLog._chalk.blue // eslint-disable-line no-underscore-dangle
+    formatter: qbLog._chalk.grey // eslint-disable-line no-underscore-dangle
   }
 });
 

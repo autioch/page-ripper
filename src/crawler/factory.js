@@ -28,6 +28,7 @@ module.exports = function crawlerFactory(config) {
       db,
       parsePost,
       requestPost,
+      dataPath,
       idStore: idStoreFactory({
         defaultId,
         existingIds

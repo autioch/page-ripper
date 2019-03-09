@@ -26,6 +26,7 @@ describe('crawler post', () => {
     it(`requires valid configuration`, () => {
       expect(() => postDownloadFactory({
         db,
+        dataPath: __dirname,
         idStore: idStoreFactory(),
         requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
@@ -35,6 +36,7 @@ describe('crawler post', () => {
     it('returns API object', () => {
       const downloader = postDownloadFactory({
         db,
+        dataPath: __dirname,
         idStore: idStoreFactory(),
         requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
@@ -48,6 +50,7 @@ describe('crawler post', () => {
     it('is a function with single argument', () => {
       const downloader = postDownloadFactory({
         db,
+        dataPath: __dirname,
         idStore: idStoreFactory(),
         requestPost: mockRequestPost({}),
         parsePost: mockParsePost({})
@@ -61,6 +64,7 @@ describe('crawler post', () => {
       it(testCase.description, async () => {
         const downloader = postDownloadFactory({
           db,
+          dataPath: __dirname,
           idStore: idStoreFactory(),
           requestPost: mockRequestPost(testCase.response),
           parsePost: mockParsePost({})
@@ -76,6 +80,7 @@ describe('crawler post', () => {
       it(testCase.description, async () => {
         const downloader = postDownloadFactory({
           db,
+          dataPath: __dirname,
           idStore: idStoreFactory({
             existingIds: testCase.existingIds
           }),

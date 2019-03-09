@@ -3,6 +3,7 @@ const path = require('path');
 const getImageNames = require('./getImageNames');
 const request = require('request');
 const qbLog = require('qb-log');
+const { log } = require('../../utils');
 
 const noop = () => undefined;// eslint-disable-line no-undefined
 const HANG_DELAY = 10000;
@@ -22,12 +23,13 @@ qbLog({
   }
 });
 
-function saveImage(imageInfo) {
+function saveImage(imageInfo, dataPath) {
   const { imageUrl, fullPath } = imageInfo;
 
   return new Promise((resolve, reject) => {
     const fail = (err) => {
       qbLog.imageError(err.message);
+      log(dataPath, 'Failed to download image', JSON.stringify(imageInfo), err.message);
       reject(err);
       clearTimeout(hangTimeout); // eslint-disable-line no-use-before-define
     };
@@ -80,7 +82,7 @@ module.exports = async function downloadImages(dataPath, folderName, imageUrls) 
     await fs.promises.mkdir(absoluteFolderPath);
   }
 
-  const promises = imageInfos.map(saveImage);
+  const promises = imageInfos.map((imageInfo) => saveImage(imageInfo, dataPath));
 
   return Promise.all(promises).then(() => qbLog.imageDone());
 };

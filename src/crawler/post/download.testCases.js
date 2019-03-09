@@ -5,7 +5,9 @@ const errorTestCases = [
     description: 'will return request result if request failed',
     response: {
       body: '',
-      error: 'Failed',
+      error: {
+        message: 'Failed'
+      },
       status: 404,
       url: 'http://test.com'
     }

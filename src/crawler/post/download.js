@@ -2,6 +2,7 @@ const cheerio = require('cheerio');
 const dbAPIFactory = require('./dbAPI');
 const { ensureConfig, filenamify } = require('../../utils');
 const qbLog = require('qb-log');
+const { log } = require('../../utils');
 
 qbLog({
   post: {
@@ -26,9 +27,10 @@ module.exports = function postDownloadFactory(config) {
   ensureConfig(config, 'requestPost', 'function');
   ensureConfig(config, 'parsePost', 'function');
   ensureConfig(config, 'idStore', 'object');
+  ensureConfig(config, 'dataPath', 'string');
   ensureConfig(config, 'db', 'object');
 
-  const { requestPost, parsePost, idStore, db } = config;
+  const { requestPost, parsePost, idStore, db, dataPath } = config;
 
   const dbAPI = dbAPIFactory({
     db
@@ -40,6 +42,7 @@ module.exports = function postDownloadFactory(config) {
 
     if (result.error) {
       qbLog.postError(result.error.message);
+      log(dataPath, 'Failed to download post', url, result.error.message);
 
       return result;
     }
