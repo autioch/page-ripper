@@ -9,7 +9,6 @@ module.exports = function parseAuthorAndDate($) {
 
   return {
     author,
-    addedDate,
-    gatheredDate: new Date().toJSON().split('T')[0]
+    addedDate
   };
 };
