@@ -3,7 +3,7 @@ const path = require('path');
 const { CONSOLE_REPLACE, IGNORED_IMAGE, IGNORED_LINK_ENDING, IGNORED_LINK_CONTENT, IGNORED_LINK } = require('./consts');
 
 function extractLinks(comment, commentLinks) {
-  const { html } = comment; // eslint-disable-line id-blacklist
+  const { html } = comment;
   const $ = cheerio.load(html);
 
   const images = $('.commentDesc img').map((index, el) => el.attribs.src).get().filter((src) => !IGNORED_IMAGE.includes(src));

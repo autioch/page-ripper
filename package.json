@@ -12,10 +12,7 @@
   "author": "github.com/autioch",
   "license": "ISC",
   "dependencies": {
-    "bluebird": "^3.5.3",
     "cheerio": "^1.0.0-rc.2",
-    "filenamify": "^2.1.0",
-    "filenamify-url": "^1.0.0",
     "image-downloader": "^3.4.2",
     "lodash": "^4.17.11",
     "qb-log": "^1.0.1",

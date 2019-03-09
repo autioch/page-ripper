@@ -1,13 +1,13 @@
 /* eslint-env mocha */
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
-const imageName = require('./imageName');
-const testCases = require('./imageName.testCases');
+const getImageNames = require('./getImageNames');
+const testCases = require('./getImageNames.testCases');
 
-describe('imageName', () => {
+describe('getImageNames', () => {
   testCases.forEach((testCase, index) => {
     it(testCase.description || `test case ${index}`, () => {
-      const result = imageName(testCase.input);
+      const result = getImageNames(testCase.input.folderName, testCase.input.imageUrls);
 
       expect(result).to.deep.equal(testCase.output);
     });

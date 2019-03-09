@@ -1,6 +1,5 @@
 const crawlFactory = require('./crawl');
-const { idStoreFactory } = require('./idStore');
-const { imageDownloadFactory } = require('./image');
+const idStoreFactory = require('./idStore');
 const { postDownloadFactory, requestPost } = require('./post');
 const { queueFactory } = require('./queue');
 const { ensureConfig } = require('../utils');
@@ -24,6 +23,7 @@ module.exports = function crawlerFactory(config) {
   return crawlFactory({
     db,
     requestPause,
+    dataPath,
     downloader: postDownloadFactory({
       db,
       parsePost,
@@ -37,9 +37,6 @@ module.exports = function crawlerFactory(config) {
       db,
       visitedItems,
       queuedItems
-    }),
-    imageDownload: imageDownloadFactory({
-      dataPath
     })
   });
 };

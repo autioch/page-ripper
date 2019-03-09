@@ -18,53 +18,8 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/image.jpeg',
-      fullPath: 'post/path/image.jpeg'
+      fullPath: 'post\\path\\a.com_image.jpeg'
     }]
-  },
-  {
-    description: 'returns no imageInfo for invalid image',
-    input: {
-      folderName: 'post/path',
-      imageUrls: [
-        'https://youtu.be/cmh0YmoJrbs?t=311'
-      ]
-    },
-    output: [
-      // {
-      //   imageUrl: 'https://youtu.be/cmh0YmoJrbs?t=311',
-      //   fullPath: 'post/path/cmh0YmoJrbs_t=311'
-      // }
-    ]
-  },
-  {
-    description: 'returns no imageInfo for invalid image',
-    input: {
-      folderName: 'post/path',
-      imageUrls: [
-        'https://bit.ly/2SCAroJ'
-      ]
-    },
-    output: [
-      // {
-      //   imageUrl: 'https://bit.ly/2SCAroJ',
-      //   fullPath: 'post/path/2SCAroJ'
-      // }
-    ]
-  },
-  {
-    description: 'returns no imageInfo for invalid image',
-    input: {
-      folderName: 'post/path',
-      imageUrls: [
-        'https://podroze.onet.pl/polska/malopolskie/most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim/hp511ye'
-      ]
-    },
-    output: [
-      // {
-      //   imageUrl: 'https://podroze.onet.pl/polska/malopolskie/most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim/hp511ye',
-      //   fullPath: 'post/path/polska_malopolskie_most-jana-stacha-w-znamirowicach-nad-jeziorem-roznowskim_hp511ye'
-      // }
-    ]
   },
   {
     description: 'returns valid imageInfo for url with port',
@@ -76,7 +31,7 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com:1234/image.png',
-      fullPath: 'post/path/image.png'
+      fullPath: 'post\\path\\a.com_1234_image.png'
     }]
   },
   {
@@ -89,7 +44,7 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/assets/image.png',
-      fullPath: 'post/path/assets_image.png'
+      fullPath: 'post\\path\\a.com_assets_image.png'
     }]
   },
   {
@@ -102,7 +57,7 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/assets/complicated image-name_bonus__double.png',
-      fullPath: 'post/path/assets_complicated image-name_bonus_double.png'
+      fullPath: 'post\\path\\a.com_assets_complicated image-name_bonus_double.png'
     }]
   },
   {
@@ -116,10 +71,10 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/assets/image.png',
-      fullPath: 'post/path/assets_image.png'
+      fullPath: 'post\\path\\a.com_assets_image.png'
     }, {
       imageUrl: 'http://a.com/assets/image2.png',
-      fullPath: 'post/path/assets_image2.png'
+      fullPath: 'post\\path\\a.com_assets_image2.png'
     }]
   },
   {
@@ -133,10 +88,10 @@ module.exports = [
     },
     output: [{
       imageUrl: 'http://a.com/image.png',
-      fullPath: 'post/path/image.png'
+      fullPath: 'post\\path\\a.com_image.png'
     }, {
       imageUrl: 'http://other-domain.com/image.png',
-      fullPath: 'post/path/image__2.png'
+      fullPath: 'post\\path\\other-domain.com_image.png'
     }]
   }
 ];

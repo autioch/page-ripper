@@ -44,7 +44,3 @@ The object can contain any other properties, they will be all persisted in the d
 
 ### NPM module
 This app is currently unavailable in NPM registry.
-
-
-## TODO
-1. Move all `normalizations` of urls to filenames to the crawler, instead of relying on the valid `parsePost` result.

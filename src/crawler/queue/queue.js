@@ -6,7 +6,7 @@ const setDict = (obj, key) => Object.assign(obj, {
   [key]: true
 });
 
-const extract = (arr, dict) => uniq(arr).filter((item) => !dict[item]);
+const filterByDict = (arr, dict) => uniq(arr).filter((item) => !dict[item]);
 
 module.exports = function queueFactory(config) {
   ensureConfig(config, 'db', 'object');
@@ -18,7 +18,7 @@ module.exports = function queueFactory(config) {
   });
 
   const visited = visitedItems.reduce((obj, item) => setDict(obj, item), {});
-  let queued = extract(queuedItems, visited);
+  let queued = filterByDict(queuedItems, visited);
 
   async function visit(item) {
     setDict(visited, item);
@@ -39,7 +39,7 @@ module.exports = function queueFactory(config) {
   }
 
   async function add(items) {
-    const toAdd = extract(items, visited).filter((item) => !queued.includes(item));
+    const toAdd = filterByDict(items, visited).filter((item) => !queued.includes(item));
 
     await dbAPI.add(toAdd);
     queued.push(...toAdd);

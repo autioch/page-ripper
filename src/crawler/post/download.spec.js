@@ -2,7 +2,7 @@
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
 const postDownloadFactory = require('./download');
-const { idStoreFactory } = require('../idStore');
+const idStoreFactory = require('../idStore');
 const { errorTestCases, validTestCases } = require('./download.testCases');
 const dbMock = require('../../db/mock');
 

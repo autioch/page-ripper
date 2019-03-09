@@ -7,6 +7,7 @@ const dbPath = join(rootPath, 'db.sqlite');
 const parsePost = require('./data/jm/parsePost/parsePost');
 
 const startingPages = [
+  'https://joemonster.org/art/46032/Mistrzowie_Internetu_CLXXXIII_Jak_pewna_Sylwia_zaplanowala_plec_dziecka'
 ];
 
 module.exports = {

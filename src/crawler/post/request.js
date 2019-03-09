@@ -1,15 +1,12 @@
 const request = require('request');
-const Bluebird = require('bluebird');
 
 function assertError(err, response, body, url) {
   if (err) {
     return err.message;
   }
 
-  const { status } = response; // eslint-disable-line no-shadow
-
-  if (status < 200 || status > 299) { // eslint-disable-line no-magic-numbers
-    return `Invalid response status ${status} ${url}`;
+  if (response.status < 200 || response.status > 299) { // eslint-disable-line no-magic-numbers
+    return `Invalid response status ${response.status} ${url}`;
   }
 
   if (!body.length) {
@@ -20,7 +17,7 @@ function assertError(err, response, body, url) {
 }
 
 module.exports = function requestPost(url) {
-  return new Bluebird((resolve) => request({
+  return new Promise((resolve) => request({
     uri: url
   }, (err, response, body) => resolve({
     body,

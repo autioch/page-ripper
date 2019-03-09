@@ -3,7 +3,7 @@ const setupDb = require('../db');
 
 // const log = require('qb-log');
 const fs = require('fs').promises;
-const _ = require('lodash');
+const { pick, groupBy } = require('lodash');
 
 (async () => {
   const { db } = await setupDb(config.dbPath);
@@ -13,10 +13,10 @@ const _ = require('lodash');
   const details = results.map((result) => {
     const info = JSON.parse(result.postInfo);
 
-    return _.pick(info, ['id', 'url', 'folderName', 'title']);
+    return pick(info, ['id', 'url', 'folderName', 'title']);
   });
 
-  const grouped = _.groupBy(details, 'folderName');
+  const grouped = groupBy(details, 'folderName');
   const duplicates = Object.entries(grouped).filter(([, values]) => values.length > 1);
 
   await fs.writeFile('./dump.json', JSON.stringify(duplicates, null, '  '));

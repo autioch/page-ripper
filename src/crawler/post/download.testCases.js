@@ -19,13 +19,15 @@ const validTestCases = [
       body: 'example body',
       error: null,
       status: 200,
-      url: 'http://test.com'
+      url: 'http://yey.com/extras'
     },
     parseResult: {
-      id: 'MISSING'
+      id: 'MISSING',
+      folderName: 'http://yey.com/extras'
     },
     postInfo: {
-      id: 'MISSING'
+      id: 'MISSING',
+      folderName: 'yey.com_extras'
     }
   },
   {
@@ -37,10 +39,12 @@ const validTestCases = [
       url: 'http://test.com'
     },
     parseResult: {
-      id: '1'
+      id: '1',
+      folderName: 'http://test.com'
     },
     postInfo: {
-      id: '1'
+      id: '1',
+      folderName: 'test.com'
     }
   },
   {
@@ -50,10 +54,11 @@ const validTestCases = [
       body: 'example body',
       error: null,
       status: 200,
-      url: 'http://test.com'
+      url: 'http://test.com/strange.htm'
     },
     parseResult: {
-      id: '1'
+      id: '1',
+      folderName: 'test.com_strange.htm'
     },
     postInfo: {}
   }

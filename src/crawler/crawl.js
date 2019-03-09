@@ -1,5 +1,6 @@
 const qbLog = require('qb-log');
 const { ensureConfig } = require('../utils');
+const downloadImages = require('./images/download');
 
 const REQUEST_PAUSE = 500;
 
@@ -12,29 +13,21 @@ qbLog({
 
 module.exports = function crawlFactory(config) {
   ensureConfig(config, 'downloader', 'object');
-  ensureConfig(config, 'imageDownload', 'object');
   ensureConfig(config, 'queue', 'object');
   ensureConfig(config, 'db', 'object');
 
-  const { downloader, imageDownload, queue, db, requestPause = REQUEST_PAUSE } = config;
+  const { downloader, queue, db, requestPause = REQUEST_PAUSE } = config;
   let loopCount = 0;
   let resolve;
 
   async function visit(postUrl) {
-    qbLog.visit(loopCount + 1, postUrl);
+    qbLog.visit(loopCount + 1, '  ', postUrl);
 
     const postInfo = await downloader.downloadPost(postUrl);
     const { folderName, imageUrls = [], nextUrls = [] } = postInfo;
 
     await queue.add(nextUrls);
-
-    if (folderName) {
-      await imageDownload.download({
-        folderName,
-        imageUrls
-      });
-    }
-
+    await downloadImages(config.dataPath, folderName, imageUrls);
     await queue.visit(postUrl);
 
     loopCount++; // eslint-disable-line no-plusplus
