@@ -7,7 +7,7 @@ module.exports = {
 
   /* Required */
   id: '22133',
-  folderName: 'Najtrudniejsze%20pytanie__22133',
+  folderName: 'Najtrudniejsze pytanie _22133',
   nextUrls: [
     'http://joemonster.org/art/18791/Samoobrona%20dla%20kobiet',
     'http://joemonster.org/art/21418/Kilka%20fakt%C3%B3w%20o%20Pary%C5%BCu',

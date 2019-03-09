@@ -8,26 +8,26 @@ const noop = () => undefined;// eslint-disable-line no-undefined
 const HANG_DELAY = 10000;
 
 qbLog({
-  image: {
-    prefix: 'IMAGE',
+  imageStart: {
+    prefix: 'IMAGE START',
     formatter: qbLog._chalk.green // eslint-disable-line no-underscore-dangle
-  }
-});
-
-qbLog({
+  },
+  imageDone: {
+    prefix: 'IMAGE DONE',
+    formatter: qbLog._chalk.green // eslint-disable-line no-underscore-dangle
+  },
   imageError: {
     prefix: 'IMAGE ERROR',
     formatter: qbLog._chalk.red // eslint-disable-line no-underscore-dangle
   }
 });
 
-function saveImage(imageInfo, index) {
+function saveImage(imageInfo) {
   const { imageUrl, fullPath } = imageInfo;
 
   return new Promise((resolve, reject) => {
     const fail = (err) => {
       qbLog.imageError(err.message);
-      qbLog.empty(index, ' ', imageUrl);
       reject(err);
       clearTimeout(hangTimeout); // eslint-disable-line no-use-before-define
     };
@@ -71,7 +71,7 @@ module.exports = async function downloadImages(dataPath, folderName, imageUrls) 
     return Promise.resolve();
   }
 
-  qbLog.image('Start', imageUrls.length);
+  qbLog.imageStart(imageUrls.length);
 
   const absoluteFolderPath = path.join(dataPath, folderName);
   const imageInfos = getImageNames(absoluteFolderPath, imageUrls);
@@ -82,5 +82,5 @@ module.exports = async function downloadImages(dataPath, folderName, imageUrls) 
 
   const promises = imageInfos.map(saveImage);
 
-  return Promise.all(promises).then(() => qbLog.image('Done'));
+  return Promise.all(promises).then(() => qbLog.imageDone());
 };

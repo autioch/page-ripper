@@ -1,5 +1,7 @@
 const request = require('request');
 
+const HANG_DELAY = 10000;
+
 function assertError(err, response, body, url) {
   if (err) {
     return err.message;
@@ -17,12 +19,21 @@ function assertError(err, response, body, url) {
 }
 
 module.exports = function requestPost(url) {
-  return new Promise((resolve) => request({
-    uri: url
-  }, (err, response, body) => resolve({
-    body,
-    error: assertError(err, response, body, url),
-    status: response.status,
-    url
-  })));
+  return new Promise((resolve) => {
+    const hangTimeout = setTimeout(() => resolve({
+      error: 'Post timeout'
+    }), HANG_DELAY);
+
+    request({
+      uri: url
+    }, (err, response, body) => {
+      clearTimeout(hangTimeout);
+
+      resolve({
+        body,
+        error: assertError(err, response, body, url),
+        status: response.status
+      });
+    });
+  });
 };

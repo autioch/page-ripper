@@ -2,7 +2,7 @@ const qbLog = require('qb-log');
 const { ensureConfig } = require('../utils');
 const downloadImages = require('./images/download');
 
-const REQUEST_PAUSE = 500;
+const REQUEST_PAUSE = 1000;
 
 qbLog({
   crawl: {

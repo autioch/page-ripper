@@ -6,6 +6,13 @@ const testCases = require('./filenamify.testCases');
 
 describe('util filenamify', () => {
   testCases.forEach((testCase) => {
+    if (typeof testCase === 'string') {
+      it(`does not throw for ${testCase}`, () => {
+        filenamify(testCase);
+      });
+
+      return;
+    }
     it('produces valid folder name', () => {
       const result = filenamify(testCase.input);
 

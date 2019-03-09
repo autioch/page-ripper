@@ -8,7 +8,7 @@ module.exports = {
 
   /* Required */
   id: '40836',
-  folderName: 'Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw__40836',
+  folderName: 'Mistrzowie internetu XXXIV - Świeżak Viagra Władysław _40836',
   nextUrls: [
     'http://joemonster.org/art/22104/Problemy%20wsp%C3%B3%C5%82czesnego%20%C5%9Bwiata',
     'http://joemonster.org/art/24889/Kompilacja_rodzicow_na_medal_II',

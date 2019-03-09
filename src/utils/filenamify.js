@@ -14,14 +14,15 @@ const SAFE = '_';
 const SAFE_MULTIPLE = /_{2,}/g;
 const SAFE_TRIM = /^_|_$/g;
 
+const MAX_LENGTH = 100;
+
+const clean = (str) => decodeURI(unescape(str || EMPTY)).replace(PATH_MULTIPLE, PATH);
 const is = (item) => !!item;
-const cleanPathname = (str) => decodeURI((str || EMPTY).replace(PATH_MULTIPLE, PATH));
-const cleanSearch = (str) => decodeURI((str || EMPTY).replace(PATH_MULTIPLE, PATH));
-const cleanHostname = (str) => (str || EMPTY).replace(WWW, EMPTY);
 
 module.exports = function filenamify(rawUrl) {
   const { hostname, port, pathname, search } = url.parse(rawUrl);
-  const simplifiedUrl = [cleanHostname(hostname), port, cleanPathname(pathname), cleanSearch(search)].filter(is).join(SAFE);
+  const parts = [(hostname || EMPTY).replace(WWW, EMPTY), port, pathname, search];
+  const simplifiedUrl = parts.map(clean).filter(is).join(SAFE);
 
   const fileName = simplifiedUrl
     .replace(FORBIDDEN, SAFE)
@@ -29,5 +30,7 @@ module.exports = function filenamify(rawUrl) {
     .replace(SAFE_MULTIPLE, SAFE)
     .replace(SAFE_TRIM, EMPTY);
 
-  return RESERVED.test(fileName) ? SAFE + fileName + SAFE : fileName;
+  const secured = RESERVED.test(fileName) ? SAFE + fileName + SAFE : fileName;
+
+  return secured.slice(0, MAX_LENGTH);
 };

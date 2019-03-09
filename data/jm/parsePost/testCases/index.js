@@ -5,7 +5,8 @@ const loadHtm = (fileName) => fs.readFileSync(path.join(__dirname, `${fileName}.
 
 const cases = [
   require('./Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw'),
-  require('./Najtrudniejsze pytanie')
+  require('./Najtrudniejsze pytanie'),
+  require('./Zamienił domowe podwórko w fajną miejscówkę do letniego odpoczynku')
 ];
 
 cases.forEach((testCase) => {

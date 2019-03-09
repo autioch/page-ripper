@@ -71,22 +71,14 @@ describe('db prepareLastState', () => {
   });
 
   it(`returns valid visitedItems`, async () => {
-    const toAdd = [{
-      id: 'a',
-      url: 'http://a.com',
-      postInfo: 'json'
-    }, {
-      id: 'b',
-      url: 'http://b.com',
-      postInfo: 'json'
-    }, {
-      id: 'c',
-      url: 'http://c.com',
-      postInfo: 'json'
-    }];
+    const toAdd = [
+      'http://a.com',
+      'http://b.com',
+      'http://c.com'
+    ];
 
     for (let i = 0; i < toAdd.length; i++) {
-      await db.run('INSERT INTO posts (id, url, postINfo) VALUES (?, ?, ?)', [toAdd[i].id, toAdd[i].url, toAdd[i].postInfo]); // eslint-disable-line no-await-in-loop
+      await db.run('INSERT INTO queue (url, isVisited) VALUES (?, ?)', [toAdd[i], 1]); // eslint-disable-line no-await-in-loop
     }
 
     const result = await prepareLastState(db);

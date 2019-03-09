@@ -1,6 +1,6 @@
 module.exports = async function prepareLastState(db) {
-  const queuedItems = await db.all('SELECT url FROM queue');
-  const visitedItems = await db.all('SELECT url FROM posts');
+  const queuedItems = await db.all('SELECT url FROM queue where isVisited = 0');
+  const visitedItems = await db.all('SELECT url FROM queue where isVisited = 1');
   const existingIds = await db.all('SELECT id FROM posts');
 
   return {

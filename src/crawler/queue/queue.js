@@ -1,9 +1,21 @@
 const { uniq } = require('lodash');
 const dbAPIFactory = require('./dbAPI');
 const { ensureConfig } = require('../../utils');
+const qbLog = require('qb-log');
 
 const setDict = (obj, key) => Object.assign(obj, {
   [key]: true
+});
+
+qbLog({
+  queueAdd: {
+    prefix: 'QUEUE ADD',
+    formatter: qbLog._chalk.blue // eslint-disable-line no-underscore-dangle
+  },
+  queueInit: {
+    prefix: 'QUEUE INIT',
+    formatter: qbLog._chalk.blue // eslint-disable-line no-underscore-dangle
+  }
 });
 
 const filterByDict = (arr, dict) => uniq(arr).filter((item) => !dict[item]);
@@ -12,6 +24,8 @@ module.exports = function queueFactory(config) {
   ensureConfig(config, 'db', 'object');
 
   const { visitedItems = [], queuedItems = [], db } = config;
+
+  qbLog.queueInit(`visited ${visitedItems.length}, queued ${queuedItems.length}`);
 
   const dbAPI = dbAPIFactory({
     db
@@ -40,6 +54,8 @@ module.exports = function queueFactory(config) {
 
   async function add(items) {
     const toAdd = filterByDict(items, visited).filter((item) => !queued.includes(item));
+
+    qbLog.queueAdd(`${toAdd.length} from ${items.length}`);
 
     await dbAPI.add(toAdd);
     queued.push(...toAdd);
