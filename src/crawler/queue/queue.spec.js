@@ -18,13 +18,16 @@ describe('queue', () => {
   describe('setup', () => {
     it(`requires db option`, () => {
       expect(() => queueFactory({
-        db
+        db,
+        queuedItems: [],
+        visitedItems: []
       })).to.not.throw();
     });
 
     it('accepts visitedItems option', () => {
       expect(() => queueFactory({
         db,
+        queuedItems: [],
         visitedItems: ['a']
       })).to.not.throw();
     });
@@ -32,7 +35,8 @@ describe('queue', () => {
     it('accepts queuedItems option', () => {
       expect(() => queueFactory({
         db,
-        queuedItems: ['a']
+        queuedItems: ['a'],
+        visitedItems: []
       })).to.not.throw();
     });
   });
@@ -41,7 +45,8 @@ describe('queue', () => {
     it('can provide next id in the queue', () => {
       const queue = queueFactory({
         db,
-        queuedItems: ['a']
+        queuedItems: ['a'],
+        visitedItems: []
       });
 
       const nextId = queue.next();
@@ -52,7 +57,9 @@ describe('queue', () => {
     it('will proide if queue is empty', () => {
       const queue = queueFactory({
         db,
-        queuedItems: []
+        queuedItems: [],
+        visitedItems: [],
+        visitedItems: []
       });
 
       const nextId = queue.next();
@@ -65,7 +72,9 @@ describe('queue', () => {
     it('allows adding new ids to queue', async () => {
       const queue = queueFactory({
         db,
-        queuedItems: []
+        queuedItems: [],
+        visitedItems: [],
+        visitedItems: []
       });
 
       await queue.add(['added', 'yet another']);
@@ -79,7 +88,8 @@ describe('queue', () => {
     it('removes only visited item from queue', async () => {
       const queue = queueFactory({
         db,
-        queuedItems: ['a']
+        queuedItems: ['a'],
+        visitedItems: []
       });
 
       const remainingCount = await queue.visit('a');
@@ -90,7 +100,8 @@ describe('queue', () => {
     it('removes any visited item from queue', async () => {
       const queue = queueFactory({
         db,
-        queuedItems: ['a', 'b', 'c']
+        queuedItems: ['a', 'b', 'c'],
+        visitedItems: []
       });
 
       const remainingCount = await queue.visit('b');

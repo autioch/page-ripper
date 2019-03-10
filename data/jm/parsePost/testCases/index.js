@@ -5,7 +5,8 @@ const cases = [
   require('./19143'),
   require('./22133'),
   require('./28741'),
-  require('./40836')
+  require('./40836'),
+  require('./42474')
 ];
 
 cases.forEach((testCase) => {

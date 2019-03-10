@@ -23,6 +23,16 @@ qbLog({
   }
 });
 
+function getFolderName(postInfo) {
+  const suggestedFolderName = filenamify(postInfo.folderName);
+
+  if (suggestedFolderName !== null) {
+    return suggestedFolderName;
+  }
+
+  return `__ _${postInfo.id}`;
+}
+
 module.exports = function postDownloadFactory(config) {
   ensureConfig(config, 'requestPost', 'function');
   ensureConfig(config, 'parsePost', 'function');
@@ -56,9 +66,9 @@ module.exports = function postDownloadFactory(config) {
       return {};
     }
 
-    postInfo.folderName = filenamify(postInfo.folderName);
+    postInfo.folderName = getFolderName(postInfo);
 
-    qbLog.postSave(postInfo.id, url);
+    qbLog.postSave(postInfo.id, postInfo.folderName);
     await dbAPI.save({
       id: postInfo.id,
       url,

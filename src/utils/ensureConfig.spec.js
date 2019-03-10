@@ -53,7 +53,15 @@ describe('ensureConfig', () => {
 
       expect(() => example({}))
         .to.throw(Error)
-        .with.property('message', 'example requires "prop" string in config, got undefined');
+        .with.property('message', 'example requires "prop" string in config');
+    });
+
+    it(`throws proper error for missing array`, () => {
+      const example = (config) => ensureConfig(config, 'prop', 'array');
+
+      expect(() => example({}))
+        .to.throw(Error)
+        .with.property('message', 'example requires "prop" array in config');
     });
 
     it(`throws proper error with invalid property`, () => {

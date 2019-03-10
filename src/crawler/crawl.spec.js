@@ -29,7 +29,9 @@ describe('crawl', () => {
         db,
         downloader: mockPostDownloader(),
         queue: queueFactory({
-          db
+          db,
+          queuedItems: [],
+          visitedItems: []
         })
       })).to.not.throw();
     });
@@ -41,7 +43,26 @@ describe('crawl', () => {
         db,
         downloader: mockPostDownloader(),
         queue: queueFactory({
-          db
+          db,
+          queuedItems: [],
+          visitedItems: []
+        })
+      });
+
+      const result = await crawl.start();
+
+      expect(result).to.equal(0);
+      expect(db.db.open).to.equal(false);
+    });
+
+    it('will do nothing if all queued items are already visited', async () => {
+      const crawl = crawlFactory({
+        db,
+        downloader: mockPostDownloader(),
+        queue: queueFactory({
+          db,
+          queuedItems: ['a'],
+          visitedItems: ['a', 'b']
         })
       });
 
@@ -61,7 +82,8 @@ describe('crawl', () => {
         requestPause: 0,
         queue: queueFactory({
           db,
-          queuedItems: ['a']
+          queuedItems: ['a'],
+          visitedItems: []
         })
       });
 
@@ -82,7 +104,8 @@ describe('crawl', () => {
         requestPause: 0,
         queue: queueFactory({
           db,
-          queuedItems: new Array(loopCount).fill(null).map((_, index) => index.toString())
+          queuedItems: new Array(loopCount).fill(null).map((_, index) => index.toString()),
+          visitedItems: []
         })
       });
 
@@ -102,7 +125,8 @@ describe('crawl', () => {
         requestPause: 0,
         queue: queueFactory({
           db,
-          queuedItems: ['first']
+          queuedItems: ['first'],
+          visitedItems: []
         })
       });
 
@@ -122,7 +146,8 @@ describe('crawl', () => {
         requestPause: 0,
         queue: queueFactory({
           db,
-          queuedItems: ['first']
+          queuedItems: ['first'],
+          visitedItems: []
         })
       });
 

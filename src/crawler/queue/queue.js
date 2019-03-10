@@ -22,10 +22,10 @@ const filterByDict = (arr, dict) => uniq(arr).filter((item) => !dict[item]);
 
 module.exports = function queueFactory(config) {
   ensureConfig(config, 'db', 'object');
+  ensureConfig(config, 'visitedItems', 'array');
+  ensureConfig(config, 'queuedItems', 'array');
 
   const { visitedItems = [], queuedItems = [], db } = config;
-
-  qbLog.queueInit(`visited ${visitedItems.length}, queued ${queuedItems.length}`);
 
   const dbAPI = dbAPIFactory({
     db
@@ -33,6 +33,8 @@ module.exports = function queueFactory(config) {
 
   const visited = visitedItems.reduce((obj, item) => setDict(obj, item), {});
   let queued = filterByDict(queuedItems, visited);
+
+  qbLog.queueInit(`visited ${visitedItems.length}, queued ${queued.length}`);
 
   async function visit(item) {
     setDict(visited, item);

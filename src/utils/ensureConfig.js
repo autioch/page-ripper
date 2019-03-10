@@ -20,7 +20,20 @@ module.exports = function ensureConfig(config, optionName, expectedType) {
 
   const option = config[optionName];
 
+  if (option === undefined || option === null) { // eslint-disable-line no-undefined
+    throw Error(`${callerName()} requires "${optionName}" ${expectedType} in config`);
+  }
+
+  const type = typeof option;
+
+  if (expectedType === 'array') {
+    if (Array.isArray(option)) {
+      return;
+    }
+    throw Error(`${callerName()} requires "${optionName}" Array in config, got ${type}`);
+  }
+
   if (option === undefined || option === null || typeof option !== expectedType) { // eslint-disable-line no-undefined
-    throw Error(`${callerName()} requires "${optionName}" ${expectedType} in config, got ${typeof option}`);
+    throw Error(`${callerName()} requires "${optionName}" ${expectedType} in config, got ${type}`);
   }
 };

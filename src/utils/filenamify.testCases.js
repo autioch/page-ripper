@@ -50,6 +50,10 @@ module.exports = [
     input: 'https://rudaslaska.com.pl/galeria/285213/nowy_bytom_-_plac_jana_paw%B3a_ii.jpg',
     output: 'rudaslaska.com.pl_galeria_285213_nowy_bytom_-_plac_jana_paw³a_ii.jpg'
   },
+  {
+    input: 'http://joemonster.org/art/42474/Mistrzowie_internetu_LXXXI_Wlasnie_o_tym_marzy_90_facetow',
+    output: 'joemonster.org_art_42474_Mistrzowie_internetu_LXXXI_Wlasnie_o_tym_marzy_90_facetow'
+  },
   'https://s3.flog.pl/media/foto/2502873_plac-jana-pawla-ii-w-rudzie-slaskiej_1.jpg',
   'https://upload.wikimedia.org/wikipedia/commons/1/1b/Bia%C5%82ystok,_Rynek_Ko%C5%9Bciuszki,_widok_na_katedr%C4%99_2011.jpg',
   'https://zul.blog.onet.pl/files/2013/11/dzieci.jpg',
