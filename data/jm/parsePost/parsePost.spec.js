@@ -6,14 +6,10 @@ const parsePost = require('./parsePost');
 const testCases = require('./testCases');
 
 describe('JM parsePost', () => {
-  testCases.forEach((testCase, index) => {
-    let result = {
-      id: 'a',
-      nextUrls: [],
-      imageUrls: []
-    };
+  testCases.forEach((testCase) => {
+    let result;
 
-    describe(`${index} setup`, () => {
+    describe(`${testCase.id} setup`, () => {
       it('parses without throwing', () => {
         const $ = cheerio.load(testCase.htm);
 
@@ -43,7 +39,7 @@ describe('JM parsePost', () => {
       }
     });
 
-    describe(`${index} extras`, () => {
+    describe(`${testCase.id} extras`, () => {
       it('returns title', () => {
         expect(result.title).to.deep.equal(testCase.title);
       });

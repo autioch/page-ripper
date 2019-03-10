@@ -3,7 +3,6 @@
 /* eslint-disable no-magic-numbers */
 module.exports = {
   url: 'https://joemonster.org/art/28741/Zamieni%C5%82%20domowe%20podw%C3%B3rko%20w%20fajn%C4%85%20miejsc%C3%B3wk%C4%99%20do%20letniego%20odpoczynku',
-  htm: 'Zamienił domowe podwórko w fajną miejscówkę do letniego odpoczynku',
 
   /* Required */
   id: '28741',

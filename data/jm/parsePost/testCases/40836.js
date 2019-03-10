@@ -4,7 +4,6 @@
 module.exports = {
   /* Input */
   url: 'http://joemonster.org/art/40836/Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw',
-  htm: 'Mistrzowie_internetu_XXXIV_Swiezak_Viagra_Wladyslaw',
 
   /* Required */
   id: '40836',

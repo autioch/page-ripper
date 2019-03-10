@@ -6,8 +6,7 @@ const { IGNORED_TAGS, GATEWAY_ERROR } = require('./consts');
 
 module.exports = function parsePost($, url, bodyText) {
   const text = (el) => $(el).text().trim();
-  const urlParts = url.split('/');
-  const id = urlParts[urlParts.length - 2]; // eslint-disable-line no-magic-numbers
+  const [,,,, id] = url.split('/');
 
   if (bodyText.includes(GATEWAY_ERROR)) {
     return {

@@ -3,7 +3,6 @@
 /* eslint-disable no-magic-numbers */
 module.exports = {
   url: 'http://joemonster.org/art/22133/Najtrudniejsze%20pytanie',
-  htm: 'Najtrudniejsze pytanie',
 
   /* Required */
   id: '22133',

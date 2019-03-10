@@ -1,3 +1,7 @@
+const JMtestCases = require('../../data/jm/parsePost/testCases');
+
+const JMlinks = JMtestCases.reduce((arr, testCase) => arr.concat(testCase.imageUrls).concat(testCase.title), []);
+
 module.exports = [
   {
     input: 'absolute.com/path/example',
@@ -48,5 +52,6 @@ module.exports = [
   },
   'https://s3.flog.pl/media/foto/2502873_plac-jana-pawla-ii-w-rudzie-slaskiej_1.jpg',
   'https://upload.wikimedia.org/wikipedia/commons/1/1b/Bia%C5%82ystok,_Rynek_Ko%C5%9Bciuszki,_widok_na_katedr%C4%99_2011.jpg',
-  'https://zul.blog.onet.pl/files/2013/11/dzieci.jpg'
+  'https://zul.blog.onet.pl/files/2013/11/dzieci.jpg',
+  ...JMlinks
 ];
