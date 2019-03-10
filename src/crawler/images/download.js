@@ -23,18 +23,18 @@ qbLog({
   }
 });
 
-function saveImage(imageInfo, dataPath) {
+function saveImage(imageInfo) {
   const { imageUrl, fullPath } = imageInfo;
 
   return new Promise((resolve, reject) => {
     const fail = (err) => {
       qbLog.imageError(err.message);
-      log(dataPath, 'Failed to download image', JSON.stringify(imageInfo), err.message);
+      log('Image error', JSON.stringify(imageInfo), err.message);
       reject(err);
       clearTimeout(hangTimeout); // eslint-disable-line no-use-before-define
     };
 
-    const hangTimeout = setTimeout(() => fail(new Error('Image timeout ')), HANG_DELAY);
+    const hangTimeout = setTimeout(() => fail(new Error('Timeout ')), HANG_DELAY);
 
     request({
       url: imageUrl,
@@ -59,9 +59,9 @@ function saveImage(imageInfo, dataPath) {
           clearTimeout(hangTimeout);
         });
       } else if (body) {
-        fail(new Error(`Image loading error - ${res.statusCode}`));
+        fail(new Error(res.statusCode));
       } else {
-        fail(new Error(`Image loading error - empty body`));
+        fail(new Error(`Empty body`));
       }
     });
   })
@@ -82,7 +82,7 @@ module.exports = async function downloadImages(dataPath, folderName, imageUrls) 
     await fs.promises.mkdir(absoluteFolderPath);
   }
 
-  const promises = imageInfos.map((imageInfo) => saveImage(imageInfo, dataPath));
+  const promises = imageInfos.map(saveImage);
 
   return Promise.all(promises).then(() => qbLog.imageDone());
 };

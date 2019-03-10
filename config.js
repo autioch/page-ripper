@@ -13,6 +13,7 @@ const startingPages = [
 module.exports = {
   dataPath,
   dbPath,
+  rootPath,
   startingPages,
   parsePost
 };

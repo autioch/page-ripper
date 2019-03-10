@@ -37,10 +37,9 @@ module.exports = function postDownloadFactory(config) {
   ensureConfig(config, 'requestPost', 'function');
   ensureConfig(config, 'parsePost', 'function');
   ensureConfig(config, 'idStore', 'object');
-  ensureConfig(config, 'dataPath', 'string');
   ensureConfig(config, 'db', 'object');
 
-  const { requestPost, parsePost, idStore, db, dataPath } = config;
+  const { requestPost, parsePost, idStore, db } = config;
 
   const dbAPI = dbAPIFactory({
     db
@@ -52,7 +51,7 @@ module.exports = function postDownloadFactory(config) {
 
     if (result.error) {
       qbLog.postError(result.error.message);
-      log(dataPath, 'Failed to download post', url, result.error.message);
+      log('Failed to download post', url, result.error.message);
 
       return result;
     }
@@ -61,14 +60,14 @@ module.exports = function postDownloadFactory(config) {
     const postInfo = parsePost($, url, result.body);
 
     if (idStore.has(postInfo.id)) {
-      qbLog.postVisited(postInfo.id, url);
+      qbLog.postVisited();
 
       return {};
     }
 
     postInfo.folderName = getFolderName(postInfo);
 
-    qbLog.postSave(postInfo.id, postInfo.folderName);
+    qbLog.postSave();
     await dbAPI.save({
       id: postInfo.id,
       url,

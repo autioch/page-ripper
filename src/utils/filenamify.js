@@ -1,6 +1,7 @@
 /*  eslint-disable no-control-regex */
 const url = require('url');
 const qbLog = require('qb-log');
+const log = require('./log');
 
 qbLog({
   filenamify: {
@@ -44,6 +45,7 @@ module.exports = function filenamify(rawUrl) {
     return secured.slice(0, MAX_LENGTH);
   } catch (err) {
     qbLog.filenamify(err.message);
+    log(err.message);
 
     return null;
   }
