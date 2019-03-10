@@ -50,8 +50,8 @@ module.exports = function postDownloadFactory(config) {
     const result = await requestPost(url);
 
     if (result.error) {
-      qbLog.postError(result.error.message);
-      log('Failed to download post', url, result.error.message);
+      qbLog.postError(result.error);
+      log('Failed to download post', url, result.error);
 
       return result;
     }

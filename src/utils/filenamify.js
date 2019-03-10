@@ -42,7 +42,7 @@ module.exports = function filenamify(rawUrl) {
 
     const secured = RESERVED.test(fileName) ? SAFE + fileName + SAFE : fileName;
 
-    return secured.slice(0, MAX_LENGTH);
+    return secured.trim().slice(0, MAX_LENGTH);
   } catch (err) {
     qbLog.filenamify(err.message);
     log(err.message);
