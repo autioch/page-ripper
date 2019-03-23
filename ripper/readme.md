@@ -11,7 +11,7 @@ The main export is an asynchronous function `pageRipper`, which requires configu
 ### parsePost
 Function that must be passed in configuration. It will be used to extract information from the retrieved post html.
 
-It will accept three arguments:
+It will be provided three arguments:
  - `cheerio` instance with loaded post body,
  - post url,
  - raw response html body.
@@ -35,4 +35,7 @@ The object can contain any other properties, they will be all persisted in the d
 
 ## TODO
 2. Add post browser.
-4. Separate post parser from id generator.
+4. Separate post parser from id generator:
+  - in table `queue`, `id` should be stored.
+  - `parsePost` should return `nextUrls` in form of array of objects, with `id` and `url` properties, instead of just array of strings representing `url`
+  - queue should no longer operate on `url` only, but instead check ids
