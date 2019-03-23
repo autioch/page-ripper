@@ -1,0 +1,28 @@
+{
+  "name": "page-ripper",
+  "version": "0.0.3",
+  "description": "Work in progress",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "mocha --reporter=list ./**/*.spec.js",
+    "test:watch": "mocha --reporter=min --watch ./**/*.spec.js & exit 0"
+  },
+  "author": "github.com/autioch",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "image-downloader": "^3.4.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "qb-log": "^1.0.1",
+    "sqlite3": "^4.0.4",
+    "thenify-all": "^1.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "eslint": "^5.12.0",
+    "eslint-config-qb": "^1.0.0"
+  }
+}
