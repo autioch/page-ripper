@@ -1,6 +1,7 @@
 const qbLog = require('qb-log');
 const connect = require('./connect');
 const install = require('./install');
+const update = require('./update');
 const Wrapper = require('./wrapper');
 const prepareLastState = require('./prepareLastState');
 
@@ -29,6 +30,10 @@ module.exports = async function setup(dbPath) {
 
     qbLog.install('Done');
   }
+
+  qbLog.install('Update database');
+  await update(db);
+  qbLog.install('Done');
 
   const { existingIds, visitedItems, queuedItems } = await prepareLastState(db);
 

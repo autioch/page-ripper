@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3');
 const install = require('./install');
+const update = require('./update');
 const Wrapper = require('./wrapper');
 
 module.exports = async function dbMock(installApp = true) {
@@ -7,6 +8,7 @@ module.exports = async function dbMock(installApp = true) {
 
   if (installApp) {
     await install(db);
+    await update(db);
   }
 
   return db;

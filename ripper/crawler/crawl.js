@@ -16,7 +16,7 @@ module.exports = function crawlFactory(config) {
   ensureConfig(config, 'queue', 'object');
   ensureConfig(config, 'db', 'object');
 
-  const { downloader, queue, db, requestPause = REQUEST_PAUSE } = config;
+  const { downloader, queue, db, dataPath, requestPause = REQUEST_PAUSE } = config;
   let loopCount = 0;
   let resolve;
 
@@ -24,10 +24,16 @@ module.exports = function crawlFactory(config) {
     qbLog.crawl(loopCount + 1);
 
     const postInfo = await downloader.downloadPost(postUrl);
-    const { folderName, imageUrls = [], nextUrls = [] } = postInfo;
+    const { folderName, imageUrls = [], nextUrls = [], id } = postInfo;
 
     await queue.add(nextUrls);
-    await downloadImages(config.dataPath, folderName, imageUrls);
+    await downloadImages({
+      id,
+      db,
+      dataPath,
+      folderName,
+      imageUrls
+    });
     await queue.visit(postUrl);
 
     loopCount++; // eslint-disable-line no-plusplus

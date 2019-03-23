@@ -34,7 +34,5 @@ The object can contain any other properties, they will be all persisted in the d
 5. Execute `start`: `npm run start`.
 
 ## TODO
-1. Add table of post images, with flag if they're downloaded or not, maybe error message.
 2. Add post browser.
-3. Use better logger.
 4. Separate post parser from id generator.
