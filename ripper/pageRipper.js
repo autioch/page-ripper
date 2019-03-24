@@ -1,4 +1,4 @@
-const setupDb = require('./db');
+const setupDb = require('../db');
 const crawlerFactory = require('./crawler');
 const { ensureConfig } = require('./utils');
 

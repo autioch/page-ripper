@@ -1,0 +1,35 @@
+{
+  "name": "page-ripper-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:watch": "nodemon index.js"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Autioch/page-ripper-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Autioch/page-ripper-server/issues"
+  },
+  "homepage": "https://github.com/Autioch/page-ripper-server#readme",
+  "dependencies": {
+    "app-module-path": "2.2.0",
+    "bluebird": "3.5.3",
+    "body-parser": "1.18.3",
+    "express": "4.16.4",
+    "nodemon": "1.18.10",
+    "qb-log": "1.0.1"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "eslint": "5.15.3",
+    "eslint-config-qb": "1.0.0",
+    "mocha": "6.0.2"
+  }
+}

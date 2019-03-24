@@ -3,7 +3,7 @@
 /* eslint-disable no-magic-numbers */
 const { expect } = require('chai');
 const crawlerFactory = require('./factory');
-const dbMock = require('../db/mock');
+const dbMock = require('../../db/mock');
 
 describe('crawlerFactory', () => {
   let db;

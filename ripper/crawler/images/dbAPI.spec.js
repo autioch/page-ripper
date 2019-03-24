@@ -5,13 +5,17 @@
 /* eslint-disable max-len */
 const { expect } = require('chai');
 const dbAPIFactory = require('./dbAPI');
-const dbMock = require('../../db/mock');
+const dbMock = require('../../../db/mock');
 
 describe('crawler images db API', () => {
   let db;
 
   beforeEach(async () => {
     db = await dbMock();
+
+    const row = await db.all('SELECT version FROM config');
+
+    console.log('db', row[0].version);
   });
 
   afterEach(async () => {

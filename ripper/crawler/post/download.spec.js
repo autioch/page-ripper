@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const postDownloadFactory = require('./download');
 const idStoreFactory = require('../idStore');
 const { errorTestCases, validTestCases } = require('./download.testCases');
-const dbMock = require('../../db/mock');
+const dbMock = require('../../../db/mock');
 
 const DELAY = 1;
 

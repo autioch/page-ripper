@@ -4,7 +4,7 @@
 const { expect } = require('chai');
 const { queueFactory } = require('./queue');
 const crawlFactory = require('./crawl');
-const dbMock = require('../db/mock');
+const dbMock = require('../../db/mock');
 
 const mockPostDownloader = (postInfo = {}) => ({
   downloadPost: () => new Promise((res) => setTimeout(() => res(postInfo), 10))

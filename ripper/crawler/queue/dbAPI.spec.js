@@ -5,7 +5,7 @@
 /* eslint-disable max-len */
 const { expect } = require('chai');
 const dbAPIFactory = require('./dbAPI');
-const dbMock = require('../../db/mock');
+const dbMock = require('../../../db/mock');
 
 describe('cawler dbAPIFactory', () => {
   let db;

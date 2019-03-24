@@ -2,7 +2,7 @@
 /* eslint-disable max-nested-callbacks */
 const { expect } = require('chai');
 const queueFactory = require('./queue');
-const dbMock = require('../../db/mock');
+const dbMock = require('../../../db/mock');
 
 describe('queue', () => {
   let db;
