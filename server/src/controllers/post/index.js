@@ -1,37 +1,23 @@
-const { HTTP_STATUS: { OK, SERVER_ERROR } } = require('../../consts');
+const { HTTP_STATUS: { OK } } = require('../../consts');
+const manager = require('./manager');
 
 module.exports = [{
   path: '/post',
   method: 'get',
   handler: (db) => async (req, res) => {
-    try {
-      const rows = await db.all('SELECT id from posts order by id');
+    const posts = await manager.getPostList(db);
 
-      const posts = rows.map((row) => row.id).sort((a, b) => a - b);
-
-      res.setHeader('Content-Type', 'text/javascript');
-      res.status(OK).send(JSON.stringify(posts, null, ' '));
-    } catch (err) {
-      res.status(SERVER_ERROR).send({
-        error: err.message
-      });
-    }
+    res.setHeader('Content-Type', 'text/javascript');
+    res.status(OK).send(JSON.stringify(posts, null, ' '));
   }
 }, {
-  path: '/post/:id',
+  path: '/post/:postId',
   method: 'get',
   handler: (db) => async (req, res) => {
-    try {
-      const { id } = req.params;
-      const [post] = await db.all('SELECT * from posts WHERE id = ?', [id]);
+    const { postId } = req.params;
+    const post = await manager.getPost(db, postId);
 
-      post.postInfo = JSON.parse(post.postInfo);
-      res.setHeader('Content-Type', 'text/javascript');
-      res.status(OK).send(JSON.stringify(post, null, ' '));
-    } catch (err) {
-      res.status(SERVER_ERROR).send({
-        error: err.message
-      });
-    }
+    res.setHeader('Content-Type', 'text/javascript');
+    res.status(OK).send(JSON.stringify(post, null, ' '));
   }
 }];

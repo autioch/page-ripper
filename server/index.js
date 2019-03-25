@@ -2,7 +2,11 @@ const qbLog = require('qb-log')('simple');
 const setupDb = require('../db');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { setupControllers, setupStatic, setupErrors } = require('./src');
+const {
+  // setupErrors,
+  setupControllers,
+  setupStatic
+} = require('./src');
 
 async function setupServer(config) {
   const { dbPath, port } = config;
@@ -27,7 +31,8 @@ async function setupServer(config) {
   });
 
   setupControllers(app, db);
-  setupErrors(app);
+
+  // setupErrors(app);
 
   qbLog.info('Backend application ready.');
 

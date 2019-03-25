@@ -1,13 +1,25 @@
+const { HTTP_STATUS: { SERVER_ERROR } } = require('../consts');
 const qbLog = require('qb-log');
 
 const controllers = [
-  require('./post')
+  require('./post'),
+  require('./image')
 ];
 
 module.exports = function setupControllers(app, db) {
   const endpointCount = controllers.reduce((count, controller) => {
     controller.forEach((action) => {
-      app[action.method](action.path, action.handler(db));
+      const withDb = action.handler(db);
+
+      app[action.method](action.path, async (req, res) => {
+        try {
+          await withDb(req, res);
+        } catch (err) {
+          res.status(SERVER_ERROR).send({
+            error: err.message
+          });
+        }
+      });
     });
 
     return count + controller.length;
