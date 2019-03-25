@@ -1,7 +1,13 @@
 const path = require('path');
-const { httpStatus: { SERVER_ERROR } } = require('src/utils');
+const { HTTP_STATUS: { SERVER_ERROR } } = require('../consts');
 
-module.exports = function error(req, res) {
+const FILE_PATH = path.join(__dirname, './error.html');
+
+function errorHandler(req, res) {
   res.status(SERVER_ERROR);
-  res.sendFile(path.join(__dirname, './error.html'));
+  res.sendFile(FILE_PATH);
+}
+
+module.exports = function setupErrors(app) {
+  app.use(errorHandler);
 };

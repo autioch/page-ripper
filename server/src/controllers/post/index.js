@@ -1,4 +1,4 @@
-const { httpStatus: { OK, SERVER_ERROR } } = require('src/utils');
+const { HTTP_STATUS: { OK, SERVER_ERROR } } = require('../../consts');
 
 module.exports = [{
   path: '/post',

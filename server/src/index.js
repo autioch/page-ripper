@@ -1,8 +1,9 @@
-const qbLog = require('qb-log');
-const controllers = require('./controllers');
-const setup = require('./setup');
-const port = 9090;
-const config = require('../config');
+const setupControllers = require('./controllers');
+const setupStatic = require('./static');
+const setupErrors = require('./errors');
 
-setup(controllers, config)
-  .then((app) => app.listen(port, () => qbLog.info(`Listening on PORT ${port}`)));
+module.exports = {
+  setupStatic,
+  setupControllers,
+  setupErrors
+};
