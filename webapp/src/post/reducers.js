@@ -1,10 +1,9 @@
-import { POST_SELECT,  POST_SET_LIST} from './actionTypes';
-
+import { POST_SELECT, POST_SET_LIST } from './actionTypes';
 
 const initialState = {
   posts: [],
   postId: null
-}
+};
 
 export function posts(state = initialState, action) {
   switch (action.type) {
