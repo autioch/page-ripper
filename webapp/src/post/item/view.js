@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectPost } from '../../store/actions';
+import { selectPost } from '../actions';
 
 import './styles.scss';
 

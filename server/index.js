@@ -2,6 +2,7 @@ const qbLog = require('qb-log')('simple');
 const setupDb = require('../db');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const {
   // setupErrors,
   setupControllers,
@@ -15,6 +16,8 @@ async function setupServer(config) {
   qbLog.info('Setting up server...');
 
   const app = express();
+
+  app.use(cors());
 
   setupStatic(app);
 

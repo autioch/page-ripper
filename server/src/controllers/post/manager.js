@@ -2,7 +2,10 @@ module.exports = {
   async getPostList(db) {
     const rows = await db.all('SELECT id from posts order by id');
 
-    const posts = rows.map((row) => row.id).sort((a, b) => a - b);
+    const posts = rows.sort((a, b) => a.id - b.id).map((row) => ({
+      id: row.id,
+      title: row.id
+    }));
 
     return posts;
   },

@@ -5,9 +5,9 @@ import './styles.scss';
 
 const mapStateToProps = (state) => state.posts;
 
-const PostListView = ({ posts }) => (
+const PostListView = ({ list }) => (
   <div className="post-list">
-    {posts.map((post) => <PostItemView key={post.id} post={post}/>)}
+    {list.map((post) => <PostItemView key={post.id} post={post}/>)}
   </div>
 );
 
