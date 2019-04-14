@@ -1,0 +1,38 @@
+.image-item {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  border: solid 1px transparent;
+  text-align: center;
+  position: relative;
+  transition: background 200ms;
+
+  &:hover {
+    background: #def;
+
+    > .image-item__options {
+      display: block;
+    }
+  }
+}
+
+.image-item__el {
+  max-width: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
+}
+
+.image-item__options {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+
+.image-item__option {
+  > a {
+    text-decoration: none;
+    color: #212121;
+  }
+}

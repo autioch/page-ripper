@@ -1,7 +1,8 @@
 .post-list {
   height: 100%;
   overflow: auto;
-  width: 5em;
+  width: 200px;
+  flex: none;
 
   .ReactVirtualized__List {
     outline: none;

@@ -1,4 +1,7 @@
 .post-item {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &.is-active {
     background-color: #def;

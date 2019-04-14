@@ -7,11 +7,13 @@ import loggerMiddleware from './logger';
 import { fetchPosts } from './post/actions';
 
 import App from './App';
-import postsReducer from './post/reducer';
+import postReducer from './post/reducer';
+import imageReducer from './image/reducer';
 import './index.css';
 
 const app = combineReducers({
-  posts: postsReducer
+  posts: postReducer,
+  images: imageReducer
 });
 
 const store = createStore(app, applyMiddleware(thunkMiddleware, loggerMiddleware));
