@@ -1,4 +1,4 @@
-import { POST_SELECT, POST_FETCH_LIST, POST_SET_LIST } from './actionTypes';
+import { POST_SELECT, POST_LIST_FETCH, POST_LIST_SET } from './actionTypes';
 
 const initialState = {
   list: [],
@@ -13,12 +13,12 @@ export default function posts(state = initialState, action) {
         ...state,
         selectedId: action.selectedId
       };
-    case POST_FETCH_LIST:
+    case POST_LIST_FETCH:
       return {
         ...state,
-        isLoading: true
+        isLoading: action.isLoading
       };
-    case POST_SET_LIST:
+    case POST_LIST_SET:
       return {
         ...state,
         isLoading: false,

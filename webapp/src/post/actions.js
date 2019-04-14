@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { POST_SELECT, POST_SET_LIST, POST_FETCH_LIST } from './actionTypes';
+import { POST_SELECT, POST_LIST_SET, POST_LIST_FETCH } from './actionTypes';
 
 export function selectPost(selectedId) {
   return {
@@ -10,23 +10,27 @@ export function selectPost(selectedId) {
 
 export function setPostList(list) {
   return {
-    type: POST_SET_LIST,
+    type: POST_LIST_SET,
     list
   };
 }
 
-export function fetchPostsStart() {
+export function fetchPostList(isLoading) {
   return {
-    type: POST_FETCH_LIST
+    type: POST_LIST_FETCH,
+    isLoading
   };
 }
 
 export function fetchPosts() {
   return (dispatch) => {
-    dispatch(fetchPostsStart());
+    dispatch(fetchPostList(true));
 
     return axios
       .get(`http://localhost:9090/post`)
-      .then(({ data }) => dispatch(setPostList(data)));
+      .then(({ data }) => {
+        dispatch(fetchPostList(false));
+        dispatch(setPostList(data));
+      });
   };
 }
