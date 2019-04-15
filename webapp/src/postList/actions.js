@@ -8,28 +8,28 @@ export function selectPost(selectedId) {
   };
 }
 
-export function setPostList(list) {
+export function setPostList(items) {
   return {
     type: POST_LIST_SET,
-    list
+    items
   };
 }
 
-export function fetchPostList(isLoading) {
+export function setPostListLoading(isLoading) {
   return {
     type: POST_LIST_FETCH,
     isLoading
   };
 }
 
-export function fetchPosts() {
+export function fetchPostList() {
   return (dispatch) => {
-    dispatch(fetchPostList(true));
+    dispatch(setPostListLoading(true));
 
     return axios
       .get(`http://localhost:9090/post`)
       .then(({ data }) => {
-        dispatch(fetchPostList(false));
+        dispatch(setPostListLoading(false));
         dispatch(setPostList(data));
       });
   };

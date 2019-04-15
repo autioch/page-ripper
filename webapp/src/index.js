@@ -4,16 +4,18 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { render } from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from './logger';
-import { fetchPosts } from './post/actions';
 
 import App from './App';
-import postReducer from './post/reducer';
-import imageReducer from './image/reducer';
+import { fetchPostList } from './postList/actions';
+import postListReducer from './postList/reducer';
+import postDetailsReducer from './postDetails/reducer';
+import imageListReducer from './imageList/reducer';
 import './index.css';
 
 const app = combineReducers({
-  posts: postReducer,
-  images: imageReducer
+  postDetails: postDetailsReducer,
+  postList: postListReducer,
+  imageList: imageListReducer
 });
 
 const store = createStore(app, applyMiddleware(thunkMiddleware, loggerMiddleware));
@@ -26,4 +28,4 @@ render(
   document.getElementById('root')
 );
 
-store.dispatch(fetchPosts());
+store.dispatch(fetchPostList());

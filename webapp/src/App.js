@@ -1,11 +1,14 @@
 import React from 'react';
-import ImageListView from './image/view';
-import PostListView from './post/view';
+import ImageListView from './imageList/view';
+import PostListView from './postList/view';
+import PostDetailsView from './postDetails/view';
+
 import './App.css';
 
 const App = () => (
   <div className="App">
     <PostListView/>
+    <PostDetailsView/>
     <ImageListView/>
   </div>
 );

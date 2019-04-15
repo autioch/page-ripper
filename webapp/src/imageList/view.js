@@ -5,19 +5,19 @@ import getDimensions from './getDimensions';
 import './styles.scss';
 
 const mapStateToProps = (state) => ({
-  list: state.images.list,
-  isLoading: state.images.isLoading,
-  postId: state.posts.selectedId
+  items: state.imageList.items,
+  isLoading: state.imageList.isLoading
 });
 
-const ImageListView = ({ list, isLoading, postId }) => {
-  const dimensions = getDimensions(list.length);
+const ImageListView = ({ items, isLoading }) => {
+  const visibleList = items.filter((image) => !image.isHidden);
+  const dimensions = getDimensions(visibleList.length);
 
   return (
     <div className="image-list">
       {isLoading ? <div>Loading...</div> : ''}
-      {isLoading || list.length ? '' : <div>No images in post</div>}
-      {isLoading ? '' : list.map((img) => <ItemView key={img} image={img} postId={postId} dimensions={dimensions}/>)}
+      {isLoading || visibleList.length ? '' : <div>No images in post</div>}
+      {isLoading ? '' : visibleList.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
     </div>
   );
 };

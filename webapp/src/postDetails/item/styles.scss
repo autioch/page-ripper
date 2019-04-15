@@ -1,0 +1,9 @@
+.post-detail {
+  &:not(:first-child) {
+    margin-top: 1em;
+  }
+}
+
+.post-detail__header {
+  font-weight: bold;
+}

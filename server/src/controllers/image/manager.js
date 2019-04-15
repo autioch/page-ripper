@@ -15,7 +15,10 @@ module.exports = {
       images = await fs.promises.readdir(fullPath);
     }
 
-    return images;
+    return images.map((image) => ({
+      id: image,
+      title: image
+    }));
   },
 
   async getPostImagePath(db, postId, imageId) {

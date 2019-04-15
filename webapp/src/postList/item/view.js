@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectPost } from '../actions';
-import { fetchImages } from '../../image/actions';
+import { fetchImageList } from '../../imageList/actions';
+import { fetchPostDetails } from '../../postDetails/actions';
 
 import './styles.scss';
 
 const mapStateToProps = (state, ownProps) => ({
-  isActive: ownProps.post.id === state.posts.selectedId
+  isActive: ownProps.post.id === state.postList.selectedId
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick() {
     dispatch(selectPost(ownProps.post.id));
-    dispatch(fetchImages(ownProps.post.id));
+    dispatch(fetchImageList(ownProps.post.id));
+    dispatch(fetchPostDetails(ownProps.post.id));
   }
 });
 

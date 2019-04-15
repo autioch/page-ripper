@@ -1,12 +1,12 @@
 import { POST_SELECT, POST_LIST_FETCH, POST_LIST_SET } from './actionTypes';
 
 const initialState = {
-  list: [],
+  items: [],
   postId: null,
   isLoading: false
 };
 
-export default function posts(state = initialState, action) {
+export default function postListReducer(state = initialState, action) {
   switch (action.type) {
     case POST_SELECT:
       return {
@@ -21,7 +21,7 @@ export default function posts(state = initialState, action) {
     case POST_LIST_SET:
       return {
         ...state,
-        list: action.list
+        items: action.items
       };
     default:
       return state;
