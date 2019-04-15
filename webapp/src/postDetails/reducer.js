@@ -1,4 +1,4 @@
-import { POST_DETAILS_SET, POST_DETAILS_LOADING } from './actionTypes';
+import { POST_DETAILS_SET, POST_DETAILS_LOADING, POST_DETAILS_TOGGLE } from './actionTypes';
 
 const initialState = {
   details: undefined, // eslint-disable-line no-undefined
@@ -15,6 +15,11 @@ export default function postDetailsReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: action.isLoading
+      };
+    case POST_DETAILS_TOGGLE:
+      return {
+        ...state,
+        isExpanded: action.isExpanded
       };
     default:
       return state;

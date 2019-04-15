@@ -1,4 +1,4 @@
-import { POST_SELECT, POST_LIST_FETCH, POST_LIST_SET } from './actionTypes';
+import { POST_SELECT, POST_LIST_LOADING, POST_LIST_SET, POST_LIST_TOGGLE } from './actionTypes';
 
 const initialState = {
   items: [],
@@ -13,10 +13,15 @@ export default function postListReducer(state = initialState, action) {
         ...state,
         selectedId: action.selectedId
       };
-    case POST_LIST_FETCH:
+    case POST_LIST_LOADING:
       return {
         ...state,
         isLoading: action.isLoading
+      };
+    case POST_LIST_TOGGLE:
+      return {
+        ...state,
+        isExpanded: action.isExpanded
       };
     case POST_LIST_SET:
       return {

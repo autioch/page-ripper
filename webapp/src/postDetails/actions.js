@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { POST_DETAILS_SET, POST_DETAILS_LOADING } from './actionTypes';
+import { POST_DETAILS_SET, POST_DETAILS_LOADING, POST_DETAILS_TOGGLE } from './actionTypes';
 
 export function setPostDetails(details) {
   return {
@@ -8,6 +8,13 @@ export function setPostDetails(details) {
       url: details.url,
       ...details.postInfo
     }).sort((a, b) => a[0].localeCompare(b[0]))
+  };
+}
+
+export function togglePostDetails(isExpanded) {
+  return {
+    type: POST_DETAILS_TOGGLE,
+    isExpanded
   };
 }
 

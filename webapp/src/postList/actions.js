@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { POST_SELECT, POST_LIST_SET, POST_LIST_FETCH } from './actionTypes';
+import { POST_SELECT, POST_LIST_SET, POST_LIST_LOADING, POST_LIST_TOGGLE } from './actionTypes';
 
 export function selectPost(selectedId) {
   return {
@@ -15,9 +15,16 @@ export function setPostList(items) {
   };
 }
 
+export function togglePostList(isExpanded) {
+  return {
+    type: POST_LIST_TOGGLE,
+    isExpanded
+  };
+}
+
 export function setPostListLoading(isLoading) {
   return {
-    type: POST_LIST_FETCH,
+    type: POST_LIST_LOADING,
     isLoading
   };
 }

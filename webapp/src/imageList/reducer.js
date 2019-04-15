@@ -1,4 +1,4 @@
-import { IMAGE_LIST_SET, IMAGE_LIST_FETCH, IMAGE_HIDE } from './actionTypes';
+import { IMAGE_LIST_SET, IMAGE_LIST_FETCH, IMAGE_HIDE, IMAGE_TOGGLE } from './actionTypes';
 
 const initialState = {
   items: [],
@@ -18,7 +18,11 @@ export default function imageListReducer(state = initialState, action) {
         isLoading: false,
         items: action.items
       };
-
+    case IMAGE_TOGGLE:
+      return {
+        ...state,
+        isExpanded: action.isExpanded
+      };
     case IMAGE_HIDE:
       return {
         ...state,
