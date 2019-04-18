@@ -10,6 +10,7 @@ body,
   display: flex;
   background-color: #212121;
   color: #eee;
+  font-size: 12px;
   /* flex-direction: row; */
   /* align-items: stretch; */
 }

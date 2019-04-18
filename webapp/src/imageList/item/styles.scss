@@ -33,7 +33,8 @@
 .image-item__option {
   cursor: pointer;
 
-  > a {
+  > a,
+  > div {
     text-decoration: none;
     color: #212121;
   }
