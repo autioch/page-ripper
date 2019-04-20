@@ -2,7 +2,8 @@ import { POST_DETAILS_SET, POST_DETAILS_LOADING, POST_DETAILS_TOGGLE } from './a
 
 const initialState = {
   details: undefined, // eslint-disable-line no-undefined
-  isLoading: false
+  isLoading: false,
+  isExpanded: true
 };
 
 export default function postDetailsReducer(state = initialState, action) {
@@ -19,7 +20,7 @@ export default function postDetailsReducer(state = initialState, action) {
     case POST_DETAILS_TOGGLE:
       return {
         ...state,
-        isExpanded: action.isExpanded
+        isExpanded: action.isExpanded === undefined ? !state.isExpanded : action.isExpanded
       };
     default:
       return state;

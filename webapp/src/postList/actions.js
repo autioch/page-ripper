@@ -1,10 +1,26 @@
 import axios from 'axios';
-import { POST_SELECT, POST_LIST_SET, POST_LIST_LOADING, POST_LIST_TOGGLE } from './actionTypes';
+import {
+  POST_SELECT, POST_LIST_SET, POST_LIST_LOADING,
+  POST_LIST_TOGGLE,
+  POST_LIST_NEXT, POST_LIST_PREV
+} from './actionTypes';
 
 export function selectPost(selectedId) {
   return {
     type: POST_SELECT,
     selectedId
+  };
+}
+
+export function nextPost() {
+  return {
+    type: POST_LIST_NEXT
+  };
+}
+
+export function prevPost() {
+  return {
+    type: POST_LIST_PREV
   };
 }
 

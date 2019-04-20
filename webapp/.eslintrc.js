@@ -10,6 +10,7 @@ module.exports = {
     'no-unused-vars': ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
     'id-blacklist': ['off'],
     'id-length': ['off'],
+    'no-undefined': ['off'],
     'jsx-a11y/href-no-hash': ['off']
   }
 };

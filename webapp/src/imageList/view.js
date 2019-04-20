@@ -6,12 +6,17 @@ import './styles.scss';
 
 const mapStateToProps = (state) => ({
   items: state.imageList.items,
-  isLoading: state.imageList.isLoading
+  isLoading: state.imageList.isLoading,
+  isExpanded: state.imageList.isExpanded
 });
 
-const ImageListView = ({ items, isLoading }) => {
+const ImageListView = ({ items, isLoading, isExpanded }) => {
   const visibleList = items.filter((image) => !image.isHidden);
   const dimensions = getDimensions(visibleList.length);
+
+  if (!isExpanded) {
+    return '';
+  }
 
   return (
     <div className="image-list">

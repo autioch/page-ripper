@@ -3,3 +3,5 @@ export const POST_SELECT = 'POST_SELECT';
 export const POST_LIST_SET = 'POST_LIST_SET';
 export const POST_LIST_LOADING = 'POST_LIST_LOADING';
 export const POST_LIST_TOGGLE = 'POST_LIST_TOGGLE';
+export const POST_LIST_NEXT = 'POST_LIST_NEXT';
+export const POST_LIST_PREV = 'POST_LIST_PREV';

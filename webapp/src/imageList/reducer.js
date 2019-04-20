@@ -2,7 +2,8 @@ import { IMAGE_LIST_SET, IMAGE_LIST_FETCH, IMAGE_HIDE, IMAGE_TOGGLE } from './ac
 
 const initialState = {
   items: [],
-  isLoading: false
+  isLoading: false,
+  isExpanded: true
 };
 
 export default function imageListReducer(state = initialState, action) {
@@ -21,7 +22,7 @@ export default function imageListReducer(state = initialState, action) {
     case IMAGE_TOGGLE:
       return {
         ...state,
-        isExpanded: action.isExpanded
+        isExpanded: action.isExpanded === undefined ? !state.isExpanded : action.isExpanded
       };
     case IMAGE_HIDE:
       return {
