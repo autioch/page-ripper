@@ -39,6 +39,9 @@ class ImageListView extends Component {
   }
 
   setMainDimensions() {
+    if (!this.el.current) {
+      return;
+    }
     const rect = this.el.current.getBoundingClientRect();
 
     this.setState({

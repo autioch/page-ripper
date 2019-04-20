@@ -20,11 +20,11 @@ const App = () => (
     <PostDetailsView/>
     <ImageListView/>
     <div className="toggle-list">
-      <PostListToggleView/>
-      <ImageListToggleView/>
-      <PostDetailsToggleView/>
       <NextPostView/>
       <PrevPostView/>
+      <PostListToggleView/>
+      <PostDetailsToggleView/>
+      <ImageListToggleView/>
     </div>
   </div>
 );
