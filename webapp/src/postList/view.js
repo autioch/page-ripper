@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PostItemView from './item/view';
 import FilterView from './filter/view';
+import SummaryView from './summary/view';
 import { AutoSizer, List } from 'react-virtualized';
 import './styles.scss';
 
@@ -29,6 +30,7 @@ const PostListView = ({ visibleItems, isLoading, isExpanded }) => {
           )}
         </AutoSizer> }
       </div>
+      <SummaryView />
     </div>
   );
 };

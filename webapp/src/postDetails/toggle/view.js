@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const TogglePostDetailsView = ({ isExpanded, onClick }) => (
   <div className={`toggle-section ${isExpanded ? 'is-expanded' : ''}`} onClick={onClick}>
-    Post details
+    Details
   </div>
 );
 

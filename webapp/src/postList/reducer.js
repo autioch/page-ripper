@@ -17,13 +17,13 @@ const initialState = {
   filterValue: ''
 };
 
-function getNextIndex({ items, selectedId }, change = 1) {
+function getNextIndex({ visibleItems, selectedId }, change = 1) {
   if (!selectedId) {
     return 0;
   }
 
-  const currentIndex = items.findIndex((item) => item.id === selectedId);
-  const nextIndex = keepInRange(currentIndex + change, 0, items.length - 1);
+  const currentIndex = visibleItems.findIndex((item) => item.id === selectedId);
+  const nextIndex = keepInRange(currentIndex + change, 0, visibleItems.length - 1);
 
   return nextIndex;
 }
@@ -46,12 +46,12 @@ export default function postListReducer(state = initialState, action) {
     case POST_LIST_NEXT:
       return {
         ...state,
-        selectedId: state.items[getNextIndex(state, NEXT_CHANGE)].id
+        selectedId: state.visibleItems[getNextIndex(state, NEXT_CHANGE)].id
       };
     case POST_LIST_PREV:
       return {
         ...state,
-        selectedId: state.items[getNextIndex(state, PREV_CHANGE)].id
+        selectedId: state.visibleItems[getNextIndex(state, PREV_CHANGE)].id
       };
     case POST_SELECT:
       return {
