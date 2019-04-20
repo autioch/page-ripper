@@ -51,9 +51,12 @@ export function fetchPostList() {
 
     return axios
       .get(`http://localhost:9090/post`)
-      .then(({ data }) => {
-        dispatch(setPostListLoading(false));
-        dispatch(setPostList(data));
-      });
+      .then(
+        ({ data }) => {
+          dispatch(setPostListLoading(false));
+          dispatch(setPostList(data));
+        },
+        () => dispatch(setPostListLoading(false))
+      );
   };
 }

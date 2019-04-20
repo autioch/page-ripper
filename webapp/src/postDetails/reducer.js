@@ -10,6 +10,7 @@ export default function postDetailsReducer(state = initialState, action) {
   switch (action.type) {
     case POST_DETAILS_SET:
       return {
+        ...state,
         details: action.details
       };
     case POST_DETAILS_LOADING:

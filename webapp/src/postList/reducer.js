@@ -4,6 +4,8 @@ import {
   POST_LIST_NEXT, POST_LIST_PREV
 } from './actionTypes';
 
+const keepInRange = (value, min, max) => Math.max(min, Math.min(value, max));
+
 const initialState = {
   items: [],
   selectedId: null,
@@ -17,7 +19,7 @@ function getNextIndex({ items, selectedId }, change = 1) {
   }
 
   const currentIndex = items.findIndex((item) => item.id === selectedId);
-  const nextIndex = Math.min(currentIndex + change, items.length - 1);
+  const nextIndex = keepInRange(currentIndex + change, 0, items.length - 1);
 
   return nextIndex;
 }

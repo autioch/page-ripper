@@ -24,13 +24,11 @@ function getColRow(imageCount, ratio) {
   throw Error(`Calculating rows/cols went wrong for ${imageCount} images.`);
 }
 
-const POST_WIDTH = 200;
-
-module.exports = function getDimensions(imageCount) {
+module.exports = function getDimensions(imageCount, availableWidth, availableHeight) {
   const { col, row } = getColRow(imageCount, RATIO);
 
-  const imageWidth = Math.floor((window.innerWidth - POST_WIDTH) / row);
-  const imageHeight = Math.floor(window.innerHeight / col);
+  const imageWidth = Math.floor(availableWidth / row);
+  const imageHeight = Math.floor(availableHeight / col);
 
   return {
     width: `${Math.floor(imageWidth)}px`,

@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PrevPostView = ({ onClick }) => (
-  <div className="toggle-section" onClick={onClick}>{'/\\'}</div>
+  <div className="toggle-section is-expanded" onClick={onClick}>{'/\\'}</div>
 );
 
 const PrevPostViewConnected = connect(

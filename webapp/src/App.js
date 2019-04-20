@@ -9,8 +9,8 @@ import PostListToggleView from './postList/toggle/view';
 import PostDetailsView from './postDetails/view';
 import PostDetailsToggleView from './postDetails/toggle/view';
 
-// import NextPostView from './postList/next/view';
-// import PrevPostView from './postList/prev/view';
+import NextPostView from './postList/next/view';
+import PrevPostView from './postList/prev/view';
 
 import './App.scss';
 
@@ -23,8 +23,8 @@ const App = () => (
       <PostListToggleView/>
       <ImageListToggleView/>
       <PostDetailsToggleView/>
-      {/* <NextPostView/> */}
-      {/* <PrevPostView/> */}
+      <NextPostView/>
+      <PrevPostView/>
     </div>
   </div>
 );

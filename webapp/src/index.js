@@ -10,6 +10,10 @@ import { fetchPostList } from './postList/actions';
 import postListReducer from './postList/reducer';
 import postDetailsReducer from './postDetails/reducer';
 import imageListReducer from './imageList/reducer';
+
+import { fetchImageList } from './imageList/actions';
+import { fetchPostDetails } from './postDetails/actions';
+
 import './index.css';
 
 const app = combineReducers({
@@ -29,3 +33,18 @@ render(
 );
 
 store.dispatch(fetchPostList());
+
+let currentPostSelectedId = null;
+
+/* TODO Make it work properly */
+store.subscribe(() => {
+  const stateSelectedId = store.getState().postList.selectedId;
+
+  if (currentPostSelectedId === stateSelectedId) {
+    return;
+  }
+
+  currentPostSelectedId = stateSelectedId;
+  store.dispatch(fetchImageList(currentPostSelectedId));
+  store.dispatch(fetchPostDetails(currentPostSelectedId));
+});
