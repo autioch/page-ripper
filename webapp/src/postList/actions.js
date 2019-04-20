@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   POST_SELECT, POST_LIST_SET, POST_LIST_LOADING,
   POST_LIST_TOGGLE,
-  POST_LIST_NEXT, POST_LIST_PREV
+  POST_LIST_NEXT, POST_LIST_PREV,
+  POST_LIST_FILTER_VALUE
 } from './actionTypes';
 
 export function selectPost(selectedId) {
@@ -42,6 +43,13 @@ export function setPostListLoading(isLoading) {
   return {
     type: POST_LIST_LOADING,
     isLoading
+  };
+}
+
+export function setPostListFilterValue(filterValue) {
+  return {
+    type: POST_LIST_FILTER_VALUE,
+    filterValue
   };
 }
 
