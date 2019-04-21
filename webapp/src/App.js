@@ -1,15 +1,16 @@
 import React from 'react';
 
 import ImageListView from './imageList/view';
-import ImageListToggleView from './imageList/toggle/view';
+import ImageListToggleView from './imageList/navigation/toggle';
 
 import PostListView from './postList/view';
-import PostListToggleView from './postList/navigation/toggle/view';
-import NextPostView from './postList/navigation/next/view';
-import PrevPostView from './postList/navigation/prev/view';
+import PostListToggleView from './postList/navigation/toggle';
+import NextPostView from './postList/navigation/next';
+import PrevPostView from './postList/navigation/prev';
 
 import PostDetailsView from './postDetails/view';
-import PostDetailsToggleView from './postDetails/toggle/view';
+import PostDetailsToggleView from './postDetails/navigation/toggle';
+import MenuView from './menu/view';
 
 import './App.scss';
 
@@ -18,13 +19,13 @@ const App = () => (
     <PostListView/>
     <PostDetailsView/>
     <ImageListView/>
-    <div className="toggle-list">
-      <NextPostView/>
+    <MenuView>
       <PrevPostView/>
+      <NextPostView/>
       <PostListToggleView/>
       <PostDetailsToggleView/>
       <ImageListToggleView/>
-    </div>
+    </MenuView>
   </div>
 );
 

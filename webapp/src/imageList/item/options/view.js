@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 const ImageItemView = ({ fullId, hide }) => (
   <div className="image-item__options">
     <a className="image-item__option" title="Open in new window" target="_blank" rel="noopener noreferrer" href={fullId}>
-      <Icon type="right" />
+      <Icon type="double-right" />
     </a>
     <div className="image-item__option" title="Hide image" onClick={hide} >
       <Icon type="eye-invisible" />

@@ -1,0 +1,21 @@
+@import '../../mixins';
+
+.c-menu-item {
+  @include box();
+  @include centerContent();
+  cursor: pointer;
+  letter-spacing: 1px;
+  border-bottom-left-radius: .5em;
+  border-bottom-right-radius: .5em;
+  transition: color 200ms;
+  min-width: 3em;
+  padding: .5em 1em;
+
+  &.is-expanded {
+    color: #3a3;
+  }
+
+  &:hover {
+    background-color: #3a3a3a;
+  }
+}

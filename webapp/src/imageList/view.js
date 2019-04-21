@@ -11,7 +11,8 @@ const mapStateToProps = (state) => ({
   isLoading: state.imageList.isLoading,
   isExpanded: state.imageList.isExpanded,
   postListExpanded: state.postList.isExpanded,
-  postDetailsExpanded: state.postDetails.isExpanded
+  postDetailsExpanded: state.postDetails.isExpanded,
+  postSelected: !!state.postList.selectedId
 });
 
 const countVisible = (itemList) => itemList.filter((image) => !image.isHidden).length;
@@ -62,13 +63,14 @@ class ImageListView extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if ((prevProps.postListExpanded !== this.props.postListExpanded) || (prevProps.postDetailsExpanded !== this.props.postDetailsExpanded)) {
+    if (
+      (prevProps.postListExpanded !== this.props.postListExpanded) ||
+      (prevProps.postDetailsExpanded !== this.props.postDetailsExpanded) ||
+      (prevProps.isExpanded !== this.props.isExpanded) ||
+      (prevState.mainWidth !== this.state.mainWidth) ||
+      (prevState.mainHeight !== this.state.mainHeight)
+    ) {
       this.setMainDimensions();
-
-      return;
-    }
-    if ((prevState.mainWidth !== this.state.mainWidth) || (prevState.mainHeight !== this.state.mainHeight)) {
-      this.setItemDimensions();
 
       return;
     }
@@ -86,9 +88,11 @@ class ImageListView extends Component {
       return '';
     }
 
-    const { isLoading } = this.props;
+    const { postSelected, isLoading } = this.props;
     const visibleList = this.props.items.filter((image) => !image.isHidden);
+    const hiddenCount = this.props.items.length - visibleList.length;
 
+    const isEmpty = postSelected && !isLoading && !visibleList.length;
     const dimensions = {
       height: this.state.itemHeight,
       width: this.state.itemWidth
@@ -97,7 +101,8 @@ class ImageListView extends Component {
     return (
       <div className="image-list" ref={this.el}>
         <LoaderView isLoading={isLoading} />
-        {isLoading || visibleList.length ? '' : <div>No images in post</div>}
+        {isEmpty ? <div className="image-list__info">No images in post ({hiddenCount} hidden)</div> : ''}
+        {postSelected ? '' : <div className="image-list__info">Select post to browse images</div>}
         {isLoading ? '' : visibleList.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
       </div>
     );

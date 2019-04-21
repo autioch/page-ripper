@@ -1,0 +1,21 @@
+@import '../mixins';
+
+.m-menu {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.m-menu-content {
+  opacity: 0;
+  transition: opacity 250ms;
+  padding: 0 2em 2em;
+  display: flex;
+
+  &:hover {
+    opacity: 1;
+  }
+}
