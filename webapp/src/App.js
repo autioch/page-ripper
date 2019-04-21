@@ -10,6 +10,7 @@ import PrevPostView from './postList/navigation/prev';
 
 import PostDetailsView from './postDetails/view';
 import PostDetailsToggleView from './postDetails/navigation/toggle';
+import PostDetailsInfoView from './postDetails/info';
 import MenuView from './menu/view';
 
 import './App.scss';
@@ -26,6 +27,7 @@ const App = () => (
       <PostDetailsToggleView/>
       <ImageListToggleView/>
     </MenuView>
+    <PostDetailsInfoView/>
   </div>
 );
 

@@ -1,7 +1,7 @@
 import { POST_DETAILS_SET, POST_DETAILS_LOADING, POST_DETAILS_TOGGLE } from './actionTypes';
 
 const initialState = {
-  details: undefined, // eslint-disable-line no-undefined
+  details: [],
   isLoading: false,
   isExpanded: true
 };
