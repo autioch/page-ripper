@@ -27,6 +27,7 @@ export function setPostDetailsLoading(isLoading) {
 
 export function fetchPostDetails(postId) {
   return (dispatch) => {
+    dispatch(setPostDetails({}));
     dispatch(setPostDetailsLoading(true));
 
     return axios

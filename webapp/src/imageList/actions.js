@@ -24,6 +24,7 @@ export function setImageListLoading(isLoading) {
 
 export function fetchImageList(postId) {
   return (dispatch) => {
+    dispatch(setImageList([]));
     dispatch(setImageListLoading(true));
 
     return axios

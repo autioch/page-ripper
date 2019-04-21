@@ -55,6 +55,7 @@ export function setPostListFilterValue(filterValue) {
 
 export function fetchPostList() {
   return (dispatch) => {
+    dispatch(setPostList([]));
     dispatch(setPostListLoading(true));
 
     return axios
