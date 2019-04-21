@@ -8,11 +8,13 @@ import './styles.scss';
 
 const mapStateToProps = (state) => ({
   items: state.imageList.items,
+  visibleItems: state.imageList.visibleItems,
   isLoading: state.imageList.isLoading,
   isExpanded: state.imageList.isExpanded,
+  postSelected: !!state.postList.selectedId,
+
   postListExpanded: state.postList.isExpanded,
-  postDetailsExpanded: state.postDetails.isExpanded,
-  postSelected: !!state.postList.selectedId
+  postDetailsExpanded: state.postDetails.isExpanded
 });
 
 const countVisible = (itemList) => itemList.filter((image) => !image.isHidden).length;
@@ -49,7 +51,7 @@ class ImageListView extends Component {
     this.setState({
       mainWidth: rect.width,
       mainHeight: rect.height
-    });
+    }, () => this.setItemDimensions());
   }
 
   setItemDimensions() {
@@ -88,11 +90,10 @@ class ImageListView extends Component {
       return '';
     }
 
-    const { postSelected, isLoading } = this.props;
-    const visibleList = this.props.items.filter((image) => !image.isHidden);
-    const hiddenCount = this.props.items.length - visibleList.length;
+    const { postSelected, isLoading, visibleItems, items } = this.props;
+    const hiddenCount = items.length - visibleItems.length;
 
-    const isEmpty = postSelected && !isLoading && !visibleList.length;
+    const isEmpty = postSelected && !isLoading && !visibleItems.length;
     const dimensions = {
       height: this.state.itemHeight,
       width: this.state.itemWidth
@@ -103,7 +104,7 @@ class ImageListView extends Component {
         <LoaderView isLoading={isLoading} />
         {isEmpty ? <div className="image-list__info">No images in post ({hiddenCount} hidden)</div> : ''}
         {postSelected ? '' : <div className="image-list__info">Select post to browse images</div>}
-        {isLoading ? '' : visibleList.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
+        {isLoading ? '' : visibleItems.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
       </div>
     );
   }
