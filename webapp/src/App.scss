@@ -1,5 +1,7 @@
-// sass-lint:disable no-vendor-prefixes
 // sass-lint:disable class-name-format
+@import './scroll';
+@import './components/toggle/styles';
+
 html,
 body,
 #root,
@@ -13,61 +15,4 @@ body,
   background-color: #222;
   color: #ddd;
   font-size: 12px;
-  /* flex-direction: row; */
-  /* align-items: stretch; */
-}
-
-::-webkit-scrollbar {
-  background-color: #333;
-  border-radius: .25em;
-  height: .5em;
-  width: .5em;
-}
-
-::-webkit-scrollbar-button {
-  display: none;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #333;
-  border-radius: .25em;
-}
-
-
-::-webkit-scrollbar-thumb {
-  background-color: #666;
-  border-radius: .25em;
-}
-
-.toggle-list {
-  position: fixed;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  padding: 0 .5em .5em 0;
-  transition: opacity 250ms;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-.toggle-section {
-  padding: 1em .5em;
-  cursor: pointer;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  letter-spacing: 1px;
-  background: #444;
-  border-top-left-radius: .5em;
-  border-bottom-left-radius: .5em;
-  transition: background 250ms;
-
-  &:not(.is-expanded) {
-    text-decoration: line-through;
-  }
-
-  &:hover {
-    background: #000;
-  }
 }

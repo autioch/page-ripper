@@ -1,0 +1,32 @@
+.toggle-list {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  padding: 0 .5em .5em 0;
+  transition: opacity 250ms;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.toggle-section {
+  padding: 1em .5em;
+  cursor: pointer;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 1px;
+  background: #444;
+  border-top-left-radius: .5em;
+  border-bottom-left-radius: .5em;
+  transition: background 250ms;
+
+  &:not(.is-expanded) {
+    text-decoration: line-through;
+  }
+
+  &:hover {
+    background: #000;
+  }
+}
