@@ -1,17 +1,7 @@
-.post-list-container {
+.post-list {
   height: 100%;
-  overflow: auto;
-  width: 200px;
+  width: 250px;
   flex: none;
   display: flex;
   flex-direction: column;
-}
-
-
-.post-list {
-  flex-grow: 1;
-  
-  .ReactVirtualized__List {
-    outline: none;
-  }
 }

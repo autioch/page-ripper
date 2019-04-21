@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { togglePostList } from '../actions';
+import { togglePostList } from '../../actions';
 import './styles.scss';
 
 const mapStateToProps = (state) => ({

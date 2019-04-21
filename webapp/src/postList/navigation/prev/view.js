@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { prevPost } from '../actions';
+import { prevPost } from '../../actions';
 import './styles.scss';
 
 const mapStateToProps = () => ({});

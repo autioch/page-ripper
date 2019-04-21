@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { selectPost } from '../actions';
+import { selectPost } from '../../actions';
 
 import './styles.scss';
 
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const PostItemView = ({ post, style, isActive, onClick }) => (
-  <div className={`post-item ${isActive ? 'is-active' : ''}`} style={style} onClick={onClick} title={post.title}>
+  <div className={`post-list-item ${isActive ? 'is-active' : ''}`} style={style} onClick={onClick} title={post.title}>
     {post.title}
   </div>
 );

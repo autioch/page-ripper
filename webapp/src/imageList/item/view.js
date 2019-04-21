@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { connect } from 'react-redux';
 import { hideImage } from '../actions';
+import { Icon } from 'antd';
 
 import './styles.scss';
 
@@ -16,9 +18,11 @@ const ImageItemView = ({ fullId, dimensions, hide }) => (
   <div className="image-item" style={dimensions}>
     <img className="image-item__el" src={fullId} alt="" />
     <div className="image-item__options">
-      <div className="image-item__option" title="Hide image" onClick={hide} >H</div>
-      <div className="image-item__option" title="Open in new window">
-        <a target="_blank" rel="noopener noreferrer" href={fullId}>{'>'}</a>
+      <a className="image-item__option" title="Open in new window" target="_blank" rel="noopener noreferrer" href={fullId}>
+        <Icon type="right" />
+      </a>
+      <div className="image-item__option" title="Hide image" onClick={hide} >
+        <Icon type="eye-invisible" />
       </div>
     </div>
   </div>

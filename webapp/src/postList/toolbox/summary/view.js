@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './styles.scss';
 
 const mapStateToProps = (state) => ({
   visibleCount: state.postList.visibleItems.length,
@@ -8,8 +7,8 @@ const mapStateToProps = (state) => ({
 });
 
 const PostListSummaryView = ({ visibleCount, totalCount }) => (
-  <div className="post-list-summary">
-    {visibleCount} / {totalCount}
+  <div className="post-list-toolbox-item">
+    {visibleCount} / {totalCount} posts
   </div>
 );
 

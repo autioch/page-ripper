@@ -4,6 +4,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { render } from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from './logger';
+import 'antd/dist/antd.css';
 
 import App from './App';
 import { fetchPostList } from './postList/actions';

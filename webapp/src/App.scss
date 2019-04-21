@@ -10,8 +10,8 @@ body,
 
 .App {
   display: flex;
-  background-color: #212121;
-  color: #eee;
+  background-color: #222;
+  color: #ddd;
   font-size: 12px;
   /* flex-direction: row; */
   /* align-items: stretch; */
@@ -19,6 +19,7 @@ body,
 
 ::-webkit-scrollbar {
   background-color: #333;
+  border-radius: .25em;
   height: .5em;
   width: .5em;
 }
@@ -29,6 +30,7 @@ body,
 
 ::-webkit-scrollbar-track {
   background-color: #333;
+  border-radius: .25em;
 }
 
 

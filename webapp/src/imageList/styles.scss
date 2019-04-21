@@ -1,7 +1,14 @@
+@import '../mixins';
+
 .image-list {
+  @include box();
   display: flex;
   flex: 1 1 1000px;
   flex-wrap: wrap;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
+  border-top-left-radius: .25em;
+  border-bottom-left-radius: .25em;
+  margin-left: .25em;
+  position: relative;
 }

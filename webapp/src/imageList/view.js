@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ItemView from './item/view';
+import LoaderView from '../components/loader/view';
 import getDimensions from './getDimensions';
 import './styles.scss';
 
@@ -95,7 +96,7 @@ class ImageListView extends Component {
 
     return (
       <div className="image-list" ref={this.el}>
-        {isLoading ? <div>Loading...</div> : ''}
+        <LoaderView isLoading={isLoading} />
         {isLoading || visibleList.length ? '' : <div>No images in post</div>}
         {isLoading ? '' : visibleList.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
       </div>

@@ -1,0 +1,11 @@
+@import '../../mixins';
+
+.post-list-list {
+  @include box();
+  flex-grow: 1;
+  border-top-right-radius: .5em;
+
+  .ReactVirtualized__List {
+    outline: none;
+  }
+}

@@ -1,0 +1,32 @@
+@import '../../../mixins';
+
+.post-list-filter__input-container {
+  flex: 1;
+  height: 2em;
+  display: flex;
+  align-items: center;
+}
+
+.post-list-filter__input {
+  background-color: #2a2a2a;
+  border: 0;
+  box-sizing: border-box;
+  color: #3a3;
+  margin: 0;
+  outline: none;
+  // padding: .25em .5em;
+  width: calc(100% - 1em);
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+.post-list-filter__reset {
+  @include centerContent();
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  flex: none;
+  margin-right: -.5em;
+}
