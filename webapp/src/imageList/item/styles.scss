@@ -25,26 +25,3 @@
   display: block;
   margin: 0 auto;
 }
-
-.image-item__options {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: none;
-  background: #444;
-  border-top-left-radius: .25em;
-}
-
-.image-item__option {
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  width: 2em;
-  line-height: 2em;
-  height: 2em;
-
-  &:hover {
-    color: #3a3;
-  }
-}

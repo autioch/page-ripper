@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 import { connect } from 'react-redux';
-import { hideImage } from '../actions';
-import { Icon } from 'antd';
+import OptionsView from './options/view';
 
 import './styles.scss';
 
@@ -10,27 +9,15 @@ const mapStateToProps = (state, ownProps) => ({
   fullId: `http://localhost:9090/image/${state.postList.selectedId}/${ownProps.image.id}`
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  hide: () => dispatch(hideImage(ownProps.image.id))
-});
-
-const ImageItemView = ({ fullId, dimensions, hide }) => (
+const ImageItemView = ({ fullId, dimensions, image }) => (
   <div className="image-item" style={dimensions}>
     <img className="image-item__el" src={fullId} alt="" />
-    <div className="image-item__options">
-      <a className="image-item__option" title="Open in new window" target="_blank" rel="noopener noreferrer" href={fullId}>
-        <Icon type="right" />
-      </a>
-      <div className="image-item__option" title="Hide image" onClick={hide} >
-        <Icon type="eye-invisible" />
-      </div>
-    </div>
+    <OptionsView image={image} />
   </div>
 );
 
 const ImageItemViewConnected = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(ImageItemView);
 
 export default ImageItemViewConnected;
