@@ -1,0 +1,49 @@
+@import '../../mixins';
+
+.image-viewer {
+  @include box();
+  @include centerContent();
+  position: relative;
+  height: 100%;
+  padding: 0;
+}
+
+.image-viewer__el {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image-viewer__prev {
+  @include centerContent();
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2em;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+.image-viewer__next {
+  @include centerContent();
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 2em;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+
+.image-viewer__hide {
+  @include centerContent();
+  position: absolute;
+  top: 0;
+  right: 2em;
+  width: 2em;
+  height: 2em;
+  color: #f1f1f1;
+}

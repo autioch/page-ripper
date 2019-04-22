@@ -1,5 +1,35 @@
 import axios from 'axios';
-import { IMAGE_LIST_SET, IMAGE_LIST_FETCH, IMAGE_HIDE, IMAGE_TOGGLE } from './actionTypes';
+import {
+  IMAGE_LIST_SET, IMAGE_LIST_FETCH, IMAGE_TOGGLE,
+  IMAGE_HIDE,
+  IMAGE_VIEWER_OPEN, IMAGE_VIEWER_CLOSE,
+  IMAGE_VIEWER_NEXT, IMAGE_VIEWER_PREV
+} from './actionTypes';
+
+export function openViewer(imageId) {
+  return {
+    type: IMAGE_VIEWER_OPEN,
+    imageId
+  };
+}
+
+export function closeViewer() {
+  return {
+    type: IMAGE_VIEWER_CLOSE
+  };
+}
+
+export function viewerNextImage() {
+  return {
+    type: IMAGE_VIEWER_NEXT
+  };
+}
+
+export function viewerPrevImage() {
+  return {
+    type: IMAGE_VIEWER_PREV
+  };
+}
 
 export function setImageList(items) {
   return {

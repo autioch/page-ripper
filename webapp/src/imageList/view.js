@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ItemView from './item/view';
+import ImageViewer from './viewer/view';
 import LoaderView from '../components/loader/view';
+import ModalView from '../components/modal/view';
 import getDimensions from './getDimensions';
+import { closeViewer } from './actions';
 import './styles.scss';
 
 const mapStateToProps = (state) => ({
@@ -14,7 +17,13 @@ const mapStateToProps = (state) => ({
   postSelected: !!state.postList.selectedId,
 
   postListExpanded: state.postList.isExpanded,
-  postDetailsExpanded: state.postDetails.isExpanded
+  postDetailsExpanded: state.postDetails.isExpanded,
+  viewerIsOpen: state.imageList.viewerIsOpen,
+  postId: state.postList.selectedId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  hideViewer: () => dispatch(closeViewer())
 });
 
 const countVisible = (itemList) => itemList.filter((image) => !image.isHidden).length;
@@ -90,7 +99,7 @@ class ImageListView extends Component {
       return '';
     }
 
-    const { postSelected, isLoading, visibleItems, items } = this.props;
+    const { postSelected, isLoading, visibleItems, items, viewerIsOpen, hideViewer, postId } = this.props;
     const hiddenCount = items.length - visibleItems.length;
 
     const isEmpty = postSelected && !isLoading && !visibleItems.length;
@@ -105,13 +114,17 @@ class ImageListView extends Component {
         {isEmpty ? <div className="image-list__info">No images in post ({hiddenCount} hidden)</div> : ''}
         {postSelected ? '' : <div className="image-list__info">Select post to browse images</div>}
         {isLoading ? '' : visibleItems.map((image) => <ItemView key={image.id} image={image} dimensions={dimensions}/>)}
+        {viewerIsOpen ? <ModalView hide={hideViewer}>
+          <ImageViewer postId={postId} />
+        </ModalView> : ''}
       </div>
     );
   }
 }
 
 const ImageListViewConnected = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(ImageListView);
 
 export default ImageListViewConnected;

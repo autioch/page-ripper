@@ -1,0 +1,14 @@
+@import '../../mixins';
+
+.c-modal {
+  @include overlay();
+  padding: .5em;
+  background: rgba(255, 255, 255, .1);
+}
+
+.c-modal__close {
+  @include centerContent();
+  position: absolute;
+  top: .5em;
+  right: .5em;
+}

@@ -1,13 +1,26 @@
 import axios from 'axios';
 import { POST_DETAILS_SET, POST_DETAILS_LOADING, POST_DETAILS_TOGGLE } from './actionTypes';
 
+const IGNORED_KEYS = {
+  nextUrls: true,
+  imageUrls: true
+};
+
+function extractDetails(details) {
+  const items = Object.entries({
+    url: details.url,
+    ...details.postInfo
+  });
+
+  const fixedItems = items.filter(([key]) => !IGNORED_KEYS[key]).sort((a, b) => a[0].localeCompare(b[0]));
+
+  return fixedItems;
+}
+
 export function setPostDetails(details) {
   return {
     type: POST_DETAILS_SET,
-    details: Object.entries({
-      url: details.url,
-      ...details.postInfo
-    }).sort((a, b) => a[0].localeCompare(b[0]))
+    details: extractDetails(details)
   };
 }
 
