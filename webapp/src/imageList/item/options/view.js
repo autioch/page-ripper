@@ -7,11 +7,16 @@ import { Icon } from 'antd';
 import './styles.scss';
 
 const mapStateToProps = (state, ownProps) => ({
-  fullId: `http://localhost:9090/image/${state.postList.selectedId}/${ownProps.image.id}`
+  fullId: `http://localhost:9090/image/${state.postList.selectedId}/${ownProps.image.id}`,
+  postId: state.postList.selectedId,
+  imageId: ownProps.image.id
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  hide: () => dispatch(hideImage(ownProps.image.id))
+  hide: () => dispatch(hideImage({
+    postId: ownProps.postId,
+    imageId: ownProps.image.id
+  }))
 });
 
 const ImageItemView = ({ fullId, hide }) => (

@@ -36,7 +36,9 @@ export function fetchImageList(postId) {
   };
 }
 
-export function hideImage(imageId) {
+export function hideImage({ postId, imageId }) {
+  axios.get(`http://localhost:9090/image/${postId}/${imageId}/hide`);
+
   return {
     type: IMAGE_HIDE,
     imageId

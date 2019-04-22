@@ -20,4 +20,14 @@ module.exports = [{
 
     res.sendFile(postImagePath);
   }
+}, {
+  path: '/image/:postId/:imageId/hide',
+  method: 'get',
+  handler: (db) => async (req, res) => {
+    const { postId, imageId } = req.params;
+
+    await manager.hideImage(db, postId, imageId);
+
+    res.sendStatus(OK);
+  }
 }];

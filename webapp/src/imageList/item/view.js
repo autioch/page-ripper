@@ -6,7 +6,8 @@ import LoaderView from '../../components/loader/view';
 import './styles.scss';
 
 const mapStateToProps = (state, ownProps) => ({
-  fullId: `http://localhost:9090/image/${state.postList.selectedId}/${ownProps.image.id}`
+  fullId: `http://localhost:9090/image/${state.postList.selectedId}/${ownProps.image.id}`,
+  postId: state.postList.selectedId
 });
 
 class ImageItemView extends Component {
@@ -27,7 +28,7 @@ class ImageItemView extends Component {
   }
 
   render() {
-    const { fullId, dimensions, image } = this.props;
+    const { fullId, postId, dimensions, image } = this.props;
 
     return (
       <div className="image-item" style={dimensions}>
@@ -39,7 +40,7 @@ class ImageItemView extends Component {
           onError={this.loadCallback}
         />
         <LoaderView isLoading={this.state.isLoading} />
-        <OptionsView image={image} />
+        <OptionsView image={image} postId={postId}/>
       </div>
     );
   }

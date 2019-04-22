@@ -27,5 +27,9 @@ module.exports = {
     const postImagePath = path.join(dataPath, folderName, imageId);
 
     return postImagePath;
+  },
+
+  async hideImage(db, postId, imageId) {
+    /* TODO */
   }
 };
