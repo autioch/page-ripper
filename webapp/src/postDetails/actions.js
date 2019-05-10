@@ -7,10 +7,7 @@ const IGNORED_KEYS = {
 };
 
 function extractDetails(details) {
-  const items = Object.entries({
-    url: details.url,
-    ...details.postInfo
-  });
+  const items = Object.entries(details);
 
   const fixedItems = items.filter(([key]) => !IGNORED_KEYS[key]).sort((a, b) => a[0].localeCompare(b[0]));
 

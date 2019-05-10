@@ -17,7 +17,7 @@ module.exports = function parsePost($, url, bodyText) {
 
   const contentImageUrls = $('div#arcik img').map((index, el) => el.attribs.src).get().map((imageUrl) => imageUrl.split('?')[0]);
   const commentImageUrls = parseComments($);
-  const title = $('h1.title').text();
+  const title = $('h1.title').text().trim();
 
   return {
     id,

@@ -37,7 +37,7 @@ module.exports = [
 
     // const prepared = await db.prepare('INSERT INTO posts (id, url, folderName, title, postInfo) VALUES (?, ?, ?, ?, ?)');
     for (let index = 0; index < updatedRows.length; index++) {
-      if ((index + 1) % 100 === 0) {
+      if (index % 100 === 0) {
         qbLog.update(`Updating row ${index}`);
       }
 
