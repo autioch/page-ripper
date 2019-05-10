@@ -3,6 +3,7 @@ const dbAPIFactory = require('./dbAPI');
 const { ensureConfig, filenamify } = require('../../utils');
 const qbLog = require('qb-log');
 const { log } = require('../../utils');
+const { omit } = require('lodash');
 
 qbLog({
   post: {
@@ -68,11 +69,15 @@ module.exports = function postDownloadFactory(config) {
     postInfo.folderName = getFolderName(postInfo);
 
     qbLog.postSave();
+
+    const extraDetails = omit(postInfo, ['id', 'folderName', 'title']);
+
     await dbAPI.save({
       id: postInfo.id,
       url,
       folderName: postInfo.folderName,
-      postInfo: JSON.stringify(postInfo)
+      title: postInfo.title,
+      postInfo: JSON.stringify(extraDetails)
     });
 
     idStore.add(postInfo.id);

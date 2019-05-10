@@ -12,10 +12,6 @@ describe('crawler images db API', () => {
 
   beforeEach(async () => {
     db = await dbMock();
-
-    const row = await db.all('SELECT version FROM config');
-
-    console.log('db', row[0].version);
   });
 
   afterEach(async () => {

@@ -4,7 +4,7 @@ const qbLog = require('qb-log');
 module.exports = pageRipper;
 
 if (require.main === module) {
-  const config = require('../config');
+  const config = require('./config');
 
   pageRipper(config).then(
     (crawler) => crawler.start(),

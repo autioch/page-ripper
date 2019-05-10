@@ -1,25 +1,27 @@
-const config = require('../../config');
-const setupDb = require('../db');
+const config = require('../config');
+const setupDb = require('../../db');
 
 // const log = require('qb-log');
 const fs = require('fs').promises;
-const { pick, groupBy } = require('lodash');
+
+// const { pick, groupBy } = require('lodash');
 
 (async () => {
   const { db } = await setupDb(config.dbPath);
 
-  const results = await db.all(`select postInfo from posts order by id, url`);
+  // const results = await db.all(`SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'`);
 
-  const details = results.map((result) => {
-    const info = JSON.parse(result.postInfo);
+  const results = await db.all(`select * from posts_old`);
 
-    return pick(info, ['id', 'url', 'folderName', 'title']);
-  });
+  // const details = results.map((result) => {
+  //   const info = JSON.parse(result.postInfo);
+  //
+  //   return pick(info, ['id', 'url', 'folderName', 'title']);
+  // });
+  // const grouped = groupBy(results, 'title');
+  // const duplicates = Object.entries(grouped).filter(([, values]) => values.length > 1);
 
-  const grouped = groupBy(details, 'folderName');
-  const duplicates = Object.entries(grouped).filter(([, values]) => values.length > 1);
-
-  await fs.writeFile('./dump.json', JSON.stringify(duplicates, null, '  '));
+  await fs.writeFile('./dump.json', JSON.stringify(results, null, '  '));
 
   await db.close();
 })();

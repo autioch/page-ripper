@@ -25,11 +25,13 @@ const validTestCases = [
     },
     parseResult: {
       id: 'MISSING',
-      folderName: 'http://yey.com/extras'
+      folderName: 'http://yey.com/extras',
+      title: 'yey extras'
     },
     postInfo: {
       id: 'MISSING',
-      folderName: 'yey.com_extras'
+      folderName: 'yey.com_extras',
+      title: 'yey extras'
     }
   },
   {
@@ -42,11 +44,13 @@ const validTestCases = [
     },
     parseResult: {
       id: '1',
-      folderName: 'http://test.com'
+      folderName: 'http://test.com',
+      title: 'test'
     },
     postInfo: {
       id: '1',
-      folderName: 'test.com'
+      folderName: 'test.com',
+      title: 'test'
     }
   },
   {
@@ -60,7 +64,8 @@ const validTestCases = [
     },
     parseResult: {
       id: '1',
-      folderName: 'test.com_strange.htm'
+      folderName: 'test.com_strange.htm',
+      title: 'test strange'
     },
     postInfo: {}
   }

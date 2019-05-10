@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
+    "db:update": "node dbUpdate",
     "test": "mocha --reporter=list ./**/*.spec.js",
     "test:watch": "mocha --reporter=min --watch ./**/*.spec.js & exit 0"
   },

@@ -1,20 +1,8 @@
-// TODO cache until parse is no longer needed.
-let postList = [];
-
 module.exports = {
   async getPostList(db) {
-    if (postList.length) {
-      return postList;
-    }
+    const postList = await db.all('SELECT id, title from posts order by id');
 
-    const rows = await db.all('SELECT id, postInfo from posts order by id');
-
-    const posts = rows.sort((a, b) => a.id - b.id).map((row) => ({
-      id: row.id,
-      title: JSON.parse(row.postInfo).title
-    }));
-
-    postList = posts.sort((a, b) => a.title.localeCompare(b.title));
+    // postList.sort((a, b) => a.title.localeCompare(b.title));
 
     return postList;
   },

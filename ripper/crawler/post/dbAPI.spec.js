@@ -32,6 +32,7 @@ describe('crawler post db API', () => {
     await dbAPI.save({
       id: 'a',
       folderName: 'dataPath/a',
+      title: 'some title',
       url: 'http://a.com',
       postInfo: 'json'
     });
@@ -41,6 +42,7 @@ describe('crawler post db API', () => {
     expect(dbState).to.deep.equal([{
       id: 'a',
       folderName: 'dataPath/a',
+      title: 'some title',
       url: 'http://a.com',
       postInfo: 'json'
     }]);
