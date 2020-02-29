@@ -8,9 +8,7 @@ module.exports = {
   },
 
   async getPost(db, postId) {
-    const [post] = await db.getPost(postId);
-
-    const { postInfo, ...postDetails } = post;
+    const { postInfo, ...postDetails } = await db.getPost(postId);
 
     return {
       ...postDetails,
