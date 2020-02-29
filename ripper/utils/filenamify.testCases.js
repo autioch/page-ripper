@@ -1,4 +1,4 @@
-const JMtestCases = require('../../data/jm/parsePost/jm/testCases');
+const JMtestCases = require('../../data/jm/parsePost/testCases');
 
 const JMlinks = JMtestCases.reduce((arr, testCase) => arr.concat(testCase.imageUrls).concat(testCase.title), []);
 

@@ -1,5 +1,4 @@
 const { uniq } = require('lodash');
-const dbAPIFactory = require('./dbAPI');
 const { ensureConfig } = require('../../utils');
 const qbLog = require('qb-log');
 
@@ -27,10 +26,6 @@ module.exports = function queueFactory(config) {
 
   const { visitedItems = [], queuedItems = [], db } = config;
 
-  const dbAPI = dbAPIFactory({
-    db
-  });
-
   const visited = visitedItems.reduce((obj, item) => setDict(obj, item), {});
   let queued = filterByDict(queuedItems, visited);
 
@@ -39,7 +34,7 @@ module.exports = function queueFactory(config) {
   async function visit(item) {
     setDict(visited, item);
 
-    await dbAPI.visit(item);
+    await db.visitUrl(item);
 
     queued = queued.filter((arrItem) => arrItem !== item);
 
@@ -59,7 +54,7 @@ module.exports = function queueFactory(config) {
 
     qbLog.queueAdd(`${toAdd.length} from ${items.length}`);
 
-    await dbAPI.add(toAdd);
+    await db.addUrlToQueue(toAdd);
     queued.push(...toAdd);
   }
 

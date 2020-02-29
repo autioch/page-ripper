@@ -89,4 +89,46 @@ module.exports = class Wrapper {
       });
     });
   }
+
+  async savePost(post) {
+    const { id, url, title, folderName, postInfo } = post;
+
+    await this.run('INSERT INTO posts (id, url, title, folderName, postInfo) VALUES (?, ?, ?, ?, ?)', [id, url, title, folderName, postInfo]);
+  }
+
+  async savePostImages(postId, images) {
+    for (let i = 0; i < images.length; i++) {
+      const { imageUrl, fullPath, message } = images[i];
+
+      await this.run('INSERT INTO images (postId, imageUrl, fullPath, message) VALUES (?, ?, ?, ?)', [postId, imageUrl, fullPath, message]);
+    }
+  }
+
+  async visitUrl(url) {
+    await this.run(`UPDATE queue SET isVisited = ? WHERE url = ?`, [1, url]);
+  }
+
+  async addUrlToQueue(urls) {
+    for (let i = 0; i < urls.length; i++) {
+      await this.run('INSERT INTO queue (url, isVisited) VALUES (?, ?)', [urls[i], 0]);
+    }
+  }
+
+  async getPostList() {
+    const postList = await this.all('SELECT id, title from posts order by id');
+
+    return postList;
+  }
+
+  async getPost(postId) {
+    const [post] = await this.all('SELECT * from posts WHERE id = ?', [postId]);
+
+    return post;
+  }
+
+  async getPostFolderName(postId) {
+    const [row] = await this.all('SELECT folderName from posts where id = ?', [postId]);
+
+    return row.folderName;
+  }
 };

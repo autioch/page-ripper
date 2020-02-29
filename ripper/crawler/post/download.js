@@ -1,5 +1,4 @@
 const cheerio = require('cheerio');
-const dbAPIFactory = require('./dbAPI');
 const { ensureConfig, filenamify } = require('../../utils');
 const qbLog = require('qb-log');
 const { log } = require('../../utils');
@@ -42,10 +41,6 @@ module.exports = function postDownloadFactory(config) {
 
   const { requestPost, parsePost, idStore, db } = config;
 
-  const dbAPI = dbAPIFactory({
-    db
-  });
-
   async function downloadPost(url) {
     qbLog.post(url);
     const result = await requestPost(url);
@@ -72,7 +67,7 @@ module.exports = function postDownloadFactory(config) {
 
     const extraDetails = omit(postInfo, ['id', 'folderName', 'title']);
 
-    await dbAPI.save({
+    await db.savePost({
       id: postInfo.id,
       url,
       folderName: postInfo.folderName,

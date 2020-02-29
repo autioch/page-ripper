@@ -4,6 +4,7 @@ const install = require('./src/install');
 const update = require('./src/update');
 const Wrapper = require('./src/wrapper');
 const prepareLastState = require('./src/prepareLastState');
+const structure = require('./src/structure');
 
 async function isInstalled(db) {
   const info = await db.all('SELECT * FROM sqlite_master');
@@ -18,7 +19,8 @@ qbLog({
   }
 });
 
-module.exports = async function setupDb(dbPath) {
+async function setupDb(config) {
+  const { dbPath } = config;
   const rawDb = await connect(dbPath);
   const db = new Wrapper(rawDb);
   const isReady = await isInstalled(db);
@@ -35,6 +37,8 @@ module.exports = async function setupDb(dbPath) {
   await update(db);
   qbLog.install('Done');
 
+  structure(db);
+
   const { existingIds, visitedItems, queuedItems } = await prepareLastState(db);
 
   return {
@@ -43,4 +47,12 @@ module.exports = async function setupDb(dbPath) {
     queuedItems,
     visitedItems
   };
-};
+}
+
+module.exports = setupDb;
+
+if (require.main === module) {
+  const config = require('../config');
+
+  setupDb(config);
+}

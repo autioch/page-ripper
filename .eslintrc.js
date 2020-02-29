@@ -17,6 +17,8 @@ module.exports = {
     'class-methods-use-this': ['off'],
     'no-await-in-loop': ['off'],
     'newline-per-chained-call': ['off'],
-    'max-len': ['error', 150]
+    'max-len': ['error', 150],
+    'line-comment-position': ['off'],
+    'no-inline-comments': ['off'],
   }
 };

@@ -1,11 +1,10 @@
-const { dataPath } = require('../../../config');
+const { dataPath } = require('../../../../config');
 const fs = require('fs');
 const path = require('path');
 
 module.exports = {
   async getPostImages(db, postId) {
-    const [row] = await db.all('SELECT folderName from posts where id = ?', [postId]);
-    const { folderName } = row;
+    const folderName = await db.getPostFolderName(postId);
     const fullPath = path.join(dataPath, folderName);
 
     const anyImages = await fs.existsSync(fullPath); // eslint-disable-line no-sync
@@ -22,11 +21,9 @@ module.exports = {
   },
 
   async getPostImagePath(db, postId, imageId) {
-    const [row] = await db.all('SELECT folderName from posts where id = ?', [postId]);
-    const { folderName } = row;
-    const postImagePath = path.join(dataPath, folderName, imageId);
+    const folderName = await db.getPostFolderName(postId);
 
-    return postImagePath;
+    return path.join(dataPath, folderName, imageId);
   },
 
   async hideImage(db, postId, imageId) {

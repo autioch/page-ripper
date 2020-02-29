@@ -10,8 +10,8 @@ const {
 } = require('./src');
 
 async function setupServer(config) {
-  const { dbPath, port } = config;
-  const { db } = await setupDb(dbPath);
+  const { port } = config;
+  const { db } = await setupDb(config);
 
   qbLog.info('Setting up server...');
 
@@ -45,7 +45,7 @@ async function setupServer(config) {
 module.exports = setupServer;
 
 if (require.main === module) {
-  const config = require('./config');
+  const config = require('../config');
 
   setupServer(config);
 }

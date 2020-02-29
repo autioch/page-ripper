@@ -1,14 +1,14 @@
 {
-  "name": "page-ripper",
-  "version": "0.0.3",
-  "description": "Work in progress",
+  "name": "page-ripper-db",
+  "private": "true",
+  "version": "0.0.0",
+  "description": "Page ripper database",
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter=list ./**/*.spec.js",
     "test:watch": "mocha --reporter=min --watch ./**/*.spec.js & exit 0"
   },
   "author": "github.com/autioch",
-  "license": "ISC",
   "dependencies": {
     "qb-log": "^1.0.1",
     "sqlite": "^3.0.3",

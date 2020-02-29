@@ -1,6 +1,6 @@
 const fs = require('fs');
 const moment = require('moment');
-const { rootPath } = require('../config');
+const { rootPath } = require('../../config');
 
 const fileName = `${rootPath}/log.txt`;
 const timePrefix = () => `[${moment().format('HH:mm:ss')}]`;

@@ -1,17 +1,15 @@
 # page-ripper-server
-
-*Work in progress.*
-
+Web server for page ripper browser.
 
 ## Installation
-`npm i page-ripper-server`
+`npm i`
 
 ## Usage
 
-```javascript
+`index.js` exposes a function that accepts config and returns promise with ready server.
 
-const pagerRipperServer = require('page-ripper-server');
+Additionally, `npm run start` can be used to start the server using config from main folder.
 
-import  pagerRipperServer  from 'page-ripper-server';
+## Development
 
-```
+`npm run start:watch`

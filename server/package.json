@@ -1,23 +1,14 @@
 {
   "name": "page-ripper-server",
-  "version": "1.0.0",
-  "description": "",
+  "private": "true",
+  "version": "0.0.0",
+  "description": "Server for page ripper browser",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "start:watch": "nodemon index.js"
   },
-  "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Autioch/page-ripper-server.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Autioch/page-ripper-server/issues"
-  },
-  "homepage": "https://github.com/Autioch/page-ripper-server#readme",
+  "author": "github.com/autioch",
   "dependencies": {
     "bluebird": "3.5.3",
     "body-parser": "1.18.3",

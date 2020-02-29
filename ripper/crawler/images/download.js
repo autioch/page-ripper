@@ -3,7 +3,6 @@ const path = require('path');
 const getImageNames = require('./getImageNames');
 const qbLog = require('qb-log');
 const saveImage = require('./saveImage');
-const dbAPIFactory = require('./dbAPI');
 
 qbLog({
   imageStart: {
@@ -25,10 +24,6 @@ module.exports = async function downloadImages({ postId, db, dataPath, folderNam
     return Promise.resolve();
   }
 
-  const dbAPI = dbAPIFactory({
-    db
-  });
-
   qbLog.imageStart(imageUrls.length);
 
   const absoluteFolderPath = path.join(dataPath, folderName);
@@ -41,7 +36,7 @@ module.exports = async function downloadImages({ postId, db, dataPath, folderNam
   const promises = imageInfos.map(saveImage);
   const allImages = await Promise.all(promises);
 
-  await dbAPI.save(postId, allImages);
+  await db.savePostImages(postId, allImages);
 
   qbLog.imageDone();
 
