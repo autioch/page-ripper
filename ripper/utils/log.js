@@ -4,6 +4,8 @@ const { rootPath } = require('../config');
 
 const fileName = `${rootPath}/log.txt`;
 const timePrefix = () => `[${moment().format('HH:mm:ss')}]`;
+
+// todo isn't this just ''.padEnd(prefixLength)?
 const getIndent = (prefixLength) => new Array(prefixLength + 1).fill(null).map(() => ' ').join('');
 
 /**

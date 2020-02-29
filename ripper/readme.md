@@ -5,7 +5,7 @@ The main export is an asynchronous function `pageRipper`, which requires configu
  - `dataPath` should be folder, in which folders for each page will be created,
  - `dbPath` should be folder, in which sqlite db file will be stored,
  - `parsePost` should be a function that will extract information from the page html,
- - `startingPages` optional string array, that should be url of the first page to crawl.
+ - `startingPages` optional array of objects with id and url properties, that will be added to the front of the queue.
  - `requestPause` optional number, that will describe pause between each page request.
 
 ### parsePost

@@ -1,10 +1,11 @@
-const pageRipper = require('./pageRipper');
+const { join } = require('path');
 const qbLog = require('qb-log');
+const pageRipper = require('./pageRipper');
 
 module.exports = pageRipper;
 
 if (require.main === module) {
-  const config = require('./config');
+  const config = join(__dirname, '..', 'data', 'jm');
 
   pageRipper(config).then(
     (crawler) => crawler.start(),

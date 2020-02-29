@@ -1,1 +1,5 @@
-jm
+assets/
+db.sqlite
+db.backup.sqlite
+log.old.text
+log.text
