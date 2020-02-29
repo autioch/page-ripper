@@ -34,8 +34,8 @@ The object can contain any other properties, they will be all persisted in the d
 5. Execute `start`: `npm run start`.
 
 ## TODO
-2. Add post browser.
 4. Separate post parser from id generator:
   - in table `queue`, `id` should be stored.
   - `parsePost` should return `nextUrls` in form of array of objects, with `id` and `url` properties, instead of just array of strings representing `url`
   - queue should no longer operate on `url` only, but instead check ids
+5. Add `isHidden` for posts and images.
