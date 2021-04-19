@@ -18,7 +18,8 @@
    "postId TEXT NOT NULL",
    "imageUrl TEXT NOT NULL",
    "fullPath TEXT",
-   "message TEXT NOT NULL"
+   "message TEXT NOT NULL",
+   "isHidden INT NOT NULL DEFAULT 0"
   ]
  },
  {

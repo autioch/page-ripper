@@ -1,8 +1,12 @@
+const sortTitle = (a, b) => a.title.trim().localeCompare(b.title.trim()); // eslint-disable-line no-unused-vars
+const sortId = (a, b) => a.id - b.id; // eslint-disable-line no-unused-vars
+
 module.exports = {
+
   async getPostList(db) {
     const postList = await db.getPostList();
 
-    postList.sort((a, b) => a.title.trim().localeCompare(b.title.trim()));
+    postList.sort(sortId);
 
     return postList;
   },

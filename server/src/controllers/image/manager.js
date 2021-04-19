@@ -3,7 +3,14 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
+
+  /* TODO This is reading directly from the file system.
+   * Instead it should read from the images table that has been added recently.
+   *  */
   async getPostImages(db, postId) {
+    //   const images = await db.getPostImages(postId);
+    //
+    //   return images;
     const folderName = await db.getPostFolderName(postId);
     const fullPath = path.join(dataPath, folderName);
 
@@ -27,6 +34,6 @@ module.exports = {
   },
 
   async hideImage(db, postId, imageId) {
-    /* TODO */
+    await db.hideImage(postId, imageId);
   }
 };

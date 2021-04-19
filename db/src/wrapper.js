@@ -131,4 +131,14 @@ module.exports = class Wrapper {
 
     return row.folderName;
   }
+
+  async getPostImages(postId) {
+    const images = await this.all('SELECT * from images where postId = ?', [postId]);
+
+    return images;
+  }
+
+  async hideImage(postId, imageId) {
+    await this.run(`UPDATE images SET isHidden = ? WHERE postId = ? and imageUrl = ? `, [1, postId, imageId]);
+  }
 };

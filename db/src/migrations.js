@@ -50,5 +50,8 @@ module.exports = [
 
     await db.run('DROP TABLE posts_old');
     await db.run('VACUUM');
+  },
+  async function hiddenImages(db) {
+    await db.run('ALTER TABLE images ADD COLUMN isHidden INT NOT NULL DEFAULT 0');
   }
 ];
